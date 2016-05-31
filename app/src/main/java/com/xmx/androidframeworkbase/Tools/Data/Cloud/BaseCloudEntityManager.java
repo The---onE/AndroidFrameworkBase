@@ -3,9 +3,11 @@ package com.xmx.androidframeworkbase.Tools.Data.Cloud;
 import com.avos.avoscloud.AVException;
 import com.avos.avoscloud.AVObject;
 import com.avos.avoscloud.AVQuery;
+import com.avos.avoscloud.DeleteCallback;
 import com.avos.avoscloud.FindCallback;
 import com.avos.avoscloud.GetCallback;
 import com.avos.avoscloud.SaveCallback;
+import com.xmx.androidframeworkbase.Tools.PagerAdapter;
 import com.xmx.androidframeworkbase.User.Callback.AutoLoginCallback;
 import com.xmx.androidframeworkbase.User.UserManager;
 
@@ -27,7 +29,9 @@ public abstract class BaseCloudEntityManager<Entity extends ICloudEntity> {
         return tableName != null && entityTemplate != null;
     }
 
+    //查询全部数据并排序, ascFlag为true升序，为false降序
     public void selectByCondition(final Map<String, Object> conditions,
+                                  final String order, final boolean ascFlag,
                                   final SelectCallback<Entity> callback) {
         if (!checkDatabase()) {
             callback.notInit();
@@ -43,6 +47,13 @@ public abstract class BaseCloudEntityManager<Entity extends ICloudEntity> {
                 if (conditions != null) {
                     for (String key : conditions.keySet()) {
                         query.whereEqualTo(key, conditions.get(key));
+                    }
+                }
+                if (order != null) {
+                    if (ascFlag) {
+                        query.orderByAscending(order);
+                    } else {
+                        query.orderByDescending(order);
                     }
                 }
                 query.findInBackground(new FindCallback<AVObject>() {
@@ -100,6 +111,58 @@ public abstract class BaseCloudEntityManager<Entity extends ICloudEntity> {
                     public void done(AVException e) {
                         if (e == null) {
                             callback.success(object.getObjectId());
+                        } else {
+                            callback.syncError(e);
+                        }
+                    }
+                });
+            }
+
+            @Override
+            public void notLoggedIn() {
+                callback.notLoggedIn();
+            }
+
+            @Override
+            public void errorNetwork() {
+                callback.errorNetwork();
+            }
+
+            @Override
+            public void errorUsername() {
+                callback.errorUsername();
+            }
+
+            @Override
+            public void errorChecksum() {
+                callback.errorChecksum();
+            }
+        });
+    }
+
+    public void deleteFromCloud(final String objectId, final DelCallback callback) {
+        if (!checkDatabase()) {
+            callback.notInit();
+            return;
+        }
+        UserManager.getInstance().checkLogin(new AutoLoginCallback() {
+            @Override
+            public void success(AVObject user) {
+                AVQuery<AVObject> query = new AVQuery<>(tableName);
+                query.getInBackground(objectId, new GetCallback<AVObject>() {
+                    @Override
+                    public void done(AVObject object, AVException e) {
+                        if (e == null) {
+                            object.deleteInBackground(new DeleteCallback() {
+                                @Override
+                                public void done(AVException e) {
+                                    if (e == null) {
+                                        callback.success();
+                                    } else {
+                                        callback.syncError(e);
+                                    }
+                                }
+                            });
                         } else {
                             callback.syncError(e);
                         }

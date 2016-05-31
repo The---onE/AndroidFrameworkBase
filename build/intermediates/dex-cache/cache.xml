@@ -2,116 +2,130 @@
 <items version="2" >
 
     <item
+        jar="C:\Users\The_onE\.gradle\caches\modules-2\files-2.1\cn.leancloud.android\avoscloud-statistics\v3.13.12\a7526f3665ed1fbb6d38d3e5e0e73049c1065876\avoscloud-statistics-v3.13.12.jar"
+        jumboMode="true"
+        revision="23.0.3"
+        sha1="a7526f3665ed1fbb6d38d3e5e0e73049c1065876">
+        <dex dex="F:\Projecting\Android\AndroidFrameworkBase\app\build\intermediates\pre-dexed\debug\avoscloud-statistics-v3.13.12_19b58e660daf9475f890e06fb48f1df938f1a6da.jar" />
+    </item>
+    <item
         jar="C:\Users\The_onE\.gradle\caches\modules-2\files-2.1\cn.leancloud.android\avoscloud-sdk\v3.13.12\c38165aac1ed2163a4944d62837d9495e8364466\avoscloud-sdk-v3.13.12.jar"
-        jumboMode="false"
+        jumboMode="true"
         revision="23.0.3"
         sha1="c38165aac1ed2163a4944d62837d9495e8364466">
         <dex dex="F:\Projecting\Android\AndroidFrameworkBase\app\build\intermediates\pre-dexed\debug\avoscloud-sdk-v3.13.12_a082951a6fd072a61f4cc82d808cd8701cb07d09.jar" />
     </item>
     <item
+        jar="F:\Projecting\Android\AndroidFrameworkBase\app\build\intermediates\exploded-aar\com.android.support\support-v4\23.4.0\jars\classes.jar"
+        jumboMode="true"
+        revision="23.0.3"
+        sha1="67bd36ee9340ec7c254108936ad16b24bed160cc">
+        <dex dex="F:\Projecting\Android\AndroidFrameworkBase\app\build\intermediates\pre-dexed\debug\com.android.support-support-v4-23.4.0_4bf2a5316eefa5bc65610e3b1d4c08ed7e0be591.jar" />
+    </item>
+    <item
         jar="C:\Users\The_onE\.gradle\caches\modules-2\files-2.1\com.google.protobuf\protobuf-java\2.6.1\d9521f2aecb909835746b7a5facf612af5e890e8\protobuf-java-2.6.1.jar"
-        jumboMode="false"
+        jumboMode="true"
         revision="23.0.3"
         sha1="d9521f2aecb909835746b7a5facf612af5e890e8">
         <dex dex="F:\Projecting\Android\AndroidFrameworkBase\app\build\intermediates\pre-dexed\debug\protobuf-java-2.6.1_f2e6efb62464c473f618c27b53b00cb9f7445f04.jar" />
     </item>
     <item
         jar="F:\Projecting\Android\AndroidFrameworkBase\app\build\intermediates\exploded-aar\com.android.support\design\23.4.0\jars\classes.jar"
-        jumboMode="false"
+        jumboMode="true"
         revision="23.0.3"
         sha1="5326d9a850d491714fef8cbfaa9ea3416f0bf0d2">
         <dex dex="F:\Projecting\Android\AndroidFrameworkBase\app\build\intermediates\pre-dexed\debug\com.android.support-design-23.4.0_81a0f18cf97d86ef77e2910b0b922c8f57c200e0.jar" />
     </item>
     <item
-        jar="F:\Projecting\Android\AndroidFrameworkBase\app\build\intermediates\exploded-aar\com.android.support\support-v4\23.4.0\jars\classes.jar"
-        jumboMode="false"
-        revision="23.0.3"
-        sha1="67bd36ee9340ec7c254108936ad16b24bed160cc">
-        <dex dex="F:\Projecting\Android\AndroidFrameworkBase\app\build\intermediates\pre-dexed\debug\com.android.support-support-v4-23.4.0_4bf2a5316eefa5bc65610e3b1d4c08ed7e0be591.jar" />
-    </item>
-    <item
-        jar="F:\Projecting\Android\AndroidFrameworkBase\app\build\intermediates\exploded-aar\com.android.support\support-v4\23.4.0\jars\libs\internal_impl-23.4.0.jar"
-        jumboMode="false"
-        revision="23.0.3"
-        sha1="ea3c07504d2c8f4b13aa17c45c1b68ed9c1c3674">
-        <dex dex="F:\Projecting\Android\AndroidFrameworkBase\app\build\intermediates\pre-dexed\debug\internal_impl-23.4.0_1ba23e9a1aa2f0c595e97550d10180d78227f421.jar" />
-    </item>
-    <item
-        jar="C:\Users\The_onE\.gradle\caches\modules-2\files-2.1\cn.leancloud.android\avoscloud-statistics\v3.13.12\a7526f3665ed1fbb6d38d3e5e0e73049c1065876\avoscloud-statistics-v3.13.12.jar"
-        jumboMode="false"
-        revision="23.0.3"
-        sha1="a7526f3665ed1fbb6d38d3e5e0e73049c1065876">
-        <dex dex="F:\Projecting\Android\AndroidFrameworkBase\app\build\intermediates\pre-dexed\debug\avoscloud-statistics-v3.13.12_19b58e660daf9475f890e06fb48f1df938f1a6da.jar" />
-    </item>
-    <item
         jar="F:\Projecting\Android\AndroidFrameworkBase\app\build\intermediates\exploded-aar\com.android.support\recyclerview-v7\23.4.0\jars\classes.jar"
-        jumboMode="false"
+        jumboMode="true"
         revision="23.0.3"
         sha1="ec75036c3c52e451d0cde50a5aedaf5fd32354a0">
         <dex dex="F:\Projecting\Android\AndroidFrameworkBase\app\build\intermediates\pre-dexed\debug\com.android.support-recyclerview-v7-23.4.0_0d28b77232f0bf4de9da27c43312ce6e25e01ece.jar" />
     </item>
     <item
+        jar="F:\Projecting\Android\AndroidFrameworkBase\app\build\intermediates\exploded-aar\com.android.support\support-v4\23.4.0\jars\libs\internal_impl-23.4.0.jar"
+        jumboMode="true"
+        revision="23.0.3"
+        sha1="ea3c07504d2c8f4b13aa17c45c1b68ed9c1c3674">
+        <dex dex="F:\Projecting\Android\AndroidFrameworkBase\app\build\intermediates\pre-dexed\debug\internal_impl-23.4.0_1ba23e9a1aa2f0c595e97550d10180d78227f421.jar" />
+    </item>
+    <item
         jar="C:\Users\The_onE\.gradle\caches\modules-2\files-2.1\cn.leancloud.android\Java-WebSocket\1.3.1-leancloud\b2e07c7789af93de587a1d0c9441fb0e74fd16e0\Java-WebSocket-1.3.1-leancloud.jar"
-        jumboMode="false"
+        jumboMode="true"
         revision="23.0.3"
         sha1="b2e07c7789af93de587a1d0c9441fb0e74fd16e0">
         <dex dex="F:\Projecting\Android\AndroidFrameworkBase\app\build\intermediates\pre-dexed\debug\Java-WebSocket-1.3.1-leancloud_e2972300b9545f5336495b082a1a75283fbe377e.jar" />
     </item>
     <item
-        jar="C:\Users\The_onE\.gradle\caches\modules-2\files-2.1\cn.leancloud.android\okio\1.6.0-leancloud\7086c00a30a6de0ee3b963ec2c3702d37f1de11d\okio-1.6.0-leancloud.jar"
-        jumboMode="false"
-        revision="23.0.3"
-        sha1="7086c00a30a6de0ee3b963ec2c3702d37f1de11d">
-        <dex dex="F:\Projecting\Android\AndroidFrameworkBase\app\build\intermediates\pre-dexed\debug\okio-1.6.0-leancloud_bb6d7db6640effe57d83fff58d31b6bb3b6279f3.jar" />
-    </item>
-    <item
         jar="F:\Projecting\Android\AndroidFrameworkBase\app\build\intermediates\exploded-aar\com.android.support\appcompat-v7\23.4.0\jars\classes.jar"
-        jumboMode="false"
+        jumboMode="true"
         revision="23.0.3"
         sha1="548f06de403a9409f00554b3ee12a9fdea0e236c">
         <dex dex="F:\Projecting\Android\AndroidFrameworkBase\app\build\intermediates\pre-dexed\debug\com.android.support-appcompat-v7-23.4.0_4e849dd0ebf465379e93088c59cde9404e937be8.jar" />
     </item>
     <item
+        jar="C:\Users\The_onE\.gradle\caches\modules-2\files-2.1\cn.leancloud.android\okio\1.6.0-leancloud\7086c00a30a6de0ee3b963ec2c3702d37f1de11d\okio-1.6.0-leancloud.jar"
+        jumboMode="true"
+        revision="23.0.3"
+        sha1="7086c00a30a6de0ee3b963ec2c3702d37f1de11d">
+        <dex dex="F:\Projecting\Android\AndroidFrameworkBase\app\build\intermediates\pre-dexed\debug\okio-1.6.0-leancloud_bb6d7db6640effe57d83fff58d31b6bb3b6279f3.jar" />
+    </item>
+    <item
         jar="C:\Users\The_onE\.gradle\caches\modules-2\files-2.1\cn.leancloud.android\fastjson\1.1.39-leancloud\94d4ebd4acdaf01d7445435382eea2d2d38e7534\fastjson-1.1.39-leancloud.jar"
-        jumboMode="false"
+        jumboMode="true"
         revision="23.0.3"
         sha1="94d4ebd4acdaf01d7445435382eea2d2d38e7534">
         <dex dex="F:\Projecting\Android\AndroidFrameworkBase\app\build\intermediates\pre-dexed\debug\fastjson-1.1.39-leancloud_afd878b8da4d78090b1670421c91d55471ee4883.jar" />
     </item>
     <item
         jar="C:\Users\The_onE\.gradle\caches\modules-2\files-2.1\cn.leancloud.android\okhttp\2.6.0-leancloud\7d1a8dbbc128e91cf41ab6eafaa741ab2a6ff930\okhttp-2.6.0-leancloud.jar"
-        jumboMode="false"
+        jumboMode="true"
         revision="23.0.3"
         sha1="7d1a8dbbc128e91cf41ab6eafaa741ab2a6ff930">
         <dex dex="F:\Projecting\Android\AndroidFrameworkBase\app\build\intermediates\pre-dexed\debug\okhttp-2.6.0-leancloud_16edc4e90d3bdfc1f546d8b09c9a3ac3e120b75c.jar" />
     </item>
     <item
         jar="F:\Projecting\Android\AndroidFrameworkBase\app\build\intermediates\exploded-aar\com.android.support\animated-vector-drawable\23.4.0\jars\classes.jar"
-        jumboMode="false"
+        jumboMode="true"
         revision="23.0.3"
         sha1="de4db3785756bfb0915a9f59a9b3f2fea7407be4">
         <dex dex="F:\Projecting\Android\AndroidFrameworkBase\app\build\intermediates\pre-dexed\debug\com.android.support-animated-vector-drawable-23.4.0_909e4c3b5a4e53c9b44936ba6a57494b9cec3189.jar" />
     </item>
     <item
         jar="F:\Projecting\Android\AndroidFrameworkBase\app\build\intermediates\exploded-aar\cn.leancloud.android\avoscloud-push\v3.13.12\jars\classes.jar"
-        jumboMode="false"
+        jumboMode="true"
         revision="23.0.3"
         sha1="89f22c63a099ec196932269d3fee0df4e58be600">
         <dex dex="F:\Projecting\Android\AndroidFrameworkBase\app\build\intermediates\pre-dexed\debug\cn.leancloud.android-avoscloud-push-v3.13.12_ab0794184a1ab34a3e3426499dd97d7714d85a40.jar" />
     </item>
     <item
+        jar="D:\Android\sdk\extras\android\m2repository\com\android\support\support-annotations\23.4.0\support-annotations-23.4.0.jar"
+        jumboMode="true"
+        revision="23.0.3"
+        sha1="ffbe55fdb2bb456b1485831706a9eac3300bb6b8">
+        <dex dex="F:\Projecting\Android\AndroidFrameworkBase\app\build\intermediates\pre-dexed\debug\support-annotations-23.4.0_6c2a284fdd61d0d8ac24aa3991d9cfbc35ef85c7.jar" />
+    </item>
+    <item
         jar="F:\Projecting\Android\AndroidFrameworkBase\app\build\intermediates\exploded-aar\com.android.support\support-vector-drawable\23.4.0\jars\classes.jar"
-        jumboMode="false"
+        jumboMode="true"
         revision="23.0.3"
         sha1="c2c594cace5d83a3227b2b6e658ecbfd586d3ed9">
         <dex dex="F:\Projecting\Android\AndroidFrameworkBase\app\build\intermediates\pre-dexed\debug\com.android.support-support-vector-drawable-23.4.0_483f41fc79cc17602c5412757d6153f1bb8c694a.jar" />
     </item>
     <item
-        jar="D:\Android\sdk\extras\android\m2repository\com\android\support\support-annotations\23.4.0\support-annotations-23.4.0.jar"
-        jumboMode="false"
+        jar="F:\Projecting\Android\AndroidFrameworkBase\app\build\intermediates\incremental-runtime-classes\debug\instant-run.jar"
+        jumboMode="true"
         revision="23.0.3"
-        sha1="ffbe55fdb2bb456b1485831706a9eac3300bb6b8">
-        <dex dex="F:\Projecting\Android\AndroidFrameworkBase\app\build\intermediates\pre-dexed\debug\support-annotations-23.4.0_6c2a284fdd61d0d8ac24aa3991d9cfbc35ef85c7.jar" />
+        sha1="3722075acc7579b36f0f38321aaee0af86deb142">
+        <dex dex="F:\Projecting\Android\AndroidFrameworkBase\app\build\intermediates\pre-dexed\debug\instant-run_8ced452b563ce31ad77304bfbd32ebbd5b464ebb.jar" />
+    </item>
+    <item
+        jar="F:\Projecting\Android\AndroidFrameworkBase\app\build\intermediates\incremental-classes\debug\instant-run-bootstrap.jar"
+        jumboMode="true"
+        revision="23.0.3"
+        sha1="06b88948d41ee7a06789dc4643b61e8204be73a1">
+        <dex dex="F:\Projecting\Android\AndroidFrameworkBase\app\build\intermediates\pre-dexed\debug\instant-run-bootstrap_8bb1ab0b8054fc6d62d4dc9cd641f1351027c3c6.jar" />
     </item>
 
 </items>

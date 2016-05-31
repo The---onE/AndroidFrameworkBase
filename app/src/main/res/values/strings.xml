@@ -63,6 +63,10 @@
     <string name="update_success">更新成功</string>
     <string name="update_failure">更新失败</string>
 
+    <string name="delete">删除</string>
+    <string name="delete_success">删除成功</string>
+    <string name="delete_failure">删除失败</string>
+
     <string name="sync">同步</string>
     <string name="sync_success">同步完成</string>
     <string name="sync_failure">同步失败</string>

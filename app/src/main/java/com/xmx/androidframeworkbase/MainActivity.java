@@ -8,6 +8,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.xmx.androidframeworkbase.Fragments.CloudFragment;
 import com.xmx.androidframeworkbase.Fragments.HomeFragment;
 import com.xmx.androidframeworkbase.Fragments.SQLFragment;
 import com.xmx.androidframeworkbase.Fragments.TestFragment;
@@ -27,11 +28,13 @@ public class MainActivity extends BaseNavigationActivity {
         List<Fragment> fragments = new ArrayList<>();
         fragments.add(new HomeFragment());
         fragments.add(new SQLFragment());
+        fragments.add(new CloudFragment());
         fragments.add(new TestFragment());
 
         List<String> titles = new ArrayList<>();
         titles.add("首页");
         titles.add("SQL");
+        titles.add("Cloud");
         titles.add("测试");
 
         PagerAdapter adapter = new PagerAdapter(getSupportFragmentManager(), fragments, titles);

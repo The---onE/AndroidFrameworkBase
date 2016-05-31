@@ -9,6 +9,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.xmx.androidframeworkbase.Fragments.HomeFragment;
+import com.xmx.androidframeworkbase.Fragments.SQLFragment;
 import com.xmx.androidframeworkbase.Fragments.TestFragment;
 import com.xmx.androidframeworkbase.Tools.ActivityBase.BaseNavigationActivity;
 import com.xmx.androidframeworkbase.Tools.PagerAdapter;
@@ -25,10 +26,12 @@ public class MainActivity extends BaseNavigationActivity {
 
         List<Fragment> fragments = new ArrayList<>();
         fragments.add(new HomeFragment());
+        fragments.add(new SQLFragment());
         fragments.add(new TestFragment());
 
         List<String> titles = new ArrayList<>();
         titles.add("首页");
+        titles.add("SQL");
         titles.add("测试");
 
         PagerAdapter adapter = new PagerAdapter(getSupportFragmentManager(), fragments, titles);

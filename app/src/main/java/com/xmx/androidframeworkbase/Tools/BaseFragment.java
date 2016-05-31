@@ -1,14 +1,38 @@
 package com.xmx.androidframeworkbase.Tools;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Toast;
 
 /**
  * Created by The_onE on 2016/3/17.
  */
-public class BaseFragment extends Fragment {
+public abstract class BaseFragment extends Fragment {
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        View view = getContentView(inflater, container);
+        initView(view);
+        setListener();
+        processLogic(savedInstanceState);
+
+        return view;
+    }
+
+    protected abstract View getContentView(LayoutInflater inflater, ViewGroup container);
+
+    protected abstract void initView(View view);
+
+    protected abstract void setListener();
+
+    protected abstract void processLogic(Bundle savedInstanceState);
+
     protected boolean filterException(Exception e) {
         if (e != null) {
             e.printStackTrace();

@@ -81,6 +81,16 @@ public abstract class BaseSQLEntityManager<Entity extends ISQLEntity> {
         return database.insert(tableName, null, entity.getContent());
     }
 
+    //删除数据
+    public void deleteById(long id) {
+        if (!checkDatabase()) {
+            return;
+        }
+        database.delete(tableName, "ID = ?", new String[]{String.valueOf(id)});
+
+        version++;
+    }
+
     //更新数据 updateDate(id, "KEY1=Value1", "KEY2=Value2")
     public void updateDate(long id, String... strings) {
         if (!checkDatabase()) {

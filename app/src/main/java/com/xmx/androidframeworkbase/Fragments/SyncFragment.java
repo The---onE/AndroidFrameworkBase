@@ -2,7 +2,6 @@ package com.xmx.androidframeworkbase.Fragments;
 
 import android.content.DialogInterface;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,57 +12,55 @@ import android.widget.EditText;
 import android.widget.ListView;
 
 import com.avos.avoscloud.AVException;
-import com.xmx.androidframeworkbase.Cloud.Cloud;
-import com.xmx.androidframeworkbase.Cloud.CloudAdapter;
-import com.xmx.androidframeworkbase.Cloud.CloudEntityManager;
 import com.xmx.androidframeworkbase.R;
-import com.xmx.androidframeworkbase.SQL.SQL;
-import com.xmx.androidframeworkbase.SQL.SQLAdapter;
-import com.xmx.androidframeworkbase.SQL.SQLEntityManager;
-import com.xmx.androidframeworkbase.SQL.SQLManager;
+import com.xmx.androidframeworkbase.Sync.Sync;
+import com.xmx.androidframeworkbase.Sync.SyncAdapter;
+import com.xmx.androidframeworkbase.Sync.SyncCloudManager;
+import com.xmx.androidframeworkbase.Sync.SyncManager;
+import com.xmx.androidframeworkbase.Sync.SyncSQLManager;
 import com.xmx.androidframeworkbase.Tools.BaseFragment;
 import com.xmx.androidframeworkbase.Tools.Data.Cloud.DelCallback;
 import com.xmx.androidframeworkbase.Tools.Data.Cloud.InsertCallback;
 import com.xmx.androidframeworkbase.Tools.Data.Cloud.SelectCallback;
 import com.xmx.androidframeworkbase.Tools.Data.Cloud.UpdateCallback;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 /**
- * A simple {@link Fragment} subclass.
+ * Created by xmx on 2016/6/1.
  */
-public class CloudFragment extends BaseFragment {
+public class SyncFragment extends BaseFragment {
 
-    CloudAdapter cloudAdapter;
-    ListView cloudList;
+    SyncAdapter syncAdapter;
+    ListView syncList;
     Button add;
     EditText text;
 
     @Override
     protected View getContentView(LayoutInflater inflater, ViewGroup container) {
-        return inflater.inflate(R.layout.fragment_cloud, container, false);
+        return inflater.inflate(R.layout.fragment_sync, container, false);
     }
 
     @Override
     protected void initView(View view) {
-        cloudList = (ListView) view.findViewById(R.id.list_cloud);
-        cloudAdapter = new CloudAdapter(getContext(), new ArrayList<Cloud>());
-        cloudList.setAdapter(cloudAdapter);
+        syncList = (ListView) view.findViewById(R.id.list_sync);
+        SyncManager.getInstance().updateData();
+        syncAdapter = new SyncAdapter(getContext());
+        syncList.setAdapter(syncAdapter);
 
-        text = (EditText) view.findViewById(R.id.edit_cloud);
-        add = (Button) view.findViewById(R.id.btn_cloud);
+        text = (EditText) view.findViewById(R.id.edit_sync);
+        add = (Button) view.findViewById(R.id.btn_sync);
     }
 
     @Override
     protected void setListener() {
-        cloudList.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+        syncList.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
-                final Cloud cloud = (Cloud) cloudAdapter.getItem(i);
+                final Sync sync = (Sync) syncAdapter.getItem(i);
 
                 AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
                 builder.setMessage("要更新该记录吗？");
@@ -71,11 +68,13 @@ public class CloudFragment extends BaseFragment {
                 builder.setNegativeButton("删除", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        CloudEntityManager.getInstance().deleteFromCloud(cloud.mCloudId, new DelCallback() {
+                        SyncCloudManager.getInstance().deleteFromCloud(sync.mCloudId, new DelCallback() {
                             @Override
                             public void success() {
                                 showToast(R.string.delete_success);
-                                updateList();
+                                SyncSQLManager.getInstance().deleteByCloudId(sync.mCloudId);
+                                SyncManager.getInstance().updateData();
+                                syncAdapter.updateList();
                             }
 
                             @Override
@@ -115,12 +114,15 @@ public class CloudFragment extends BaseFragment {
                     public void onClick(DialogInterface dialogInterface, int i) {
                         Map<String, Object> update = new HashMap<>();
                         update.put("Time", new Date());
-                        CloudEntityManager.getInstance().updateToCloud(cloud.mCloudId, update,
+                        SyncCloudManager.getInstance().updateToCloud(sync.mCloudId, update,
                                 new UpdateCallback() {
                                     @Override
                                     public void success() {
                                         showToast(R.string.update_success);
-                                        updateList();
+                                        SyncSQLManager.getInstance().updateDate(sync.mCloudId,
+                                                "Time = " + new Date().getTime());
+                                        SyncManager.getInstance().updateData();
+                                        syncAdapter.updateList();
                                     }
 
                                     @Override
@@ -171,14 +173,17 @@ public class CloudFragment extends BaseFragment {
             @Override
             public void onClick(View view) {
                 String data = text.getText().toString();
-                Cloud entity = new Cloud();
+                final Sync entity = new Sync();
                 entity.mData = data;
                 entity.mTime = new Date();
-                CloudEntityManager.getInstance().insertToCloud(entity, new InsertCallback() {
+                SyncCloudManager.getInstance().insertToCloud(entity, new InsertCallback() {
                     @Override
                     public void success(String objectId) {
                         showToast(R.string.add_success);
-                        updateList();
+                        entity.mCloudId = objectId;
+                        SyncSQLManager.getInstance().insertData(entity);
+                        SyncManager.getInstance().updateData();
+                        syncAdapter.updateList();
                     }
 
                     @Override
@@ -218,47 +223,50 @@ public class CloudFragment extends BaseFragment {
 
     @Override
     protected void processLogic(Bundle savedInstanceState) {
-        updateList();
-    }
-
-    private void updateList() {
-        CloudEntityManager.getInstance().selectByCondition(null,
+        SyncCloudManager.getInstance().selectByCondition(null,
                 "Time", false,
-                new SelectCallback<Cloud>() {
-            @Override
-            public void success(List<Cloud> clouds) {
-                cloudAdapter.updateList(clouds);
-            }
+                new SelectCallback<Sync>() {
+                    @Override
+                    public void success(List<Sync> syncs) {
+                        for (Sync sync: syncs) {
+                            if (SyncSQLManager.getInstance().selectByCloudId(sync.mCloudId) == null) {
+                                SyncSQLManager.getInstance().insertData(sync);
+                            }
+                        }
+                        SyncManager.getInstance().updateData();
+                        syncAdapter.updateList();
+                        showToast(R.string.sync_success);
+                    }
 
-            @Override
-            public void notInit() {
-                showToast(R.string.failure);
-            }
+                    @Override
+                    public void notInit() {
+                        showToast(R.string.failure);
+                    }
 
-            @Override
-            public void syncError(AVException e) {
-                showToast(R.string.sync_failure);
-            }
+                    @Override
+                    public void syncError(AVException e) {
+                        showToast(R.string.sync_failure);
+                    }
 
-            @Override
-            public void notLoggedIn() {
-                showToast(R.string.not_loggedin);
-            }
+                    @Override
+                    public void notLoggedIn() {
+                        showToast(R.string.not_loggedin);
+                    }
 
-            @Override
-            public void errorNetwork() {
-                showToast(R.string.network_error);
-            }
+                    @Override
+                    public void errorNetwork() {
+                        showToast(R.string.network_error);
+                    }
 
-            @Override
-            public void errorUsername() {
-                showToast(R.string.username_error);
-            }
+                    @Override
+                    public void errorUsername() {
+                        showToast(R.string.username_error);
+                    }
 
-            @Override
-            public void errorChecksum() {
-                showToast(R.string.not_loggedin);
-            }
-        });
+                    @Override
+                    public void errorChecksum() {
+                        showToast(R.string.not_loggedin);
+                    }
+                });
     }
 }

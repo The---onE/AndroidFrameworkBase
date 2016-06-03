@@ -15,14 +15,13 @@ import com.avos.avoscloud.AVException;
 import com.xmx.androidframeworkbase.R;
 import com.xmx.androidframeworkbase.Sync.Sync;
 import com.xmx.androidframeworkbase.Sync.SyncAdapter;
-import com.xmx.androidframeworkbase.Sync.SyncCloudManager;
+import com.xmx.androidframeworkbase.Sync.SyncEntityManager;
 import com.xmx.androidframeworkbase.Sync.SyncManager;
-import com.xmx.androidframeworkbase.Sync.SyncSQLManager;
 import com.xmx.androidframeworkbase.Tools.BaseFragment;
-import com.xmx.androidframeworkbase.Tools.Data.Cloud.DelCallback;
-import com.xmx.androidframeworkbase.Tools.Data.Cloud.InsertCallback;
-import com.xmx.androidframeworkbase.Tools.Data.Cloud.SelectCallback;
-import com.xmx.androidframeworkbase.Tools.Data.Cloud.UpdateCallback;
+import com.xmx.androidframeworkbase.Tools.Data.Callback.DelCallback;
+import com.xmx.androidframeworkbase.Tools.Data.Callback.InsertCallback;
+import com.xmx.androidframeworkbase.Tools.Data.Callback.SelectCallback;
+import com.xmx.androidframeworkbase.Tools.Data.Callback.UpdateCallback;
 
 import java.util.Date;
 import java.util.HashMap;
@@ -68,11 +67,10 @@ public class SyncFragment extends BaseFragment {
                 builder.setNegativeButton("删除", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        SyncCloudManager.getInstance().deleteFromCloud(sync.mCloudId, new DelCallback() {
+                        SyncEntityManager.getInstance().deleteData(sync.mCloudId, new DelCallback() {
                             @Override
                             public void success() {
                                 showToast(R.string.delete_success);
-                                SyncSQLManager.getInstance().deleteByCloudId(sync.mCloudId);
                                 SyncManager.getInstance().updateData();
                                 syncAdapter.updateList();
                             }
@@ -114,13 +112,11 @@ public class SyncFragment extends BaseFragment {
                     public void onClick(DialogInterface dialogInterface, int i) {
                         Map<String, Object> update = new HashMap<>();
                         update.put("Time", new Date());
-                        SyncCloudManager.getInstance().updateToCloud(sync.mCloudId, update,
+                        SyncEntityManager.getInstance().updateData(sync.mCloudId, update,
                                 new UpdateCallback() {
                                     @Override
                                     public void success() {
                                         showToast(R.string.update_success);
-                                        SyncSQLManager.getInstance().updateDate(sync.mCloudId,
-                                                "Time = " + new Date().getTime());
                                         SyncManager.getInstance().updateData();
                                         syncAdapter.updateList();
                                     }
@@ -176,12 +172,11 @@ public class SyncFragment extends BaseFragment {
                 final Sync entity = new Sync();
                 entity.mData = data;
                 entity.mTime = new Date();
-                SyncCloudManager.getInstance().insertToCloud(entity, new InsertCallback() {
+                SyncEntityManager.getInstance().insertData(entity, new InsertCallback() {
                     @Override
                     public void success(String objectId) {
                         showToast(R.string.add_success);
                         entity.mCloudId = objectId;
-                        SyncSQLManager.getInstance().insertData(entity);
                         SyncManager.getInstance().updateData();
                         syncAdapter.updateList();
                     }
@@ -223,16 +218,10 @@ public class SyncFragment extends BaseFragment {
 
     @Override
     protected void processLogic(Bundle savedInstanceState) {
-        SyncCloudManager.getInstance().selectByCondition(null,
-                "Time", false,
+        SyncEntityManager.getInstance().syncFromCloud(null,
                 new SelectCallback<Sync>() {
                     @Override
                     public void success(List<Sync> syncs) {
-                        for (Sync sync: syncs) {
-                            if (SyncSQLManager.getInstance().selectByCloudId(sync.mCloudId) == null) {
-                                SyncSQLManager.getInstance().insertData(sync);
-                            }
-                        }
                         SyncManager.getInstance().updateData();
                         syncAdapter.updateList();
                         showToast(R.string.sync_success);

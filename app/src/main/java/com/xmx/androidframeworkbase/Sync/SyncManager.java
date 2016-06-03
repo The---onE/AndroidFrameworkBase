@@ -25,12 +25,12 @@ public class SyncManager {
     }
 
     public long updateData() {
-        SyncSQLManager sqlManager = SyncSQLManager.getInstance();
-        if (sqlManager.getVersion() != syncVersion) {
-            syncVersion = sqlManager.getVersion();
+        SyncEntityManager entityManager = SyncEntityManager.getInstance();
+        if (entityManager.getSQLManager().getVersion() != syncVersion) {
+            syncVersion = entityManager.getSQLManager().getVersion();
 
             syncList.clear();
-            syncList = sqlManager.selectAll("Time", false);
+            syncList = entityManager.getSQLManager().selectAll("Time", false);
 
             version++;
         }

@@ -1,13 +1,13 @@
-package com.xmx.androidframeworkbase.Tools.Data.Cloud;
+package com.xmx.androidframeworkbase.Tools.Data.Callback;
 
 import com.avos.avoscloud.AVException;
 
 /**
  * Created by The_onE on 2016/5/29.
  */
-public abstract class UpdateCallback {
+public abstract class InsertCallback {
 
-    public abstract void success();
+    public abstract void success(String objectId);
 
     public abstract void notInit();
 

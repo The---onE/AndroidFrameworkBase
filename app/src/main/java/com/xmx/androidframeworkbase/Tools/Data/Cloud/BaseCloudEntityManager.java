@@ -7,7 +7,10 @@ import com.avos.avoscloud.DeleteCallback;
 import com.avos.avoscloud.FindCallback;
 import com.avos.avoscloud.GetCallback;
 import com.avos.avoscloud.SaveCallback;
-import com.xmx.androidframeworkbase.Tools.PagerAdapter;
+import com.xmx.androidframeworkbase.Tools.Data.Callback.DelCallback;
+import com.xmx.androidframeworkbase.Tools.Data.Callback.InsertCallback;
+import com.xmx.androidframeworkbase.Tools.Data.Callback.SelectCallback;
+import com.xmx.androidframeworkbase.Tools.Data.Callback.UpdateCallback;
 import com.xmx.androidframeworkbase.User.Callback.AutoLoginCallback;
 import com.xmx.androidframeworkbase.User.UserManager;
 

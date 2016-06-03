@@ -4,18 +4,15 @@ import android.content.ContentValues;
 import android.database.Cursor;
 
 import com.avos.avoscloud.AVObject;
-import com.xmx.androidframeworkbase.Tools.Data.Cloud.ICloudEntity;
-import com.xmx.androidframeworkbase.Tools.Data.SQL.ISQLEntity;
+import com.xmx.androidframeworkbase.Tools.Data.Sync.SyncEntity;
 
 import java.util.Date;
 
 /**
  * Created by xmx on 2016/6/1.
  */
-public class Sync implements ISQLEntity, ICloudEntity {
+public class Sync extends SyncEntity {
 
-    public long mId = -1;
-    public String mCloudId = null;
     public String mData;
     public Date mTime;
 

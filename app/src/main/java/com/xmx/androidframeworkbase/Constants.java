@@ -4,6 +4,13 @@ package com.xmx.androidframeworkbase;
  * Created by The_onE on 2016/2/24.
  */
 public class Constants {
+    public static final String APP_ID = "vBb01A8F2LI63zJBqkQWiuWc-gzGzoHsz";
+    public static final String APP_KEY = "tfMtJ1uRTmRre40QhxT46yVl";
+
+    public static final String USER_INFO_TABLE = "UserInfo";
+    public static final String USER_DATA_TABLE = "UserData";
+    public static final String LOGIN_LOG_TABLE = "LoginLog";
+
     public static final String FILE_DIR = "/Framework";
     public static final String DATABASE_DIR = FILE_DIR + "/Database";
     public static final String DATABASE_FILE = DATABASE_DIR + "/database.db";

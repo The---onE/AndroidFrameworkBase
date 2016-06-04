@@ -11,6 +11,7 @@ import com.avos.avoscloud.CountCallback;
 import com.avos.avoscloud.FindCallback;
 import com.avos.avoscloud.GetCallback;
 import com.avos.avoscloud.SaveCallback;
+import com.xmx.androidframeworkbase.Constants;
 import com.xmx.androidframeworkbase.User.Callback.AutoLoginCallback;
 import com.xmx.androidframeworkbase.User.Callback.LoginCallback;
 import com.xmx.androidframeworkbase.User.Callback.RegisterCallback;
@@ -93,7 +94,7 @@ public class UserManager {
     public void logout() {
         if (isLoggedIn()) {
             String username = getUsername();
-            AVQuery<AVObject> query = new AVQuery<>("PatientsData");
+            AVQuery<AVObject> query = new AVQuery<>(Constants.USER_DATA_TABLE);
             query.whereEqualTo("username", username);
             query.findInBackground(new FindCallback<AVObject>() {
                 @Override
@@ -125,7 +126,7 @@ public class UserManager {
     }
 
     public void saveLog(String username) {
-        final AVObject post = new AVObject("LoginLog");
+        final AVObject post = new AVObject(Constants.LOGIN_LOG_TABLE);
         post.put("username", username);
         post.put("status", 0);
         post.put("timestamp", System.currentTimeMillis() / 1000);
@@ -145,7 +146,7 @@ public class UserManager {
     }
 
     public void register(final String username, final String password, final String nickname, final RegisterCallback registerCallback) {
-        final AVQuery<AVObject> query = AVQuery.getQuery("PatientsInf");
+        final AVQuery<AVObject> query = AVQuery.getQuery(Constants.USER_INFO_TABLE);
         query.whereEqualTo("username", username);
         query.countInBackground(new CountCallback() {
             public void done(final int count, AVException e) {
@@ -153,7 +154,7 @@ public class UserManager {
                     if (count > 0) {
                         registerCallback.usernameExist();
                     } else {
-                        AVQuery<AVObject> query2 = AVQuery.getQuery("PatientsData");
+                        AVQuery<AVObject> query2 = AVQuery.getQuery(Constants.USER_DATA_TABLE);
                         query2.whereEqualTo("nickname", nickname);
                         query2.countInBackground(new CountCallback() {
                             @Override
@@ -162,13 +163,13 @@ public class UserManager {
                                     if (i > 0) {
                                         registerCallback.nicknameExist();
                                     } else {
-                                        final AVObject post = new AVObject("PatientsInf");
+                                        final AVObject post = new AVObject(Constants.USER_INFO_TABLE);
                                         post.put("username", username);
                                         post.put("password", UserManager.getSHA(password));
                                         post.put("status", 0);
                                         post.put("timestamp", System.currentTimeMillis() / 1000);
 
-                                        final AVObject data = new AVObject("PatientsData");
+                                        final AVObject data = new AVObject(Constants.USER_DATA_TABLE);
                                         data.put("username", username);
                                         data.put("nickname", nickname);
                                         final String checksum = UserManager.makeChecksum();
@@ -207,7 +208,7 @@ public class UserManager {
     }
 
     public void login(final String username, final String password, final LoginCallback loginCallback) {
-        AVQuery<AVObject> query = new AVQuery<>("PatientsInf");
+        AVQuery<AVObject> query = new AVQuery<>(Constants.USER_INFO_TABLE);
         query.whereEqualTo("username", username);
         query.findInBackground(new FindCallback<AVObject>() {
             @Override
@@ -259,7 +260,7 @@ public class UserManager {
             loginCallback.notLoggedIn();
             return;
         }
-        AVQuery<AVObject> query = new AVQuery<>("PatientsData");
+        AVQuery<AVObject> query = new AVQuery<>(Constants.USER_DATA_TABLE);
         query.whereEqualTo("username", username);
         query.findInBackground(new FindCallback<AVObject>() {
             @Override
@@ -303,7 +304,7 @@ public class UserManager {
             loginCallback.notLoggedIn();
             return;
         }
-        AVQuery<AVObject> query = new AVQuery<>("PatientsData");
+        AVQuery<AVObject> query = new AVQuery<>(Constants.USER_DATA_TABLE);
         query.whereEqualTo("username", username);
         query.findInBackground(new FindCallback<AVObject>() {
             @Override

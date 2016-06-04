@@ -11,7 +11,7 @@ public class Application extends android.app.Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        AVOSCloud.initialize(this, "MyfKi04BdhTWn0hzEhnB5Sdl-gzGzoHsz", "xf4XL0vx6Si66MQzww5xooKz");
+        AVOSCloud.initialize(this, Constants.APP_ID, Constants.APP_KEY);
         UserManager.getInstance().setContext(this);
 
         DataManager.getInstance().setContext(this);

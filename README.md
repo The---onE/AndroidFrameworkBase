@@ -7,7 +7,7 @@
 - 添加三种数据实体接口和对应管理器，实现对SQLite数据库、LeanCloud数据库、本地云端数据同步的快速管理，通过将数据转化为实体，可以方便地展示在ListView等控件中
 - 更多常用工具类持续更新中……
 
-## 开发过程
+## 开发准备
 #### 复制文件
 - 在Android Studio中打开本框架，若成功创建名为“基础框架”的应用则已成功配置
 - 创建本框架的副本，作为新应用的基础文件、修改根目录文件夹名为自定义名称
@@ -33,3 +33,9 @@
 - 可以使用java/User/LoginActivity和RegisterActivity并修改res/drawable/login.png文件即可快速实现登录注册界面
 - 根据具体需要可以修改Activity的样式等实现自定义效果，或新建Activity并调用UserManager用户管理器中的方法即可实现登录注册功能
 - 注册帐号并登录后即可进入应用主界面
+
+## 自定义页面
+- 本框架主体全部运行在MainActivity中，通过ViewPager对自定义页面进行管理
+- MainActivity的initView方法fragments和titles对应保存着要显示的Fragment和其标题。
+- 框架中已添加的SQLFragment、CloudFragment、SyncFragment是分别用于演示SQLite数据库、LeanCloud数据库、本地云端数据同步的Fragment，不将其添加至列表即可不再显示，在java根目录下的SQL、Cloud、Sync可以查看对应实体管理器的使用方法
+- 要添加自定义页面，只需创建好Fragment，之后将其添加到对应的列表即可，添加顺序即为滑动显示顺序

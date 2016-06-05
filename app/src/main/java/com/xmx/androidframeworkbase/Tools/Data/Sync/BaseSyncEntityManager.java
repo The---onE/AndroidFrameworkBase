@@ -90,7 +90,7 @@ public abstract class BaseSyncEntityManager<Entity extends SyncEntity> {
             @Override
             public void success(List<Entity> entities) {
                 for (Entity entity : entities) {
-                    if (sqlManager.selectByCloudId(entity.mCloudId) == null) {
+                    if (sqlManager.selectByCloudId(entity.getCloudId()) == null) {
                         sqlManager.insertData(entity);
                     }
                 }
@@ -138,7 +138,7 @@ public abstract class BaseSyncEntityManager<Entity extends SyncEntity> {
         cloudManager.insertToCloud(entity, new InsertCallback() {
             @Override
             public void success(String objectId) {
-                entity.mCloudId = objectId;
+                entity.setCloudId(objectId);
                 sqlManager.insertData(entity);
                 callback.success(objectId);
             }

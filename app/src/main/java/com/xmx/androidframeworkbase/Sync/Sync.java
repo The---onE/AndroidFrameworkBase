@@ -11,10 +11,12 @@ import java.util.Date;
 /**
  * Created by xmx on 2016/6/1.
  */
-public class Sync extends SyncEntity {
+public class Sync implements SyncEntity {
 
+    public long mId = -1;
     public String mData;
     public Date mTime;
+    public String mCloudId = null;
 
     @Override
     public AVObject getContent(String tableName) {
@@ -65,5 +67,15 @@ public class Sync extends SyncEntity {
         entity.mTime = new Date(c.getLong(3));
 
         return entity;
+    }
+
+    @Override
+    public String getCloudId() {
+        return mCloudId;
+    }
+
+    @Override
+    public void setCloudId(String id) {
+        mCloudId = id;
     }
 }

@@ -6,3 +6,30 @@
 - 添加用户管理器和示例页面可快速实现用户的登录、注册、自动登录、检验登录等功能
 - 添加三种数据实体接口和对应管理器，实现对SQLite数据库、LeanCloud数据库、本地云端数据同步的快速管理，通过将数据转化为实体，可以方便地展示在ListView等控件中
 - 更多常用工具类持续更新中……
+
+## 开发过程
+#### 复制文件
+- 在Android Studio中打开本框架，若成功创建名为“基础框架”的应用则已成功配置
+- 创建本框架的副本，作为新应用的基础文件、修改根目录文件夹名为自定义名称
+- 在AS中打开副本文件夹，即可开始进行项目的开发
+
+#### 修改包名
+- 参考[修改包名](http://www.jianshu.com/p/557e1906db1a)中的方法将com.xmx.androidframeworkbase修改为新应用的包名
+- 修改包名后即可尝试打包生成新应用，开始开发调试
+
+#### 修改应用名
+- 打开res/values/strings.xml文件，其中包含了一下常用的提示语等字符串，修改app_name的值即可修改应用名
+
+####修改启动界面
+- 修改res/values/splash.png为自定义图片，即可在打开APP时看到启动启动界面
+
+#### 云端初始化
+- 在[LeanCloud](https://leancloud.cn/)注册帐号，创建一个新应用
+- 在云端控制台设置中，在应用Key页面查看应用信息，将对应信息保存在java/Constants类中APP_ID和APP_KEY常量中
+
+#### 用户表初始化
+- 在存储页面分别创建：管理用户帐号密码信息的表、管理用户基本数据的表、管理登录日志的日志表。将表名分别存于java根目录Constants类中：USER_INFO_TABLE、USER_DATA_TABLE、LOGIN_LOG_TABLE常量中。这些的表的权限需要设置为无限制
+- 用户表初始化后即可实现登录注册功能
+- 可以使用java/User/LoginActivity和RegisterActivity并修改res/drawable/login.png文件即可快速实现登录注册界面
+- 根据具体需要可以修改Activity的样式等实现自定义效果，或新建Activity并调用UserManager用户管理器中的方法即可实现登录注册功能
+- 注册帐号并登录后即可进入应用主界面

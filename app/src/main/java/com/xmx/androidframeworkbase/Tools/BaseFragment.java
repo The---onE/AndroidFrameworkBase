@@ -19,8 +19,8 @@ public abstract class BaseFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = getContentView(inflater, container);
         initView(view);
-        setListener();
-        processLogic(savedInstanceState);
+        setListener(view);
+        processLogic(view, savedInstanceState);
 
         return view;
     }
@@ -29,9 +29,9 @@ public abstract class BaseFragment extends Fragment {
 
     protected abstract void initView(View view);
 
-    protected abstract void setListener();
+    protected abstract void setListener(View view);
 
-    protected abstract void processLogic(Bundle savedInstanceState);
+    protected abstract void processLogic(View view, Bundle savedInstanceState);
 
     protected boolean filterException(Exception e) {
         if (e != null) {

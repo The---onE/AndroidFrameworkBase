@@ -27,7 +27,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:text="@string/nickname"
-                android:textColor="#FFFFFF"
+                android:textColor="#000000"
                 android:textSize="20sp" />
 
             <EditText
@@ -39,7 +39,7 @@
                 android:layout_marginStart="20dp"
                 android:hint="@string/nickname_hint"
                 android:inputType="text"
-                android:textColor="#FFFFFF"
+                android:textColor="#000000"
                 android:textColorHint="#A3B1CA"
                 android:textSize="20sp" />
         </LinearLayout>
@@ -60,7 +60,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:text="@string/username"
-                android:textColor="#FFFFFF"
+                android:textColor="#000000"
                 android:textSize="20sp" />
 
             <EditText
@@ -72,7 +72,7 @@
                 android:layout_marginStart="20dp"
                 android:hint="@string/username_hint"
                 android:inputType="text"
-                android:textColor="#FFFFFF"
+                android:textColor="#000000"
                 android:textColorHint="#A3B1CA"
                 android:textSize="20sp" />
         </LinearLayout>
@@ -93,7 +93,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:text="@string/password"
-                android:textColor="#FFFFFF"
+                android:textColor="#000000"
                 android:textSize="20sp" />
 
             <EditText
@@ -105,7 +105,7 @@
                 android:layout_marginStart="20dp"
                 android:hint="@string/password_hint"
                 android:inputType="textPassword"
-                android:textColor="#FFFFFF"
+                android:textColor="#000000"
                 android:textColorHint="#A3B1CA"
                 android:textSize="20sp" />
         </LinearLayout>
@@ -126,7 +126,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:text="@string/password_confirm"
-                android:textColor="#FFFFFF"
+                android:textColor="#000000"
                 android:textSize="20sp" />
 
             <EditText
@@ -138,7 +138,7 @@
                 android:layout_marginStart="20dp"
                 android:hint="@string/password_confirm_hint"
                 android:inputType="textPassword"
-                android:textColor="#FFFFFF"
+                android:textColor="#000000"
                 android:textColorHint="#A3B1CA"
                 android:textSize="20sp" />
         </LinearLayout>
@@ -168,7 +168,7 @@
                 android:layout_weight="1"
                 android:background="@null"
                 android:text="@string/register"
-                android:textColor="#FFFFFF"
+                android:textColor="#000000"
                 android:textSize="36sp" />
 
             <View
@@ -183,7 +183,7 @@
                 android:layout_weight="1"
                 android:background="@null"
                 android:text="@string/cancel"
-                android:textColor="#FFFFFF"
+                android:textColor="#000000"
                 android:textSize="36sp" />
         </LinearLayout>
     </LinearLayout>

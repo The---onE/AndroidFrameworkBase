@@ -25,12 +25,12 @@ public class HomeFragment extends BaseFragment {
     }
 
     @Override
-    protected void setListener() {
+    protected void setListener(View view) {
 
     }
 
     @Override
-    protected void processLogic(Bundle savedInstanceState) {
+    protected void processLogic(View view, Bundle savedInstanceState) {
 
     }
 

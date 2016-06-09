@@ -55,7 +55,7 @@ public class SyncFragment extends BaseFragment {
     }
 
     @Override
-    protected void setListener() {
+    protected void setListener(View view) {
         syncList.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
@@ -217,7 +217,7 @@ public class SyncFragment extends BaseFragment {
     }
 
     @Override
-    protected void processLogic(Bundle savedInstanceState) {
+    protected void processLogic(View view, Bundle savedInstanceState) {
         SyncEntityManager.getInstance().syncFromCloud(null,
                 new SelectCallback<Sync>() {
                     @Override

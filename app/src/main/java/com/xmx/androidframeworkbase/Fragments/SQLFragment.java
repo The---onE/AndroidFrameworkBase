@@ -48,7 +48,7 @@ public class SQLFragment extends BaseFragment {
     }
 
     @Override
-    protected void setListener() {
+    protected void setListener(View view) {
         sqlList.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
@@ -103,7 +103,7 @@ public class SQLFragment extends BaseFragment {
     }
 
     @Override
-    protected void processLogic(Bundle savedInstanceState) {
+    protected void processLogic(View view, Bundle savedInstanceState) {
         SQLManager.getInstance().updateData();
         sqlAdapter.updateList();
     }

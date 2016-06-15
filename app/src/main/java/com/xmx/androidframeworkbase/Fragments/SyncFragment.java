@@ -176,7 +176,6 @@ public class SyncFragment extends BaseFragment {
                     @Override
                     public void success(String objectId) {
                         showToast(R.string.add_success);
-                        entity.mCloudId = objectId;
                         SyncManager.getInstance().updateData();
                         syncAdapter.updateList();
                     }

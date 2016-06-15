@@ -101,14 +101,8 @@ public class UserManager {
                 public void done(List<AVObject> list, AVException e) {
                     if (e == null) {
                         if (list.size() > 0) {
-                            SharedPreferences.Editor editor = mSP.edit();
-                            editor.putBoolean("loggedin", false);
-                            editor.putString("username", "");
-                            editor.putString("checksum", "");
-                            editor.putString("nickname", "");
-                            editor.apply();
-
                             AVObject user = list.get(0);
+                            logout(user);
                             /*List<String> subscribing = user.getList("subscribing");
                             if (subscribing != null) {
                                 for (String sub : subscribing) {

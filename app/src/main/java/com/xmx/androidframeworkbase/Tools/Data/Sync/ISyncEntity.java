@@ -6,7 +6,8 @@ import com.xmx.androidframeworkbase.Tools.Data.SQL.ISQLEntity;
 /**
  * Created by The_onE on 2016/5/29.
  */
-public interface SyncEntity extends ICloudEntity, ISQLEntity {
-    public String getCloudId();
-    public void setCloudId(String id);
+public interface ISyncEntity extends ICloudEntity, ISQLEntity {
+    String getCloudId();
+
+    void setCloudId(String id);
 }

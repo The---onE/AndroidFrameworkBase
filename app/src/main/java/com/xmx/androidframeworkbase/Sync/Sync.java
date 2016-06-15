@@ -4,14 +4,14 @@ import android.content.ContentValues;
 import android.database.Cursor;
 
 import com.avos.avoscloud.AVObject;
-import com.xmx.androidframeworkbase.Tools.Data.Sync.SyncEntity;
+import com.xmx.androidframeworkbase.Tools.Data.Sync.ISyncEntity;
 
 import java.util.Date;
 
 /**
  * Created by xmx on 2016/6/1.
  */
-public class Sync implements SyncEntity {
+public class Sync implements ISyncEntity {
 
     public long mId = -1;
     public String mData;

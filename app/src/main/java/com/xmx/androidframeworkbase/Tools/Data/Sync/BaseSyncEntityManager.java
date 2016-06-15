@@ -16,7 +16,7 @@ import java.util.Map;
 /**
  * Created by The_onE on 2016/5/29.
  */
-public abstract class BaseSyncEntityManager<Entity extends SyncEntity> {
+public abstract class BaseSyncEntityManager<Entity extends ISyncEntity> {
 
     public class SQLManager extends BaseSQLEntityManager<Entity> {
         void setTableName(String tableName) {

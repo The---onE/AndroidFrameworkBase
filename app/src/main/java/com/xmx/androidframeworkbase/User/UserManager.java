@@ -12,8 +12,10 @@ import com.avos.avoscloud.FindCallback;
 import com.avos.avoscloud.GetCallback;
 import com.avos.avoscloud.SaveCallback;
 import com.xmx.androidframeworkbase.Constants;
+import com.xmx.androidframeworkbase.Sync.SyncEntityManager;
 import com.xmx.androidframeworkbase.User.Callback.AutoLoginCallback;
 import com.xmx.androidframeworkbase.User.Callback.LoginCallback;
+import com.xmx.androidframeworkbase.User.Callback.LogoutCallback;
 import com.xmx.androidframeworkbase.User.Callback.RegisterCallback;
 
 import java.security.MessageDigest;
@@ -28,6 +30,13 @@ public class UserManager {
 
     Context mContext;
     SharedPreferences mSP;
+
+    static LogoutCallback logoutCallback = new LogoutCallback() {
+        @Override
+        public void logout(AVObject user) {
+            SyncEntityManager.getInstance().getSQLManager().clearDatabase();
+        }
+    };
 
     public synchronized static UserManager getInstance() {
         if (null == instance) {
@@ -82,16 +91,18 @@ public class UserManager {
         saveLog(un);
     }
 
-    public void logout(AVObject user) {
+    public void logout(AVObject user, LogoutCallback callback) {
         SharedPreferences.Editor editor = mSP.edit();
         editor.putBoolean("loggedin", false);
         editor.putString("username", "");
         editor.putString("checksum", "");
         editor.putString("nickname", "");
         editor.apply();
+
+        callback.logout(user);
     }
 
-    public void logout() {
+    public void logout(final LogoutCallback callback) {
         if (isLoggedIn()) {
             String username = getUsername();
             AVQuery<AVObject> query = new AVQuery<>(Constants.USER_DATA_TABLE);
@@ -102,7 +113,7 @@ public class UserManager {
                     if (e == null) {
                         if (list.size() > 0) {
                             AVObject user = list.get(0);
-                            logout(user);
+                            logout(user, callback);
                             /*List<String> subscribing = user.getList("subscribing");
                             if (subscribing != null) {
                                 for (String sub : subscribing) {
@@ -279,7 +290,7 @@ public class UserManager {
                                 }
                             });
                         } else {
-                            logout(user);
+                            logout(user, logoutCallback);
                             loginCallback.errorChecksum();
                         }
                     } else {
@@ -310,7 +321,7 @@ public class UserManager {
                         if (checksum.equals(getSHA(getChecksum()))) {
                             loginCallback.success(user);
                         } else {
-                            logout(user);
+                            logout(user, logoutCallback);
                             loginCallback.errorChecksum();
                         }
                     } else {

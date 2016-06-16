@@ -8,7 +8,10 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
+import com.avos.avoscloud.AVObject;
 import com.xmx.androidframeworkbase.R;
+import com.xmx.androidframeworkbase.Sync.SyncEntityManager;
+import com.xmx.androidframeworkbase.User.Callback.LogoutCallback;
 import com.xmx.androidframeworkbase.User.LoginActivity;
 import com.xmx.androidframeworkbase.User.UserManager;
 
@@ -55,7 +58,12 @@ public abstract class BaseNavigationActivity extends BaseActivity
             case R.id.nav_setting:
                 break;
             case R.id.nav_logout:
-                UserManager.getInstance().logout();
+                UserManager.getInstance().logout(new LogoutCallback() {
+                    @Override
+                    public void logout(AVObject user) {
+                        SyncEntityManager.getInstance().getSQLManager().clearDatabase();
+                    }
+                });
                 startActivity(LoginActivity.class);
                 finish();
                 break;

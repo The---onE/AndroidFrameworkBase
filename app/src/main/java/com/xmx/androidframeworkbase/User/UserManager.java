@@ -34,7 +34,7 @@ public class UserManager {
     static LogoutCallback logoutCallback = new LogoutCallback() {
         @Override
         public void logout(AVObject user) {
-            SyncEntityManager.getInstance().getSQLManager().clearDatabase();
+            //SyncEntityManager.getInstance().getSQLManager().clearDatabase();
         }
     };
 

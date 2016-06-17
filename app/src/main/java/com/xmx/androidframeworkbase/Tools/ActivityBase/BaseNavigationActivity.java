@@ -61,7 +61,7 @@ public abstract class BaseNavigationActivity extends BaseActivity
                 UserManager.getInstance().logout(new LogoutCallback() {
                     @Override
                     public void logout(AVObject user) {
-                        SyncEntityManager.getInstance().getSQLManager().clearDatabase();
+                        //SyncEntityManager.getInstance().getSQLManager().clearDatabase();
                     }
                 });
                 startActivity(LoginActivity.class);

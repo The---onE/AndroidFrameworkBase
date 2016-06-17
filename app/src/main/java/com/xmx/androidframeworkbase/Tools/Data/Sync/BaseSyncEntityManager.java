@@ -1,12 +1,15 @@
 package com.xmx.androidframeworkbase.Tools.Data.Sync;
 
 import com.avos.avoscloud.AVException;
+import com.avos.avoscloud.AVObject;
 import com.xmx.androidframeworkbase.Tools.Data.Callback.DelCallback;
 import com.xmx.androidframeworkbase.Tools.Data.Callback.InsertCallback;
 import com.xmx.androidframeworkbase.Tools.Data.Callback.SelectCallback;
 import com.xmx.androidframeworkbase.Tools.Data.Callback.UpdateCallback;
 import com.xmx.androidframeworkbase.Tools.Data.Cloud.BaseCloudEntityManager;
 import com.xmx.androidframeworkbase.Tools.Data.SQL.BaseSQLEntityManager;
+import com.xmx.androidframeworkbase.User.Callback.AutoLoginCallback;
+import com.xmx.androidframeworkbase.User.UserManager;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -17,6 +20,7 @@ import java.util.Map;
  * Created by The_onE on 2016/5/29.
  */
 public abstract class BaseSyncEntityManager<Entity extends ISyncEntity> {
+    String userId = null;
 
     public class SQLManager extends BaseSQLEntityManager<Entity> {
         void setTableName(String tableName) {
@@ -86,25 +90,54 @@ public abstract class BaseSyncEntityManager<Entity extends ISyncEntity> {
             callback.notInit();
             return;
         }
-        cloudManager.selectByCondition(conditions, null, false, new SelectCallback<Entity>() {
+        UserManager.getInstance().checkLogin(new AutoLoginCallback() {
             @Override
-            public void success(List<Entity> entities) {
-                for (Entity entity : entities) {
-                    if (sqlManager.selectByCloudId(entity.getCloudId()) == null) {
-                        sqlManager.insertData(entity);
-                    }
+            public void success(AVObject user) {
+                if (!user.getObjectId().equals(userId)) {
+                    userId = user.getObjectId();
+                    sqlManager.openDatabase(userId);
                 }
-                callback.success(entities);
-            }
+                cloudManager.selectByCondition(conditions, null, false, new SelectCallback<Entity>() {
+                    @Override
+                    public void success(List<Entity> entities) {
+                        for (Entity entity : entities) {
+                            if (sqlManager.selectByCloudId(entity.getCloudId()) == null) {
+                                sqlManager.insertData(entity);
+                            }
+                        }
+                        callback.success(entities);
+                    }
 
-            @Override
-            public void notInit() {
-                callback.notInit();
-            }
+                    @Override
+                    public void notInit() {
+                        callback.notInit();
+                    }
 
-            @Override
-            public void syncError(AVException e) {
-                callback.syncError(e);
+                    @Override
+                    public void syncError(AVException e) {
+                        callback.syncError(e);
+                    }
+
+                    @Override
+                    public void notLoggedIn() {
+                        callback.notLoggedIn();
+                    }
+
+                    @Override
+                    public void errorNetwork() {
+                        callback.errorNetwork();
+                    }
+
+                    @Override
+                    public void errorUsername() {
+                        callback.errorUsername();
+                    }
+
+                    @Override
+                    public void errorChecksum() {
+                        callback.errorChecksum();
+                    }
+                });
             }
 
             @Override

@@ -42,6 +42,25 @@ public abstract class BaseSQLEntityManager<Entity extends ISQLEntity> {
         }
     }
 
+    private void openSQLFile(String filename) {
+        String d = android.os.Environment.getExternalStorageDirectory() + Constants.DATABASE_DIR;
+        File dir = new File(d);
+        boolean flag = dir.exists() || dir.mkdirs();
+
+        if (flag) {
+            String sqlFile = android.os.Environment.getExternalStorageDirectory() +
+                    Constants.DATABASE_DIR + "/" + filename + ".db";
+            File file = new File(sqlFile);
+            database = SQLiteDatabase.openOrCreateDatabase(file, null);
+            if (database == null) {
+                Log.e("DatabaseError", "创建文件失败");
+            }
+            version++;
+        } else {
+            Log.e("DatabaseError", "创建目录失败");
+        }
+    }
+
     protected boolean openDatabase() {
         openSQLFile();
         if (database != null && tableName != null && entityTemplate != null) {
@@ -53,6 +72,23 @@ public abstract class BaseSQLEntityManager<Entity extends ISQLEntity> {
             openFlag = false;
         }
         return openFlag;
+    }
+
+    public boolean openDatabase(String filename) {
+        openSQLFile(filename);
+        if (database != null && tableName != null && entityTemplate != null) {
+            String createSQL = "create table if not exists " + tableName + "("
+                    + entityTemplate.tableFields() + ")";
+            database.execSQL(createSQL);
+            openFlag = true;
+        } else {
+            openFlag = false;
+        }
+        return openFlag;
+    }
+
+    public void closeDatabase() {
+        openFlag = false;
     }
 
     protected boolean checkDatabase() {

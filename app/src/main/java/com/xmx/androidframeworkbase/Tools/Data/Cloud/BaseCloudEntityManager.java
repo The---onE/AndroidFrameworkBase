@@ -42,7 +42,7 @@ public abstract class BaseCloudEntityManager<Entity extends ICloudEntity> {
         }
         UserManager.getInstance().checkLogin(new AutoLoginCallback() {
             @Override
-            public void success(AVObject user) {
+            public void success(final AVObject user) {
                 AVQuery<AVObject> query = new AVQuery<>(tableName);
                 if (userField != null) {
                     query.whereEqualTo(userField, user.getObjectId());
@@ -67,7 +67,7 @@ public abstract class BaseCloudEntityManager<Entity extends ICloudEntity> {
                                 Entity entity = (Entity) entityTemplate.convertToEntity(object);
                                 entities.add(entity);
                             }
-                            callback.success(entities);
+                            callback.success(user, entities);
                         } else {
                             callback.syncError(e);
                         }
@@ -104,7 +104,7 @@ public abstract class BaseCloudEntityManager<Entity extends ICloudEntity> {
         }
         UserManager.getInstance().checkLogin(new AutoLoginCallback() {
             @Override
-            public void success(AVObject user) {
+            public void success(final AVObject user) {
                 final AVObject object = entity.getContent(tableName);
                 if (userField != null) {
                     object.put(userField, user.getObjectId());
@@ -113,7 +113,7 @@ public abstract class BaseCloudEntityManager<Entity extends ICloudEntity> {
                     @Override
                     public void done(AVException e) {
                         if (e == null) {
-                            callback.success(object.getObjectId());
+                            callback.success(user, object.getObjectId());
                         } else {
                             callback.syncError(e);
                         }
@@ -150,7 +150,7 @@ public abstract class BaseCloudEntityManager<Entity extends ICloudEntity> {
         }
         UserManager.getInstance().checkLogin(new AutoLoginCallback() {
             @Override
-            public void success(AVObject user) {
+            public void success(final AVObject user) {
                 AVQuery<AVObject> query = new AVQuery<>(tableName);
                 query.getInBackground(objectId, new GetCallback<AVObject>() {
                     @Override
@@ -160,7 +160,7 @@ public abstract class BaseCloudEntityManager<Entity extends ICloudEntity> {
                                 @Override
                                 public void done(AVException e) {
                                     if (e == null) {
-                                        callback.success();
+                                        callback.success(user);
                                     } else {
                                         callback.syncError(e);
                                     }
@@ -203,7 +203,7 @@ public abstract class BaseCloudEntityManager<Entity extends ICloudEntity> {
         }
         UserManager.getInstance().checkLogin(new AutoLoginCallback() {
             @Override
-            public void success(AVObject user) {
+            public void success(final AVObject user) {
                 AVQuery<AVObject> query = new AVQuery<>(tableName);
                 query.getInBackground(objectId, new GetCallback<AVObject>() {
                     @Override
@@ -217,7 +217,7 @@ public abstract class BaseCloudEntityManager<Entity extends ICloudEntity> {
                                     @Override
                                     public void done(AVException e) {
                                         if (e == null) {
-                                            callback.success();
+                                            callback.success(user);
                                         } else {
                                             callback.syncError(e);
                                         }

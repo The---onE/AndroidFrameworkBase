@@ -1,6 +1,7 @@
 package com.xmx.androidframeworkbase.Tools.Data.Callback;
 
 import com.avos.avoscloud.AVException;
+import com.avos.avoscloud.AVObject;
 import com.xmx.androidframeworkbase.Tools.Data.Cloud.ICloudEntity;
 
 import java.util.List;
@@ -10,7 +11,7 @@ import java.util.List;
  */
 public abstract class SelectCallback<Entity extends ICloudEntity> {
 
-    public abstract void success(List<Entity> entities);
+    public abstract void success(AVObject user, List<Entity> entities);
 
     public abstract void notInit();
 

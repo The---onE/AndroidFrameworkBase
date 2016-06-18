@@ -12,6 +12,7 @@ import android.widget.EditText;
 import android.widget.ListView;
 
 import com.avos.avoscloud.AVException;
+import com.avos.avoscloud.AVObject;
 import com.xmx.androidframeworkbase.R;
 import com.xmx.androidframeworkbase.Sync.Sync;
 import com.xmx.androidframeworkbase.Sync.SyncAdapter;
@@ -69,7 +70,7 @@ public class SyncFragment extends BaseFragment {
                     public void onClick(DialogInterface dialogInterface, int i) {
                         SyncEntityManager.getInstance().deleteData(sync.mCloudId, new DelCallback() {
                             @Override
-                            public void success() {
+                            public void success(AVObject user) {
                                 showToast(R.string.delete_success);
                                 SyncManager.getInstance().updateData();
                                 syncAdapter.updateList();
@@ -115,7 +116,7 @@ public class SyncFragment extends BaseFragment {
                         SyncEntityManager.getInstance().updateData(sync.mCloudId, update,
                                 new UpdateCallback() {
                                     @Override
-                                    public void success() {
+                                    public void success(AVObject user) {
                                         showToast(R.string.update_success);
                                         SyncManager.getInstance().updateData();
                                         syncAdapter.updateList();
@@ -174,7 +175,7 @@ public class SyncFragment extends BaseFragment {
                 entity.mTime = new Date();
                 SyncEntityManager.getInstance().insertData(entity, new InsertCallback() {
                     @Override
-                    public void success(String objectId) {
+                    public void success(AVObject user, String objectId) {
                         showToast(R.string.add_success);
                         SyncManager.getInstance().updateData();
                         syncAdapter.updateList();
@@ -220,7 +221,7 @@ public class SyncFragment extends BaseFragment {
         SyncEntityManager.getInstance().syncFromCloud(null,
                 new SelectCallback<Sync>() {
                     @Override
-                    public void success(List<Sync> syncs) {
+                    public void success(AVObject user, List<Sync> syncs) {
                         SyncManager.getInstance().updateData();
                         syncAdapter.updateList();
                         showToast(R.string.sync_success);

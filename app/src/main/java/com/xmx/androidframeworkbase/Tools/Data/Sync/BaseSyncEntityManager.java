@@ -83,6 +83,15 @@ public abstract class BaseSyncEntityManager<Entity extends ISyncEntity> {
         return tableName != null && entityTemplate != null;
     }
 
+    protected boolean switchAccount(String id) {
+        if (!id.equals(userId)) {
+            userId = id;
+            sqlManager.openDatabase(userId);
+            return true;
+        }
+        return false;
+    }
+
     //将云端数据同步至数据库
     public void syncFromCloud(final Map<String, Object> conditions,
                               final SelectCallback<Entity> callback) {
@@ -90,54 +99,27 @@ public abstract class BaseSyncEntityManager<Entity extends ISyncEntity> {
             callback.notInit();
             return;
         }
-        UserManager.getInstance().checkLogin(new AutoLoginCallback() {
+        cloudManager.selectByCondition(conditions, null, false, new SelectCallback<Entity>() {
+
             @Override
-            public void success(AVObject user) {
-                if (!user.getObjectId().equals(userId)) {
-                    userId = user.getObjectId();
-                    sqlManager.openDatabase(userId);
+            public void success(AVObject user, List<Entity> entities) {
+                switchAccount(user.getObjectId());
+                for (Entity entity : entities) {
+                    if (sqlManager.selectByCloudId(entity.getCloudId()) == null) {
+                        sqlManager.insertData(entity);
+                    }
                 }
-                cloudManager.selectByCondition(conditions, null, false, new SelectCallback<Entity>() {
-                    @Override
-                    public void success(List<Entity> entities) {
-                        for (Entity entity : entities) {
-                            if (sqlManager.selectByCloudId(entity.getCloudId()) == null) {
-                                sqlManager.insertData(entity);
-                            }
-                        }
-                        callback.success(entities);
-                    }
+                callback.success(user, entities);
+            }
 
-                    @Override
-                    public void notInit() {
-                        callback.notInit();
-                    }
+            @Override
+            public void notInit() {
+                callback.notInit();
+            }
 
-                    @Override
-                    public void syncError(AVException e) {
-                        callback.syncError(e);
-                    }
-
-                    @Override
-                    public void notLoggedIn() {
-                        callback.notLoggedIn();
-                    }
-
-                    @Override
-                    public void errorNetwork() {
-                        callback.errorNetwork();
-                    }
-
-                    @Override
-                    public void errorUsername() {
-                        callback.errorUsername();
-                    }
-
-                    @Override
-                    public void errorChecksum() {
-                        callback.errorChecksum();
-                    }
-                });
+            @Override
+            public void syncError(AVException e) {
+                callback.syncError(e);
             }
 
             @Override
@@ -170,10 +152,11 @@ public abstract class BaseSyncEntityManager<Entity extends ISyncEntity> {
         }
         cloudManager.insertToCloud(entity, new InsertCallback() {
             @Override
-            public void success(String objectId) {
+            public void success(AVObject user, String objectId) {
+                switchAccount(user.getObjectId());
                 entity.setCloudId(objectId);
                 sqlManager.insertData(entity);
-                callback.success(objectId);
+                callback.success(user, objectId);
             }
 
             @Override
@@ -216,9 +199,10 @@ public abstract class BaseSyncEntityManager<Entity extends ISyncEntity> {
         }
         cloudManager.deleteFromCloud(objectId, new DelCallback() {
             @Override
-            public void success() {
+            public void success(AVObject user) {
+                switchAccount(user.getObjectId());
                 sqlManager.deleteByCloudId(objectId);
-                callback.success();
+                callback.success(user);
             }
 
             @Override
@@ -262,7 +246,8 @@ public abstract class BaseSyncEntityManager<Entity extends ISyncEntity> {
         }
         cloudManager.updateToCloud(objectId, update, new UpdateCallback() {
             @Override
-            public void success() {
+            public void success(AVObject user) {
+                switchAccount(user.getObjectId());
                 List<String> strings = new ArrayList<>();
                 for (String key : update.keySet()) {
                     Object value = update.get(key);
@@ -277,7 +262,7 @@ public abstract class BaseSyncEntityManager<Entity extends ISyncEntity> {
                     strings.add(string);
                 }
                 sqlManager.updateDate(objectId, strings.toArray(new String[strings.size()]));
-                callback.success();
+                callback.success(user);
             }
 
             @Override

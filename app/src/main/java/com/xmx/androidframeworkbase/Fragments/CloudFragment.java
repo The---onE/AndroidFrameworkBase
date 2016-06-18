@@ -13,6 +13,7 @@ import android.widget.EditText;
 import android.widget.ListView;
 
 import com.avos.avoscloud.AVException;
+import com.avos.avoscloud.AVObject;
 import com.xmx.androidframeworkbase.Cloud.Cloud;
 import com.xmx.androidframeworkbase.Cloud.CloudAdapter;
 import com.xmx.androidframeworkbase.Cloud.CloudEntityManager;
@@ -69,7 +70,7 @@ public class CloudFragment extends BaseFragment {
                     public void onClick(DialogInterface dialogInterface, int i) {
                         CloudEntityManager.getInstance().deleteFromCloud(cloud.mCloudId, new DelCallback() {
                             @Override
-                            public void success() {
+                            public void success(AVObject user) {
                                 showToast(R.string.delete_success);
                                 updateList();
                             }
@@ -114,7 +115,7 @@ public class CloudFragment extends BaseFragment {
                         CloudEntityManager.getInstance().updateToCloud(cloud.mCloudId, update,
                                 new UpdateCallback() {
                                     @Override
-                                    public void success() {
+                                    public void success(AVObject user) {
                                         showToast(R.string.update_success);
                                         updateList();
                                     }
@@ -172,7 +173,7 @@ public class CloudFragment extends BaseFragment {
                 entity.mTime = new Date();
                 CloudEntityManager.getInstance().insertToCloud(entity, new InsertCallback() {
                     @Override
-                    public void success(String objectId) {
+                    public void success(AVObject user, String objectId) {
                         showToast(R.string.add_success);
                         updateList();
                     }
@@ -222,7 +223,7 @@ public class CloudFragment extends BaseFragment {
                 "Time", false,
                 new SelectCallback<Cloud>() {
             @Override
-            public void success(List<Cloud> clouds) {
+            public void success(AVObject user, List<Cloud> clouds) {
                 cloudAdapter.updateList(clouds);
             }
 

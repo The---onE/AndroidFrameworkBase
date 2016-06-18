@@ -1,13 +1,14 @@
 package com.xmx.androidframeworkbase.Tools.Data.Callback;
 
 import com.avos.avoscloud.AVException;
+import com.avos.avoscloud.AVObject;
 
 /**
  * Created by The_onE on 2016/5/29.
  */
 public abstract class InsertCallback {
 
-    public abstract void success(String objectId);
+    public abstract void success(AVObject user, String objectId);
 
     public abstract void notInit();
 

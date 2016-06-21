@@ -34,9 +34,9 @@ dependencies {
     compile 'com.android.support:support-v4:23.4.0'
 
     //avoscloud-sdk 为 LeanCloud基础包
-    compile('cn.leancloud.android:avoscloud-push:v3.+@aar') { transitive = true }
-    //avoscloud-push 为推送与实时聊天需要的包
     compile ('cn.leancloud.android:avoscloud-sdk:v3.+')
+    //avoscloud-push 为推送与实时聊天需要的包
+    compile('cn.leancloud.android:avoscloud-push:v3.+@aar') { transitive = true }
     //avoscloud-statistics 为 LeanCloud 统计包
     compile ('cn.leancloud.android:avoscloud-statistics:v3.+')
 }

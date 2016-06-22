@@ -11,6 +11,7 @@ import com.avos.avoscloud.im.v2.callback.AVIMConversationQueryCallback;
 import com.xmx.androidframeworkbase.Tools.IM.Callback.CreateConversationCallback;
 import com.xmx.androidframeworkbase.Tools.IM.Callback.FindConversationCallback;
 import com.xmx.androidframeworkbase.Tools.IM.Callback.JoinConversationCallback;
+import com.xmx.androidframeworkbase.Tools.IM.Callback.QuitConversationCallback;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -130,16 +131,20 @@ public class IMClientManager {
         }
     }
 
-    public void quitConversation(AVIMConversation conversation) {
+    public void quitConversation(AVIMConversation conversation, final QuitConversationCallback callback) {
         if (checkClient() && conversation != null) {
             conversation.quit(new AVIMConversationCallback() {
                 @Override
                 public void done(AVIMException e) {
-                    if (e != null) {
-                        e.printStackTrace();
+                    if (e == null) {
+                        callback.success();
+                    } else {
+                        callback.failure(e);
                     }
                 }
             });
+        } else {
+            callback.clientError();
         }
     }
 }

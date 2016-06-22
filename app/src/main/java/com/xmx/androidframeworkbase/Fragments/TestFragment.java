@@ -62,6 +62,11 @@ public class TestFragment extends BaseFragment {
                                             }
 
                                             @Override
+                                            public void exist(AVIMConversation conversation) {
+                                                showToast("对话已存在");
+                                            }
+
+                                            @Override
                                             public void clientError() {
                                                 showToast("IM客户端打开失败");
                                             }

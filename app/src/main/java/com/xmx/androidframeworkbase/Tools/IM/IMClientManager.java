@@ -52,19 +52,35 @@ public class IMClientManager {
         }
     }
 
-    public void createConversation(String name, final CreateConversationCallback callback) {
+    public void createConversation(final String name, final CreateConversationCallback callback) {
         if (checkClient()) {
-            client.createConversation(new ArrayList<String>(), name, null,
-                    new AVIMConversationCreatedCallback() {
-                        @Override
-                        public void done(AVIMConversation avimConversation, AVIMException e) {
-                            if (e == null) {
-                                callback.success(avimConversation);
-                            } else {
-                                callback.failure(e);
-                            }
+            AVIMConversationQuery query = client.getQuery();
+            query.whereEqualTo("name", name);
+            query.findInBackground(new AVIMConversationQueryCallback() {
+                @Override
+                public void done(List<AVIMConversation> convs, AVIMException e) {
+                    if (e == null) {
+                        if (convs != null && !convs.isEmpty()) {
+                            AVIMConversation conversation = convs.get(0);
+                            callback.exist(conversation);
+                        } else {
+                            client.createConversation(new ArrayList<String>(), name, null,
+                                    new AVIMConversationCreatedCallback() {
+                                        @Override
+                                        public void done(AVIMConversation avimConversation, AVIMException e) {
+                                            if (e == null) {
+                                                callback.success(avimConversation);
+                                            } else {
+                                                callback.failure(e);
+                                            }
+                                        }
+                                    });
                         }
-                    });
+                    } else {
+                        callback.failure(e);
+                    }
+                }
+            });
         } else {
             callback.clientError();
         }

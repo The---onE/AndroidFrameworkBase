@@ -11,5 +11,7 @@ public abstract class CreateConversationCallback {
 
     public abstract void failure(Exception e);
 
+    public abstract void exist(AVIMConversation conversation);
+
     public abstract void clientError();
 }

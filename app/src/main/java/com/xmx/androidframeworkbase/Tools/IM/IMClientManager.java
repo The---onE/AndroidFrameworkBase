@@ -8,10 +8,12 @@ import com.avos.avoscloud.im.v2.callback.AVIMClientCallback;
 import com.avos.avoscloud.im.v2.callback.AVIMConversationCallback;
 import com.avos.avoscloud.im.v2.callback.AVIMConversationCreatedCallback;
 import com.avos.avoscloud.im.v2.callback.AVIMConversationQueryCallback;
+import com.avos.avoscloud.im.v2.messages.AVIMTextMessage;
 import com.xmx.androidframeworkbase.Tools.IM.Callback.CreateConversationCallback;
 import com.xmx.androidframeworkbase.Tools.IM.Callback.FindConversationCallback;
 import com.xmx.androidframeworkbase.Tools.IM.Callback.JoinConversationCallback;
 import com.xmx.androidframeworkbase.Tools.IM.Callback.QuitConversationCallback;
+import com.xmx.androidframeworkbase.Tools.IM.Callback.SendMessageCallback;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,6 +27,7 @@ public class IMClientManager {
     private AVIMClient client;
     private String username;
     private boolean openFlag = false;
+    AVIMConversation currentConversation = null;
 
     public synchronized static IMClientManager getInstance() {
         if (null == imClientManager) {
@@ -118,6 +121,7 @@ public class IMClientManager {
                     public void done(AVIMException e) {
                         if (e == null) {
                             callback.success(conversation);
+                            currentConversation = conversation;
                         } else {
                             callback.failure(e);
                         }
@@ -125,6 +129,7 @@ public class IMClientManager {
                 });
             } else {
                 callback.success(conversation);
+                currentConversation = conversation;
             }
         } else {
             callback.clientError();
@@ -138,6 +143,7 @@ public class IMClientManager {
                 public void done(AVIMException e) {
                     if (e == null) {
                         callback.success();
+                        currentConversation = null;
                     } else {
                         callback.failure(e);
                     }
@@ -145,6 +151,25 @@ public class IMClientManager {
             });
         } else {
             callback.clientError();
+        }
+    }
+
+    public void sendText(String text, final SendMessageCallback callback) {
+        if (currentConversation != null) {
+            AVIMTextMessage message = new AVIMTextMessage();
+            message.setText(text);
+            currentConversation.sendMessage(message, new AVIMConversationCallback() {
+                @Override
+                public void done(AVIMException e) {
+                    if (e == null) {
+                        callback.success();
+                    } else {
+                        callback.failure(e);
+                    }
+                }
+            });
+        } else {
+            callback.conversationError();
         }
     }
 }

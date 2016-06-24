@@ -4,6 +4,8 @@ import com.avos.avoscloud.im.v2.AVIMClient;
 import com.avos.avoscloud.im.v2.AVIMConversation;
 import com.avos.avoscloud.im.v2.AVIMConversationQuery;
 import com.avos.avoscloud.im.v2.AVIMException;
+import com.avos.avoscloud.im.v2.AVIMMessageHandler;
+import com.avos.avoscloud.im.v2.AVIMMessageManager;
 import com.avos.avoscloud.im.v2.callback.AVIMClientCallback;
 import com.avos.avoscloud.im.v2.callback.AVIMConversationCallback;
 import com.avos.avoscloud.im.v2.callback.AVIMConversationCreatedCallback;
@@ -28,6 +30,7 @@ public class IMClientManager {
     private String username;
     private boolean openFlag = false;
     AVIMConversation currentConversation = null;
+    TextMessageHandler textMessageHandler = null;
 
     public synchronized static IMClientManager getInstance() {
         if (null == imClientManager) {
@@ -36,15 +39,23 @@ public class IMClientManager {
         return imClientManager;
     }
 
+    public String getUsername() {
+        return username;
+    }
+
     boolean checkClient() {
         return openFlag && client != null && username != null && username.length() > 0;
     }
 
-    public void openClient(String username, AVIMClientCallback callback) {
+    public void openClient(String username, TextMessageHandler textMessageHandler,
+                           AVIMClientCallback callback) {
         this.username = username;
         client = AVIMClient.getInstance(username);
         client.open(callback);
         openFlag = true;
+
+        this.textMessageHandler = textMessageHandler;
+        AVIMMessageManager.registerMessageHandler(AVIMTextMessage.class, textMessageHandler);
     }
 
     public void closeClient(AVIMClientCallback callback) {
@@ -53,6 +64,9 @@ public class IMClientManager {
             openFlag = false;
             client = null;
             username = "";
+
+            AVIMMessageManager.unregisterMessageHandler(AVIMTextMessage.class, textMessageHandler);
+            textMessageHandler = null;
         }
     }
 

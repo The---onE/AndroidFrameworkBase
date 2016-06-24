@@ -12,7 +12,7 @@ import com.xmx.androidframeworkbase.Fragments.CloudFragment;
 import com.xmx.androidframeworkbase.Fragments.HomeFragment;
 import com.xmx.androidframeworkbase.Fragments.SQLFragment;
 import com.xmx.androidframeworkbase.Fragments.SyncFragment;
-import com.xmx.androidframeworkbase.Fragments.TestFragment;
+import com.xmx.androidframeworkbase.Fragments.IMFragment;
 import com.xmx.androidframeworkbase.Tools.ActivityBase.BaseNavigationActivity;
 import com.xmx.androidframeworkbase.Tools.PagerAdapter;
 
@@ -31,14 +31,14 @@ public class MainActivity extends BaseNavigationActivity {
         fragments.add(new SyncFragment());
         fragments.add(new SQLFragment());
         fragments.add(new CloudFragment());
-        fragments.add(new TestFragment());
+        fragments.add(new IMFragment());
 
         List<String> titles = new ArrayList<>();
         titles.add("首页");
         titles.add("Sync");
         titles.add("SQL");
         titles.add("Cloud");
-        titles.add("测试");
+        titles.add("IM");
 
         PagerAdapter adapter = new PagerAdapter(getSupportFragmentManager(), fragments, titles);
 

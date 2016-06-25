@@ -14,8 +14,10 @@ import java.util.Date;
  */
 public class IMTextMessageHandler extends TextMessageHandler {
     Context context;
-    public IMTextMessageHandler(Context context) {
+    OnReceiveCallback callback;
+    public IMTextMessageHandler(Context context, OnReceiveCallback callback) {
         this.context = context;
+        this.callback = callback;
     }
     @Override
     public void onReceiveText(String text, String from, long time,
@@ -23,5 +25,6 @@ public class IMTextMessageHandler extends TextMessageHandler {
         Date date = new Date(time);
         String info = from + ":" + text + "\n" + date.toLocaleString();
         Toast.makeText(context, info, Toast.LENGTH_SHORT).show();
+        callback.receive(text, from, time, conversation, client);
     }
 }

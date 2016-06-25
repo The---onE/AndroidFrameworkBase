@@ -20,6 +20,7 @@ import com.avos.avoscloud.im.v2.messages.AVIMTextMessage;
 import com.xmx.androidframeworkbase.IM.IMAdapter;
 import com.xmx.androidframeworkbase.IM.IMTextMessageHandler;
 import com.xmx.androidframeworkbase.IM.Message;
+import com.xmx.androidframeworkbase.IM.OnReceiveCallback;
 import com.xmx.androidframeworkbase.R;
 import com.xmx.androidframeworkbase.Tools.BaseFragment;
 import com.xmx.androidframeworkbase.Tools.IM.Callback.CreateConversationCallback;
@@ -54,7 +55,12 @@ public class IMFragment extends BaseFragment {
         imAdapter = new IMAdapter(getContext(), new ArrayList<Message>());
         imList.setAdapter(imAdapter);
 
-        IMTextMessageHandler handler = new IMTextMessageHandler(getContext());
+        IMTextMessageHandler handler = new IMTextMessageHandler(getContext(), new OnReceiveCallback() {
+            @Override
+            public void receive(String text, String from, long time, AVIMConversation conversation, AVIMClient client) {
+                updateList(conversation);
+            }
+        });
         IMClientManager.getInstance().addTextMessageHandler(handler);
     }
 

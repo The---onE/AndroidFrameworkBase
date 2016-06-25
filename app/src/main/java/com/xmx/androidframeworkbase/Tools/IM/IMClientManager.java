@@ -4,7 +4,6 @@ import com.avos.avoscloud.im.v2.AVIMClient;
 import com.avos.avoscloud.im.v2.AVIMConversation;
 import com.avos.avoscloud.im.v2.AVIMConversationQuery;
 import com.avos.avoscloud.im.v2.AVIMException;
-import com.avos.avoscloud.im.v2.AVIMMessageHandler;
 import com.avos.avoscloud.im.v2.AVIMMessageManager;
 import com.avos.avoscloud.im.v2.callback.AVIMClientCallback;
 import com.avos.avoscloud.im.v2.callback.AVIMConversationCallback;
@@ -39,6 +38,7 @@ public class IMClientManager {
         return imClientManager;
     }
 
+    //获取用户名，IM客户端以用户名为唯一标识
     public String getUsername() {
         return username;
     }
@@ -47,6 +47,7 @@ public class IMClientManager {
         return openFlag && client != null && username != null && username.length() > 0;
     }
 
+    //打开客户端，所有操作必须在打开客户端之后进行
     public void openClient(String username, TextMessageHandler textMessageHandler,
                            AVIMClientCallback callback) {
         this.username = username;
@@ -58,6 +59,7 @@ public class IMClientManager {
         AVIMMessageManager.registerMessageHandler(AVIMTextMessage.class, textMessageHandler);
     }
 
+    //关闭客户端
     public void closeClient(AVIMClientCallback callback) {
         if (checkClient()) {
             client.close(callback);
@@ -70,6 +72,7 @@ public class IMClientManager {
         }
     }
 
+    //创建对话，若同名对话已存在不创建，回调函数中返回对应对话
     public void createConversation(final String name, final CreateConversationCallback callback) {
         if (checkClient()) {
             AVIMConversationQuery query = client.getQuery();
@@ -104,6 +107,7 @@ public class IMClientManager {
         }
     }
 
+    //查找对话，回调函数中返回找到的对话
     public void findConversation(String name, final FindConversationCallback callback) {
         if (checkClient()) {
             AVIMConversationQuery query = client.getQuery();
@@ -127,6 +131,7 @@ public class IMClientManager {
         }
     }
 
+    //加入对话，在创建或查找到对话后调用
     public void joinConversation(final AVIMConversation conversation, final JoinConversationCallback callback) {
         if (checkClient()) {
             if (!conversation.getMembers().contains(username)) {
@@ -150,6 +155,7 @@ public class IMClientManager {
         }
     }
 
+    //退出对话,在创建或查找到对话后调用
     public void quitConversation(AVIMConversation conversation, final QuitConversationCallback callback) {
         if (checkClient() && conversation != null) {
             conversation.quit(new AVIMConversationCallback() {
@@ -168,11 +174,52 @@ public class IMClientManager {
         }
     }
 
+    //退出对话，退出最近加入的对话
+    public void quitConversation(final QuitConversationCallback callback) {
+        if (checkClient() && currentConversation != null) {
+            currentConversation.quit(new AVIMConversationCallback() {
+                @Override
+                public void done(AVIMException e) {
+                    if (e == null) {
+                        callback.success();
+                        currentConversation = null;
+                    } else {
+                        callback.failure(e);
+                    }
+                }
+            });
+        } else {
+            callback.clientError();
+        }
+    }
+
+    //发送文本，发送到最近加入的对话中
     public void sendText(String text, final SendMessageCallback callback) {
-        if (currentConversation != null) {
+        if (checkClient() && currentConversation != null) {
             AVIMTextMessage message = new AVIMTextMessage();
             message.setText(text);
             currentConversation.sendMessage(message, new AVIMConversationCallback() {
+                @Override
+                public void done(AVIMException e) {
+                    if (e == null) {
+                        callback.success();
+                    } else {
+                        callback.failure(e);
+                    }
+                }
+            });
+        } else {
+            callback.conversationError();
+        }
+    }
+
+    //发送文本，发送到对应的对话中
+    public void sendText(AVIMConversation conversation,
+                         String text, final SendMessageCallback callback) {
+        if (checkClient() && conversation != null) {
+            AVIMTextMessage message = new AVIMTextMessage();
+            message.setText(text);
+            conversation.sendMessage(message, new AVIMConversationCallback() {
                 @Override
                 public void done(AVIMException e) {
                     if (e == null) {

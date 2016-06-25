@@ -7,6 +7,8 @@ import com.avos.avoscloud.im.v2.AVIMClient;
 import com.avos.avoscloud.im.v2.AVIMConversation;
 import com.xmx.androidframeworkbase.Tools.IM.TextMessageHandler;
 
+import java.util.Date;
+
 /**
  * Created by The_onE on 2016/6/24.
  */
@@ -16,8 +18,10 @@ public class IMTextMessageHandler extends TextMessageHandler {
         this.context = context;
     }
     @Override
-    public void onReceiveText(String text, String from, AVIMConversation conversation, AVIMClient client) {
-        String info = from + ":" + text;
+    public void onReceiveText(String text, String from, long time,
+                              AVIMConversation conversation, AVIMClient client) {
+        Date date = new Date(time);
+        String info = from + ":" + text + "\n" + date.toLocaleString();
         Toast.makeText(context, info, Toast.LENGTH_SHORT).show();
     }
 }

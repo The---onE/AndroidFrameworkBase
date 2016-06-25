@@ -1,6 +1,5 @@
 package com.xmx.androidframeworkbase.Tools.IM;
 
-import com.alibaba.fastjson.serializer.StringCodec;
 import com.avos.avoscloud.im.v2.AVIMClient;
 import com.avos.avoscloud.im.v2.AVIMConversation;
 import com.avos.avoscloud.im.v2.AVIMTypedMessageHandler;
@@ -18,7 +17,8 @@ public abstract class TextMessageHandler extends AVIMTypedMessageHandler<AVIMTex
             if (client.getClientId().equals(username)) {
                 String text = message.getText();
                 String from = message.getFrom();
-                onReceiveText(text, from, conversation, client);
+                long time = message.getTimestamp();
+                onReceiveText(text, from, time, conversation, client);
             } else {
                 client.close(null);
             }
@@ -27,6 +27,6 @@ public abstract class TextMessageHandler extends AVIMTypedMessageHandler<AVIMTex
         }
     }
 
-    public abstract void onReceiveText(String text, String from,
+    public abstract void onReceiveText(String text, String from, long time,
                                        AVIMConversation conversation, AVIMClient client);
 }

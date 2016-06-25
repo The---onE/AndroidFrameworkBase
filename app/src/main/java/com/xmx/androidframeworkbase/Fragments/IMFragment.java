@@ -13,20 +13,18 @@ import com.avos.avoscloud.AVObject;
 import com.avos.avoscloud.im.v2.AVIMClient;
 import com.avos.avoscloud.im.v2.AVIMConversation;
 import com.avos.avoscloud.im.v2.AVIMException;
-import com.avos.avoscloud.im.v2.AVIMMessage;
 import com.avos.avoscloud.im.v2.callback.AVIMClientCallback;
-import com.avos.avoscloud.im.v2.callback.AVIMMessagesQueryCallback;
-import com.avos.avoscloud.im.v2.messages.AVIMTextMessage;
 import com.xmx.androidframeworkbase.IM.IMAdapter;
 import com.xmx.androidframeworkbase.IM.IMTextMessageHandler;
-import com.xmx.androidframeworkbase.IM.Message;
 import com.xmx.androidframeworkbase.IM.OnReceiveCallback;
 import com.xmx.androidframeworkbase.R;
 import com.xmx.androidframeworkbase.Tools.BaseFragment;
 import com.xmx.androidframeworkbase.Tools.IM.Callback.CreateConversationCallback;
+import com.xmx.androidframeworkbase.Tools.IM.Callback.GetTextChatLogCallback;
 import com.xmx.androidframeworkbase.Tools.IM.Callback.JoinConversationCallback;
 import com.xmx.androidframeworkbase.Tools.IM.Callback.SendMessageCallback;
 import com.xmx.androidframeworkbase.Tools.IM.IMClientManager;
+import com.xmx.androidframeworkbase.Tools.IM.Message.TextMessage;
 import com.xmx.androidframeworkbase.User.Callback.AutoLoginCallback;
 import com.xmx.androidframeworkbase.User.UserManager;
 
@@ -41,7 +39,6 @@ public class IMFragment extends BaseFragment {
     EditText text;
     IMAdapter imAdapter;
     ListView imList;
-    AVIMConversation currentConversation;
 
     @Override
     protected View getContentView(LayoutInflater inflater, ViewGroup container) {
@@ -52,13 +49,13 @@ public class IMFragment extends BaseFragment {
     protected void initView(View view) {
         text = (EditText) view.findViewById(R.id.edit_im);
         imList = (ListView) view.findViewById(R.id.list_im);
-        imAdapter = new IMAdapter(getContext(), new ArrayList<Message>());
+        imAdapter = new IMAdapter(getContext(), new ArrayList<TextMessage>());
         imList.setAdapter(imAdapter);
 
         IMTextMessageHandler handler = new IMTextMessageHandler(getContext(), new OnReceiveCallback() {
             @Override
             public void receive(String text, String from, long time, AVIMConversation conversation, AVIMClient client) {
-                updateList(conversation);
+                updateList();
             }
         });
         IMClientManager.getInstance().addTextMessageHandler(handler);
@@ -119,8 +116,7 @@ public class IMFragment extends BaseFragment {
                             @Override
                             public void success(AVIMConversation conversation) {
                                 showToast("加入对话成功");
-                                updateList(conversation);
-                                currentConversation = conversation;
+                                updateList();
                             }
 
                             @Override
@@ -147,8 +143,7 @@ public class IMFragment extends BaseFragment {
                             @Override
                             public void success(AVIMConversation conversation) {
                                 showToast("加入对话成功");
-                                updateList(conversation);
-                                currentConversation = conversation;
+                                updateList();
                             }
 
                             @Override
@@ -181,7 +176,7 @@ public class IMFragment extends BaseFragment {
                     @Override
                     public void success() {
                         showToast("发送成功");
-                        updateList(currentConversation);
+                        updateList();
                     }
 
                     @Override
@@ -203,25 +198,21 @@ public class IMFragment extends BaseFragment {
 
     }
 
-    public void updateList(AVIMConversation conversation) {
-        conversation.queryMessages(new AVIMMessagesQueryCallback() {
+    public void updateList() {
+        IMClientManager.getInstance().getTextChatLog(new GetTextChatLogCallback() {
             @Override
-            public void done(List<AVIMMessage> messages, AVIMException e) {
-                if (e == null) {
-                    List<Message> ms = new ArrayList<>();
-                    for (AVIMMessage message : messages) {
-                        if (message instanceof AVIMTextMessage) {
-                            AVIMTextMessage tm = (AVIMTextMessage) message;
-                            Message m = new Message();
-                            m.mText = tm.getText();
-                            m.mFrom = tm.getFrom();
-                            m.mTime = tm.getTimestamp();
+            public void success(List<TextMessage> messages) {
+                imAdapter.updateList(messages);
+            }
 
-                            ms.add(0, m);
-                        }
-                    }
-                    imAdapter.updateList(ms);
-                }
+            @Override
+            public void failure(Exception e) {
+                showToast("获取聊天记录失败");
+            }
+
+            @Override
+            public void conversationError() {
+                showToast("对话未建立");
             }
         });
     }

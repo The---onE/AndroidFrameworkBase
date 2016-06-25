@@ -4,17 +4,21 @@ import com.avos.avoscloud.im.v2.AVIMClient;
 import com.avos.avoscloud.im.v2.AVIMConversation;
 import com.avos.avoscloud.im.v2.AVIMConversationQuery;
 import com.avos.avoscloud.im.v2.AVIMException;
+import com.avos.avoscloud.im.v2.AVIMMessage;
 import com.avos.avoscloud.im.v2.AVIMMessageManager;
 import com.avos.avoscloud.im.v2.callback.AVIMClientCallback;
 import com.avos.avoscloud.im.v2.callback.AVIMConversationCallback;
 import com.avos.avoscloud.im.v2.callback.AVIMConversationCreatedCallback;
 import com.avos.avoscloud.im.v2.callback.AVIMConversationQueryCallback;
+import com.avos.avoscloud.im.v2.callback.AVIMMessagesQueryCallback;
 import com.avos.avoscloud.im.v2.messages.AVIMTextMessage;
 import com.xmx.androidframeworkbase.Tools.IM.Callback.CreateConversationCallback;
 import com.xmx.androidframeworkbase.Tools.IM.Callback.FindConversationCallback;
+import com.xmx.androidframeworkbase.Tools.IM.Callback.GetTextChatLogCallback;
 import com.xmx.androidframeworkbase.Tools.IM.Callback.JoinConversationCallback;
 import com.xmx.androidframeworkbase.Tools.IM.Callback.QuitConversationCallback;
 import com.xmx.androidframeworkbase.Tools.IM.Callback.SendMessageCallback;
+import com.xmx.androidframeworkbase.Tools.IM.Message.TextMessage;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -47,6 +51,7 @@ public class IMClientManager {
         return openFlag && client != null && username != null && username.length() > 0;
     }
 
+    //添加文本消息处理器
     public void addTextMessageHandler(TextMessageHandler handler) {
         if (!textMessageHandlers.contains(handler)) {
             AVIMMessageManager.registerMessageHandler(AVIMTextMessage.class, handler);
@@ -54,6 +59,7 @@ public class IMClientManager {
         }
     }
 
+    //移除文本消息处理器
     public void removeTextMessageHandler(TextMessageHandler handler) {
         if (textMessageHandlers.contains(handler)) {
             AVIMMessageManager.unregisterMessageHandler(AVIMTextMessage.class, handler);
@@ -61,6 +67,7 @@ public class IMClientManager {
         }
     }
 
+    //移除全部文本消息处理器
     public void removeAllTextMessageHandlers() {
         for (TextMessageHandler handler : textMessageHandlers) {
             AVIMMessageManager.unregisterMessageHandler(AVIMTextMessage.class, handler);
@@ -154,16 +161,16 @@ public class IMClientManager {
                     @Override
                     public void done(AVIMException e) {
                         if (e == null) {
-                            callback.success(conversation);
                             currentConversation = conversation;
+                            callback.success(conversation);
                         } else {
                             callback.failure(e);
                         }
                     }
                 });
             } else {
-                callback.success(conversation);
                 currentConversation = conversation;
+                callback.success(conversation);
             }
         } else {
             callback.clientError();
@@ -171,13 +178,14 @@ public class IMClientManager {
     }
 
     //退出对话,在创建或查找到对话后调用
-    public void quitConversation(AVIMConversation conversation, final QuitConversationCallback callback) {
+    public void quitConversation(final AVIMConversation conversation,
+                                 final QuitConversationCallback callback) {
         if (checkClient() && conversation != null) {
             conversation.quit(new AVIMConversationCallback() {
                 @Override
                 public void done(AVIMException e) {
                     if (e == null) {
-                        callback.success();
+                        callback.success(conversation);
                         currentConversation = null;
                     } else {
                         callback.failure(e);
@@ -196,7 +204,7 @@ public class IMClientManager {
                 @Override
                 public void done(AVIMException e) {
                     if (e == null) {
-                        callback.success();
+                        callback.success(currentConversation);
                         currentConversation = null;
                     } else {
                         callback.failure(e);
@@ -239,6 +247,37 @@ public class IMClientManager {
                 public void done(AVIMException e) {
                     if (e == null) {
                         callback.success();
+                    } else {
+                        callback.failure(e);
+                    }
+                }
+            });
+        } else {
+            callback.conversationError();
+        }
+    }
+
+    //获取最近加入的对话的文本聊天记录
+    public void getTextChatLog(final GetTextChatLogCallback callback) {
+        if (checkClient() && currentConversation != null) {
+            currentConversation.queryMessages(new AVIMMessagesQueryCallback() {
+                @Override
+                public void done(List<AVIMMessage> messages, AVIMException e) {
+                    if (e == null) {
+                        List<TextMessage> ms = new ArrayList<>();
+                        for (int i = messages.size() - 1; i >= 0; --i) {
+                            AVIMMessage message = messages.get(i);
+                            if (message instanceof AVIMTextMessage) {
+                                AVIMTextMessage tm = (AVIMTextMessage) message;
+                                TextMessage m = new TextMessage();
+                                m.mText = tm.getText();
+                                m.mFrom = tm.getFrom();
+                                m.mTime = tm.getTimestamp();
+
+                                ms.add(m);
+                            }
+                        }
+                        callback.success(ms);
                     } else {
                         callback.failure(e);
                     }

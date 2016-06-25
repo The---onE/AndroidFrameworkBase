@@ -7,7 +7,7 @@ import com.avos.avoscloud.im.v2.AVIMConversation;
  */
 public abstract class QuitConversationCallback {
 
-    public abstract void success();
+    public abstract void success(AVIMConversation conversation);
 
     public abstract void failure(Exception e);
 

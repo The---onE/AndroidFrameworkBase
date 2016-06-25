@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import com.xmx.androidframeworkbase.Cloud.Cloud;
 import com.xmx.androidframeworkbase.R;
+import com.xmx.androidframeworkbase.Tools.IM.Message.TextMessage;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -19,14 +20,14 @@ import java.util.List;
  */
 public class IMAdapter extends BaseAdapter {
     Context mContext;
-    List<Message> mData;
+    List<TextMessage> mData;
 
-    public IMAdapter(Context context, List<Message> data) {
+    public IMAdapter(Context context, List<TextMessage> data) {
         mContext = context;
         mData = data;
     }
 
-    public void updateList(List<Message> data) {
+    public void updateList(List<TextMessage> data) {
         mData = data;
         notifyDataSetChanged();
     }
@@ -69,7 +70,7 @@ public class IMAdapter extends BaseAdapter {
         }
 
         if (position < mData.size()) {
-            Message m = mData.get(position);
+            TextMessage m = mData.get(position);
             holder.data.setText(m.mFrom + " : " + m.mText);
             DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             String timeString = df.format(m.mTime);

@@ -38,6 +38,9 @@ public class IMFragment extends BaseFragment {
     @Override
     protected void initView(View view) {
         text = (EditText) view.findViewById(R.id.edit_im);
+
+        IMTextMessageHandler handler = new IMTextMessageHandler(getContext());
+        IMClientManager.getInstance().addTextMessageHandler(handler);
     }
 
     @Override
@@ -51,8 +54,7 @@ public class IMFragment extends BaseFragment {
                     public void success(AVObject user) {
                         showToast("IM客户端打开中……");
 
-                        IMTextMessageHandler handler = new IMTextMessageHandler(getContext());
-                        IMClientManager.getInstance().openClient(user.getString("username"), handler,
+                        IMClientManager.getInstance().openClient(user.getString("username"),
                                 new AVIMClientCallback() {
                                     @Override
                                     public void done(AVIMClient avimClient, AVIMException e) {

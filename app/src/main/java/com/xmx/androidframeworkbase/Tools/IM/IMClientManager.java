@@ -29,7 +29,7 @@ public class IMClientManager {
     private String username;
     private boolean openFlag = false;
     AVIMConversation currentConversation = null;
-    TextMessageHandler textMessageHandler = null;
+    List<TextMessageHandler> textMessageHandlers = new ArrayList<>();
 
     public synchronized static IMClientManager getInstance() {
         if (null == imClientManager) {
@@ -47,16 +47,34 @@ public class IMClientManager {
         return openFlag && client != null && username != null && username.length() > 0;
     }
 
+    public void addTextMessageHandler(TextMessageHandler handler) {
+        if (!textMessageHandlers.contains(handler)) {
+            AVIMMessageManager.registerMessageHandler(AVIMTextMessage.class, handler);
+            textMessageHandlers.add(handler);
+        }
+    }
+
+    public void removeTextMessageHandler(TextMessageHandler handler) {
+        if (textMessageHandlers.contains(handler)) {
+            AVIMMessageManager.unregisterMessageHandler(AVIMTextMessage.class, handler);
+            textMessageHandlers.remove(handler);
+        }
+    }
+
+    public void removeAllTextMessageHandlers() {
+        for (TextMessageHandler handler : textMessageHandlers) {
+            AVIMMessageManager.unregisterMessageHandler(AVIMTextMessage.class, handler);
+        }
+        textMessageHandlers.clear();
+    }
+
     //打开客户端，所有操作必须在打开客户端之后进行
-    public void openClient(String username, TextMessageHandler textMessageHandler,
+    public void openClient(String username,
                            AVIMClientCallback callback) {
         this.username = username;
         client = AVIMClient.getInstance(username);
         client.open(callback);
         openFlag = true;
-
-        this.textMessageHandler = textMessageHandler;
-        AVIMMessageManager.registerMessageHandler(AVIMTextMessage.class, textMessageHandler);
     }
 
     //关闭客户端
@@ -66,9 +84,6 @@ public class IMClientManager {
             openFlag = false;
             client = null;
             username = "";
-
-            AVIMMessageManager.unregisterMessageHandler(AVIMTextMessage.class, textMessageHandler);
-            textMessageHandler = null;
         }
     }
 

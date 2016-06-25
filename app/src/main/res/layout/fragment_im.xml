@@ -29,4 +29,11 @@
         android:layout_height="wrap_content"
         android:text="发送内容" />
 
+    <ListView
+        android:id="@+id/list_im"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+    </ListView>
+
 </LinearLayout>

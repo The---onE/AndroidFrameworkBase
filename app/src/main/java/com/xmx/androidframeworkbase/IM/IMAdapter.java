@@ -1,4 +1,4 @@
-package com.xmx.androidframeworkbase.Cloud;
+package com.xmx.androidframeworkbase.IM;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
+import com.xmx.androidframeworkbase.Cloud.Cloud;
 import com.xmx.androidframeworkbase.R;
 
 import java.text.DateFormat;
@@ -16,16 +17,16 @@ import java.util.List;
 /**
  * Created by The_onE on 2016/3/27.
  */
-public class CloudAdapter extends BaseAdapter {
+public class IMAdapter extends BaseAdapter {
     Context mContext;
-    List<Cloud> mData;
+    List<Message> mData;
 
-    public CloudAdapter(Context context, List<Cloud> data) {
+    public IMAdapter(Context context, List<Message> data) {
         mContext = context;
         mData = data;
     }
 
-    public void updateList(List<Cloud> data) {
+    public void updateList(List<Message> data) {
         mData = data;
         notifyDataSetChanged();
     }
@@ -58,7 +59,7 @@ public class CloudAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         final ViewHolder holder;
         if (convertView == null) {
-            convertView = LayoutInflater.from(mContext).inflate(R.layout.item_cloud, null);
+            convertView = LayoutInflater.from(mContext).inflate(R.layout.item_im, null);
             holder = new ViewHolder();
             holder.data = (TextView) convertView.findViewById(R.id.item_data);
             holder.time = (TextView) convertView.findViewById(R.id.item_time);
@@ -68,10 +69,10 @@ public class CloudAdapter extends BaseAdapter {
         }
 
         if (position < mData.size()) {
-            Cloud sql = mData.get(position);
-            holder.data.setText(sql.mData);
+            Message m = mData.get(position);
+            holder.data.setText(m.mFrom + " : " + m.mText);
             DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-            String timeString = df.format(sql.mTime);
+            String timeString = df.format(m.mTime);
             holder.time.setText(timeString);
         } else {
             holder.data.setText("加载失败");

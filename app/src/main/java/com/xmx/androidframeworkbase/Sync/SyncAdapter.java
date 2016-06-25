@@ -59,7 +59,7 @@ public class SyncAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         final ViewHolder holder;
         if (convertView == null) {
-            convertView = LayoutInflater.from(mContext).inflate(R.layout.item_sql, null);
+            convertView = LayoutInflater.from(mContext).inflate(R.layout.item_sync, null);
             holder = new ViewHolder();
             holder.data = (TextView) convertView.findViewById(R.id.item_data);
             holder.time = (TextView) convertView.findViewById(R.id.item_time);

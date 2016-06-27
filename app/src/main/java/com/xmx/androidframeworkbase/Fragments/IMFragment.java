@@ -24,6 +24,7 @@ import com.xmx.androidframeworkbase.Tools.IM.Callback.GetTextChatLogCallback;
 import com.xmx.androidframeworkbase.Tools.IM.Callback.JoinConversationCallback;
 import com.xmx.androidframeworkbase.Tools.IM.Callback.SendMessageCallback;
 import com.xmx.androidframeworkbase.Tools.IM.IMClientManager;
+import com.xmx.androidframeworkbase.Tools.IM.IMMessageHandlerManager;
 import com.xmx.androidframeworkbase.Tools.IM.Message.TextMessage;
 import com.xmx.androidframeworkbase.User.Callback.AutoLoginCallback;
 import com.xmx.androidframeworkbase.User.UserManager;
@@ -58,7 +59,7 @@ public class IMFragment extends BaseFragment {
                 updateList();
             }
         });
-        IMClientManager.getInstance().addTextMessageHandler(handler);
+        IMMessageHandlerManager.getInstance().addTextMessageHandler(handler);
     }
 
     @Override

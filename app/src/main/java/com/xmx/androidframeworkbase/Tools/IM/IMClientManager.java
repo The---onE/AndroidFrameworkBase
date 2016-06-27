@@ -5,7 +5,6 @@ import com.avos.avoscloud.im.v2.AVIMConversation;
 import com.avos.avoscloud.im.v2.AVIMConversationQuery;
 import com.avos.avoscloud.im.v2.AVIMException;
 import com.avos.avoscloud.im.v2.AVIMMessage;
-import com.avos.avoscloud.im.v2.AVIMMessageManager;
 import com.avos.avoscloud.im.v2.callback.AVIMClientCallback;
 import com.avos.avoscloud.im.v2.callback.AVIMConversationCallback;
 import com.avos.avoscloud.im.v2.callback.AVIMConversationCreatedCallback;
@@ -33,7 +32,6 @@ public class IMClientManager {
     private String username;
     private boolean openFlag = false;
     AVIMConversation currentConversation = null;
-    List<TextMessageHandler> textMessageHandlers = new ArrayList<>();
 
     public synchronized static IMClientManager getInstance() {
         if (null == imClientManager) {
@@ -49,30 +47,6 @@ public class IMClientManager {
 
     boolean checkClient() {
         return openFlag && client != null && username != null && username.length() > 0;
-    }
-
-    //添加文本消息处理器
-    public void addTextMessageHandler(TextMessageHandler handler) {
-        if (!textMessageHandlers.contains(handler)) {
-            AVIMMessageManager.registerMessageHandler(AVIMTextMessage.class, handler);
-            textMessageHandlers.add(handler);
-        }
-    }
-
-    //移除文本消息处理器
-    public void removeTextMessageHandler(TextMessageHandler handler) {
-        if (textMessageHandlers.contains(handler)) {
-            AVIMMessageManager.unregisterMessageHandler(AVIMTextMessage.class, handler);
-            textMessageHandlers.remove(handler);
-        }
-    }
-
-    //移除全部文本消息处理器
-    public void removeAllTextMessageHandlers() {
-        for (TextMessageHandler handler : textMessageHandlers) {
-            AVIMMessageManager.unregisterMessageHandler(AVIMTextMessage.class, handler);
-        }
-        textMessageHandlers.clear();
     }
 
     //打开客户端，所有操作必须在打开客户端之后进行

@@ -7,9 +7,8 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
-import com.xmx.androidframeworkbase.Cloud.Cloud;
+import com.avos.avoscloud.im.v2.messages.AVIMTextMessage;
 import com.xmx.androidframeworkbase.R;
-import com.xmx.androidframeworkbase.Tools.IM.Message.TextMessage;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -20,14 +19,14 @@ import java.util.List;
  */
 public class IMAdapter extends BaseAdapter {
     Context mContext;
-    List<TextMessage> mData;
+    List<AVIMTextMessage> mData;
 
-    public IMAdapter(Context context, List<TextMessage> data) {
+    public IMAdapter(Context context, List<AVIMTextMessage> data) {
         mContext = context;
         mData = data;
     }
 
-    public void updateList(List<TextMessage> data) {
+    public void updateList(List<AVIMTextMessage> data) {
         mData = data;
         notifyDataSetChanged();
     }
@@ -70,10 +69,10 @@ public class IMAdapter extends BaseAdapter {
         }
 
         if (position < mData.size()) {
-            TextMessage m = mData.get(position);
-            holder.data.setText(m.mFrom + " : " + m.mText);
+            AVIMTextMessage m = mData.get(position);
+            holder.data.setText(m.getFrom() + " : " + m.getText());
             DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-            String timeString = df.format(m.mTime);
+            String timeString = df.format(m.getTimestamp());
             holder.time.setText(timeString);
         } else {
             holder.data.setText("加载失败");

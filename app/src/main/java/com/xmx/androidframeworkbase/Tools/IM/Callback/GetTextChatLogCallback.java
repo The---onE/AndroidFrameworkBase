@@ -1,6 +1,6 @@
 package com.xmx.androidframeworkbase.Tools.IM.Callback;
 
-import com.xmx.androidframeworkbase.Tools.IM.Message.TextMessage;
+import com.avos.avoscloud.im.v2.messages.AVIMTextMessage;
 
 import java.util.List;
 
@@ -9,7 +9,7 @@ import java.util.List;
  */
 public abstract class GetTextChatLogCallback {
 
-    public abstract void success(List<TextMessage> messages);
+    public abstract void success(List<AVIMTextMessage> messages);
 
     public abstract void failure(Exception e);
 

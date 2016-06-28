@@ -17,7 +17,6 @@ import com.xmx.androidframeworkbase.Tools.IM.Callback.GetTextChatLogCallback;
 import com.xmx.androidframeworkbase.Tools.IM.Callback.JoinConversationCallback;
 import com.xmx.androidframeworkbase.Tools.IM.Callback.QuitConversationCallback;
 import com.xmx.androidframeworkbase.Tools.IM.Callback.SendMessageCallback;
-import com.xmx.androidframeworkbase.Tools.IM.Message.TextMessage;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -238,17 +237,11 @@ public class IMClientManager {
                 @Override
                 public void done(List<AVIMMessage> messages, AVIMException e) {
                     if (e == null) {
-                        List<TextMessage> ms = new ArrayList<>();
+                        List<AVIMTextMessage> ms = new ArrayList<>();
                         for (int i = messages.size() - 1; i >= 0; --i) {
                             AVIMMessage message = messages.get(i);
                             if (message instanceof AVIMTextMessage) {
-                                AVIMTextMessage tm = (AVIMTextMessage) message;
-                                TextMessage m = new TextMessage();
-                                m.mText = tm.getText();
-                                m.mFrom = tm.getFrom();
-                                m.mTime = tm.getTimestamp();
-
-                                ms.add(m);
+                                ms.add((AVIMTextMessage) message);
                             }
                         }
                         callback.success(ms);

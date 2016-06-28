@@ -14,6 +14,7 @@ import com.avos.avoscloud.im.v2.AVIMClient;
 import com.avos.avoscloud.im.v2.AVIMConversation;
 import com.avos.avoscloud.im.v2.AVIMException;
 import com.avos.avoscloud.im.v2.callback.AVIMClientCallback;
+import com.avos.avoscloud.im.v2.messages.AVIMTextMessage;
 import com.xmx.androidframeworkbase.IM.IMAdapter;
 import com.xmx.androidframeworkbase.IM.IMTextMessageHandler;
 import com.xmx.androidframeworkbase.IM.OnReceiveCallback;
@@ -25,7 +26,6 @@ import com.xmx.androidframeworkbase.Tools.IM.Callback.JoinConversationCallback;
 import com.xmx.androidframeworkbase.Tools.IM.Callback.SendMessageCallback;
 import com.xmx.androidframeworkbase.Tools.IM.IMClientManager;
 import com.xmx.androidframeworkbase.Tools.IM.IMMessageHandlerManager;
-import com.xmx.androidframeworkbase.Tools.IM.Message.TextMessage;
 import com.xmx.androidframeworkbase.User.Callback.AutoLoginCallback;
 import com.xmx.androidframeworkbase.User.UserManager;
 
@@ -50,7 +50,7 @@ public class IMFragment extends BaseFragment {
     protected void initView(View view) {
         text = (EditText) view.findViewById(R.id.edit_im);
         imList = (ListView) view.findViewById(R.id.list_im);
-        imAdapter = new IMAdapter(getContext(), new ArrayList<TextMessage>());
+        imAdapter = new IMAdapter(getContext(), new ArrayList<AVIMTextMessage>());
         imList.setAdapter(imAdapter);
 
         IMTextMessageHandler handler = new IMTextMessageHandler(getContext(), new OnReceiveCallback() {
@@ -202,7 +202,7 @@ public class IMFragment extends BaseFragment {
     public void updateList() {
         IMClientManager.getInstance().getTextChatLog(new GetTextChatLogCallback() {
             @Override
-            public void success(List<TextMessage> messages) {
+            public void success(List<AVIMTextMessage> messages) {
                 imAdapter.updateList(messages);
             }
 

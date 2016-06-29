@@ -1,12 +1,38 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context="com.xmx.androidframeworkbase.Fragments.HomeFragment">
 
-    <TextView
-        android:layout_width="wrap_content"
+    <EditText
+        android:id="@+id/edit_id"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="首页"/>
+        android:hint="ID" />
 
-</FrameLayout>
+    <EditText
+        android:id="@+id/edit_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="标题" />
+
+    <EditText
+        android:id="@+id/edit_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="内容" />
+
+    <Button
+        android:id="@+id/btn_notification"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="发送通知" />
+
+    <Button
+        android:id="@+id/btn_remove_notification"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="移除通知" />
+
+</LinearLayout>

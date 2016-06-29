@@ -1,18 +1,27 @@
 package com.xmx.androidframeworkbase.Fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
 
 import com.xmx.androidframeworkbase.R;
 import com.xmx.androidframeworkbase.Tools.BaseFragment;
+import com.xmx.androidframeworkbase.Tools.Notification.NotificationTempActivity;
+import com.xmx.androidframeworkbase.Tools.Notification.NotificationUtils;
 
 /**
  * A simple {@link Fragment} subclass.
  */
 public class HomeFragment extends BaseFragment {
+
+    EditText idView;
+    EditText titleView;
+    EditText contentView;
 
     @Override
     protected View getContentView(LayoutInflater inflater, ViewGroup container) {
@@ -21,12 +30,38 @@ public class HomeFragment extends BaseFragment {
 
     @Override
     protected void initView(View view) {
-
+        idView = (EditText) view.findViewById(R.id.edit_id);
+        titleView = (EditText) view.findViewById(R.id.edit_title);
+        contentView = (EditText) view.findViewById(R.id.edit_content);
     }
 
     @Override
     protected void setListener(View view) {
+        Button notification = (Button) view.findViewById(R.id.btn_notification);
+        notification.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String id = idView.getText().toString();
+                int i = id.hashCode();
+                String title = titleView.getText().toString();
+                String content = contentView.getText().toString();
 
+                Intent intent = new Intent(getContext(), NotificationTempActivity.class);
+                intent.putExtra("notificationId", i);
+
+                NotificationUtils.showNotification(getContext(), i, title, content, null, intent);
+            }
+        });
+
+        Button remove = (Button) view.findViewById(R.id.btn_remove_notification);
+        remove.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String id = idView.getText().toString();
+                int i = id.hashCode();
+                NotificationUtils.removeNotification(getContext(), i);
+            }
+        });
     }
 
     @Override

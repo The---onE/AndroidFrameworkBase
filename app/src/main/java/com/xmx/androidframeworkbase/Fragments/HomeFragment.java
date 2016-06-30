@@ -37,6 +37,22 @@ public class HomeFragment extends BaseFragment {
 
     @Override
     protected void setListener(View view) {
+        Button remind = (Button) view.findViewById(R.id.btn_remind);
+        remind.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String id = idView.getText().toString();
+                int i = id.hashCode();
+                String title = titleView.getText().toString();
+                String content = contentView.getText().toString();
+
+                Intent intent = new Intent(getContext(), NotificationTempActivity.class);
+                intent.putExtra("notificationId", i);
+
+                NotificationUtils.showNotification(getContext(), intent, i, title, content);
+            }
+        });
+
         Button notification = (Button) view.findViewById(R.id.btn_notification);
         notification.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -49,7 +65,7 @@ public class HomeFragment extends BaseFragment {
                 Intent intent = new Intent(getContext(), NotificationTempActivity.class);
                 intent.putExtra("notificationId", i);
 
-                NotificationUtils.showNotification(getContext(), i, title, content, null, intent);
+                NotificationUtils.showNotification(getContext(), intent, i, title, content, true, true);
             }
         });
 

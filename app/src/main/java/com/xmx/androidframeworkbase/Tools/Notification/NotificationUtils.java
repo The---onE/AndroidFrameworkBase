@@ -57,16 +57,41 @@ public class NotificationUtils {
         return !notificationTagList.contains(tag);
     }
 
-    public static void showNotification(Context context, int id,
-                                        String title, String content, String sound, Intent intent) {
+    public static void showNotification(Context context, Intent intent, int id,
+                                        String title, String content) {
+        showNotification(context, id, intent, title, content,
+                true, false, R.mipmap.ic_launcher, null);
+    }
+
+    public static void showNotification(Context context, Intent intent, int id,
+                                        String title, String content,
+                                        boolean autoCancelFlag, boolean onGoingFlag) {
+        showNotification(context, id, intent, title, content,
+                autoCancelFlag, onGoingFlag, R.mipmap.ic_launcher, null);
+    }
+
+    public static void showNotification(Context context, Intent intent, int id,
+                                        String title, String content,
+                                        boolean autoCancelFlag, boolean onGoingFlag,
+                                        int sIcon) {
+        showNotification(context, id, intent, title, content,
+                autoCancelFlag, onGoingFlag, sIcon, null);
+    }
+
+    public static void showNotification(Context context, int id, Intent intent,
+                                        String title, String content,
+                                        boolean autoCancelFlag, boolean onGoingFlag,
+                                        int sIcon,
+                                        String sound) {
         PendingIntent contentIntent = PendingIntent.getBroadcast(context, id, intent,
                 PendingIntent.FLAG_UPDATE_CURRENT);
         NotificationCompat.Builder mBuilder =
                 new NotificationCompat.Builder(context)
-                        .setSmallIcon(R.mipmap.ic_launcher)
+                        .setSmallIcon(sIcon)
                         .setContentTitle(title)
                         .setContentText(content)
-                        .setAutoCancel(true)
+                        .setAutoCancel(autoCancelFlag)
+                        .setOngoing(onGoingFlag)
                         .setContentIntent(contentIntent)
                         .setDefaults(Notification.DEFAULT_VIBRATE | Notification.DEFAULT_SOUND);
         NotificationManager manager =
@@ -75,6 +100,7 @@ public class NotificationUtils {
         if (sound != null && sound.trim().length() > 0) {
             notification.sound = Uri.parse(ContentResolver.SCHEME_ANDROID_RESOURCE + "://" + sound);
         }
+
         manager.notify(id, notification);
     }
 

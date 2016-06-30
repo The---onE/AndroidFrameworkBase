@@ -24,10 +24,16 @@
         android:hint="内容" />
 
     <Button
-        android:id="@+id/btn_notification"
+        android:id="@+id/btn_remind"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="发送通知" />
+
+    <Button
+        android:id="@+id/btn_notification"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="发送持续通知" />
 
     <Button
         android:id="@+id/btn_remove_notification"

@@ -10,7 +10,8 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.xmx.androidframeworkbase.R;
-import com.xmx.androidframeworkbase.Tools.BaseFragment;
+import com.xmx.androidframeworkbase.Services.MainService;
+import com.xmx.androidframeworkbase.Tools.FragmentBase.BaseFragment;
 import com.xmx.androidframeworkbase.Tools.Notification.NotificationTempActivity;
 import com.xmx.androidframeworkbase.Tools.Notification.NotificationUtils;
 
@@ -22,6 +23,8 @@ public class HomeFragment extends BaseFragment {
     EditText idView;
     EditText titleView;
     EditText contentView;
+
+    Intent service = null;
 
     @Override
     protected View getContentView(LayoutInflater inflater, ViewGroup container) {
@@ -76,6 +79,23 @@ public class HomeFragment extends BaseFragment {
                 String id = idView.getText().toString();
                 int i = id.hashCode();
                 NotificationUtils.removeNotification(getContext(), i);
+            }
+        });
+
+        Button startService = (Button) view.findViewById(R.id.btn_start_service);
+        startService.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                service = new Intent(getContext(), MainService.class);
+                getContext().startService(service);
+            }
+        });
+
+        Button endService = (Button) view.findViewById(R.id.btn_end_service);
+        endService.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                getContext().stopService(service);
             }
         });
     }

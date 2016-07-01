@@ -18,7 +18,7 @@ import com.xmx.androidframeworkbase.Cloud.Cloud;
 import com.xmx.androidframeworkbase.Cloud.CloudAdapter;
 import com.xmx.androidframeworkbase.Cloud.CloudEntityManager;
 import com.xmx.androidframeworkbase.R;
-import com.xmx.androidframeworkbase.Tools.BaseFragment;
+import com.xmx.androidframeworkbase.Tools.FragmentBase.BaseFragment;
 import com.xmx.androidframeworkbase.Tools.Data.Callback.DelCallback;
 import com.xmx.androidframeworkbase.Tools.Data.Callback.InsertCallback;
 import com.xmx.androidframeworkbase.Tools.Data.Callback.SelectCallback;

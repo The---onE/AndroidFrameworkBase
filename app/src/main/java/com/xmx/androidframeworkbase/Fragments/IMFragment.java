@@ -19,7 +19,7 @@ import com.xmx.androidframeworkbase.IM.IMAdapter;
 import com.xmx.androidframeworkbase.IM.IMTextMessageHandler;
 import com.xmx.androidframeworkbase.IM.OnReceiveCallback;
 import com.xmx.androidframeworkbase.R;
-import com.xmx.androidframeworkbase.Tools.BaseFragment;
+import com.xmx.androidframeworkbase.Tools.FragmentBase.BaseFragment;
 import com.xmx.androidframeworkbase.Tools.IM.Callback.CreateConversationCallback;
 import com.xmx.androidframeworkbase.Tools.IM.Callback.GetTextChatLogCallback;
 import com.xmx.androidframeworkbase.Tools.IM.Callback.JoinConversationCallback;

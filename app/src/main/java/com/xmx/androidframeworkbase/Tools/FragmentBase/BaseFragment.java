@@ -1,4 +1,4 @@
-package com.xmx.androidframeworkbase.Tools;
+package com.xmx.androidframeworkbase.Tools.FragmentBase;
 
 import android.content.Intent;
 import android.os.Bundle;

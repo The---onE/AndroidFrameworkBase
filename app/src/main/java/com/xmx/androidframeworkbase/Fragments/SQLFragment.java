@@ -12,13 +12,12 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 
-import com.xmx.androidframeworkbase.Constants;
 import com.xmx.androidframeworkbase.R;
 import com.xmx.androidframeworkbase.SQL.SQL;
 import com.xmx.androidframeworkbase.SQL.SQLAdapter;
 import com.xmx.androidframeworkbase.SQL.SQLEntityManager;
 import com.xmx.androidframeworkbase.SQL.SQLManager;
-import com.xmx.androidframeworkbase.Tools.BaseFragment;
+import com.xmx.androidframeworkbase.Tools.FragmentBase.BaseFragment;
 
 import java.util.Date;
 

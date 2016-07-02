@@ -34,7 +34,15 @@ public abstract class BaseService extends Service {
 
     protected abstract void setForeground();
 
-    public void setForeground(Class<?> iActivity, int sIcon,
+    public void showForeground(Class<?> iActivity, String content) {
+        showForeground(iActivity, R.mipmap.ic_launcher, getString(R.string.app_name), content);
+    }
+
+    public void showForeground(Class<?> iActivity, String title, String content) {
+        showForeground(iActivity, R.mipmap.ic_launcher, title, content);
+    }
+
+    public void showForeground(Class<?> iActivity, int sIcon,
                                  String title, String content) {
         int notificationId = -1;
         Intent notificationIntent = new Intent(this, iActivity);

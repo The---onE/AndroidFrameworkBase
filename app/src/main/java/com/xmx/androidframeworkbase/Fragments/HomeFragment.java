@@ -95,7 +95,9 @@ public class HomeFragment extends BaseFragment {
         endService.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                getContext().stopService(service);
+                if (service != null) {
+                    getContext().stopService(service);
+                }
             }
         });
     }

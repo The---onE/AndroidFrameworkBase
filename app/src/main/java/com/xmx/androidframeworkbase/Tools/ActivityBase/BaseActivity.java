@@ -9,6 +9,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import org.xutils.x;
+
 /**
  * Created by The_onE on 2015/12/27.
  */
@@ -18,6 +20,9 @@ public abstract class BaseActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        x.view().inject(this);
+
         TAG = this.getClass().getSimpleName();
         initView(savedInstanceState);
         setListener();

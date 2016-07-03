@@ -4,10 +4,12 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 
+import com.avos.avoscloud.AVException;
 import com.avos.avoscloud.AVObject;
 import com.xmx.androidframeworkbase.Tools.ActivityBase.BaseActivity;
 import com.xmx.androidframeworkbase.User.Callback.AutoLoginCallback;
 import com.xmx.androidframeworkbase.User.LoginActivity;
+import com.xmx.androidframeworkbase.User.UserConstants;
 import com.xmx.androidframeworkbase.User.UserManager;
 
 public class SplashActivity extends BaseActivity {
@@ -54,15 +56,7 @@ public class SplashActivity extends BaseActivity {
             }
 
             @Override
-            public void notLoggedIn() {
-                notLoginFlag = true;
-                if (timeFlag) {
-                    startLoginActivity();
-                }
-            }
-
-            @Override
-            public void errorNetwork() {
+            public void error(AVException e) {
                 showToast(R.string.network_error);
                 notLoginFlag = true;
                 if (timeFlag) {
@@ -71,18 +65,26 @@ public class SplashActivity extends BaseActivity {
             }
 
             @Override
-            public void errorUsername() {
-                notLoginFlag = true;
-                if (timeFlag) {
-                    startLoginActivity();
-                }
-            }
-
-            @Override
-            public void errorChecksum() {
-                notLoginFlag = true;
-                if (timeFlag) {
-                    startLoginActivity();
+            public void error(int error) {
+                switch (error) {
+                    case UserConstants.NOT_LOGGED_IN:
+                        notLoginFlag = true;
+                        if (timeFlag) {
+                            startLoginActivity();
+                        }
+                        break;
+                    case UserConstants.USERNAME_ERROR:
+                        notLoginFlag = true;
+                        if (timeFlag) {
+                            startLoginActivity();
+                        }
+                        break;
+                    case UserConstants.CHECKSUM_ERROR:
+                        notLoginFlag = true;
+                        if (timeFlag) {
+                            startLoginActivity();
+                        }
+                        break;
                 }
             }
         });

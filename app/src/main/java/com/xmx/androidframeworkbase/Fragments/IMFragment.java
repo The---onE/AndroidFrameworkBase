@@ -9,6 +9,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 
+import com.avos.avoscloud.AVException;
 import com.avos.avoscloud.AVObject;
 import com.avos.avoscloud.im.v2.AVIMClient;
 import com.avos.avoscloud.im.v2.AVIMConversation;
@@ -27,6 +28,7 @@ import com.xmx.androidframeworkbase.Tools.IM.Callback.SendMessageCallback;
 import com.xmx.androidframeworkbase.Tools.IM.IMClientManager;
 import com.xmx.androidframeworkbase.Tools.IM.IMMessageHandlerManager;
 import com.xmx.androidframeworkbase.User.Callback.AutoLoginCallback;
+import com.xmx.androidframeworkbase.User.UserConstants;
 import com.xmx.androidframeworkbase.User.UserManager;
 
 import java.util.ArrayList;
@@ -83,23 +85,25 @@ public class IMFragment extends BaseFragment {
                     }
 
                     @Override
-                    public void notLoggedIn() {
-                        showToast(R.string.not_loggedin);
-                    }
-
-                    @Override
-                    public void errorNetwork() {
+                    public void error(AVException e) {
                         showToast(R.string.network_error);
                     }
 
                     @Override
-                    public void errorUsername() {
-                        showToast(R.string.username_error);
-                    }
+                    public void error(int error) {
+                        switch (error) {
+                            case UserConstants.NOT_LOGGED_IN:
+                                showToast(R.string.not_loggedin);
+                                break;
 
-                    @Override
-                    public void errorChecksum() {
-                        showToast(R.string.not_loggedin);
+                            case UserConstants.USERNAME_ERROR:
+                                showToast(R.string.username_error);
+                                break;
+
+                            case UserConstants.CHECKSUM_ERROR:
+                                showToast(R.string.not_loggedin);
+                                break;
+                        }
                     }
                 });
             }

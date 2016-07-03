@@ -11,7 +11,9 @@ import com.xmx.androidframeworkbase.Tools.Data.Callback.DelCallback;
 import com.xmx.androidframeworkbase.Tools.Data.Callback.InsertCallback;
 import com.xmx.androidframeworkbase.Tools.Data.Callback.SelectCallback;
 import com.xmx.androidframeworkbase.Tools.Data.Callback.UpdateCallback;
+import com.xmx.androidframeworkbase.Tools.Data.DataConstants;
 import com.xmx.androidframeworkbase.User.Callback.AutoLoginCallback;
+import com.xmx.androidframeworkbase.User.UserConstants;
 import com.xmx.androidframeworkbase.User.UserManager;
 
 import java.util.ArrayList;
@@ -37,7 +39,7 @@ public abstract class BaseCloudEntityManager<Entity extends ICloudEntity> {
                                   final String order, final boolean ascFlag,
                                   final SelectCallback<Entity> callback) {
         if (!checkDatabase()) {
-            callback.notInit();
+            callback.syncError(DataConstants.NOT_INIT);
             return;
         }
         UserManager.getInstance().checkLogin(new AutoLoginCallback() {
@@ -76,30 +78,30 @@ public abstract class BaseCloudEntityManager<Entity extends ICloudEntity> {
             }
 
             @Override
-            public void notLoggedIn() {
-                callback.notLoggedIn();
+            public void error(AVException e) {
+                callback.syncError(e);
             }
 
             @Override
-            public void errorNetwork() {
-                callback.errorNetwork();
-            }
-
-            @Override
-            public void errorUsername() {
-               callback.errorUsername();
-            }
-
-            @Override
-            public void errorChecksum() {
-                callback.errorChecksum();
+            public void error(int error) {
+                switch (error) {
+                    case UserConstants.NOT_LOGGED_IN:
+                        callback.syncError(DataConstants.NOT_LOGGED_IN);
+                        break;
+                    case UserConstants.USERNAME_ERROR:
+                        callback.syncError(DataConstants.USERNAME_ERROR);
+                        break;
+                    case UserConstants.CHECKSUM_ERROR:
+                        callback.syncError(DataConstants.CHECKSUM_ERROR);
+                        break;
+                }
             }
         });
     }
 
     public void insertToCloud(final Entity entity, final InsertCallback callback) {
         if (!checkDatabase()) {
-            callback.notInit();
+            callback.syncError(DataConstants.NOT_INIT);
             return;
         }
         UserManager.getInstance().checkLogin(new AutoLoginCallback() {
@@ -122,30 +124,30 @@ public abstract class BaseCloudEntityManager<Entity extends ICloudEntity> {
             }
 
             @Override
-            public void notLoggedIn() {
-                callback.notLoggedIn();
+            public void error(AVException e) {
+                callback.syncError(e);
             }
 
             @Override
-            public void errorNetwork() {
-                callback.errorNetwork();
-            }
-
-            @Override
-            public void errorUsername() {
-                callback.errorUsername();
-            }
-
-            @Override
-            public void errorChecksum() {
-                callback.errorChecksum();
+            public void error(int error) {
+                switch (error) {
+                    case UserConstants.NOT_LOGGED_IN:
+                        callback.syncError(DataConstants.NOT_LOGGED_IN);
+                        break;
+                    case UserConstants.USERNAME_ERROR:
+                        callback.syncError(DataConstants.USERNAME_ERROR);
+                        break;
+                    case UserConstants.CHECKSUM_ERROR:
+                        callback.syncError(DataConstants.CHECKSUM_ERROR);
+                        break;
+                }
             }
         });
     }
 
     public void deleteFromCloud(final String objectId, final DelCallback callback) {
         if (!checkDatabase()) {
-            callback.notInit();
+            callback.syncError(DataConstants.NOT_INIT);
             return;
         }
         UserManager.getInstance().checkLogin(new AutoLoginCallback() {
@@ -174,23 +176,23 @@ public abstract class BaseCloudEntityManager<Entity extends ICloudEntity> {
             }
 
             @Override
-            public void notLoggedIn() {
-                callback.notLoggedIn();
+            public void error(AVException e) {
+                callback.syncError(e);
             }
 
             @Override
-            public void errorNetwork() {
-                callback.errorNetwork();
-            }
-
-            @Override
-            public void errorUsername() {
-                callback.errorUsername();
-            }
-
-            @Override
-            public void errorChecksum() {
-                callback.errorChecksum();
+            public void error(int error) {
+                switch (error) {
+                    case UserConstants.NOT_LOGGED_IN:
+                        callback.syncError(DataConstants.NOT_LOGGED_IN);
+                        break;
+                    case UserConstants.USERNAME_ERROR:
+                        callback.syncError(DataConstants.USERNAME_ERROR);
+                        break;
+                    case UserConstants.CHECKSUM_ERROR:
+                        callback.syncError(DataConstants.CHECKSUM_ERROR);
+                        break;
+                }
             }
         });
     }
@@ -198,7 +200,7 @@ public abstract class BaseCloudEntityManager<Entity extends ICloudEntity> {
     public void updateToCloud(final String objectId, final Map<String, Object> update,
                               final UpdateCallback callback) {
         if (!checkDatabase()) {
-            callback.notInit();
+            callback.syncError(DataConstants.NOT_INIT);
             return;
         }
         UserManager.getInstance().checkLogin(new AutoLoginCallback() {
@@ -232,23 +234,23 @@ public abstract class BaseCloudEntityManager<Entity extends ICloudEntity> {
             }
 
             @Override
-            public void notLoggedIn() {
-                callback.notLoggedIn();
+            public void error(AVException e) {
+                callback.syncError(e);
             }
 
             @Override
-            public void errorNetwork() {
-                callback.errorNetwork();
-            }
-
-            @Override
-            public void errorUsername() {
-                callback.errorUsername();
-            }
-
-            @Override
-            public void errorChecksum() {
-                callback.errorChecksum();
+            public void error(int error) {
+                switch (error) {
+                    case UserConstants.NOT_LOGGED_IN:
+                        callback.syncError(DataConstants.NOT_LOGGED_IN);
+                        break;
+                    case UserConstants.USERNAME_ERROR:
+                        callback.syncError(DataConstants.USERNAME_ERROR);
+                        break;
+                    case UserConstants.CHECKSUM_ERROR:
+                        callback.syncError(DataConstants.CHECKSUM_ERROR);
+                        break;
+                }
             }
         });
     }

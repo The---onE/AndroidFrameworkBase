@@ -7,9 +7,8 @@ import com.xmx.androidframeworkbase.Tools.Data.Callback.InsertCallback;
 import com.xmx.androidframeworkbase.Tools.Data.Callback.SelectCallback;
 import com.xmx.androidframeworkbase.Tools.Data.Callback.UpdateCallback;
 import com.xmx.androidframeworkbase.Tools.Data.Cloud.BaseCloudEntityManager;
+import com.xmx.androidframeworkbase.Tools.Data.DataConstants;
 import com.xmx.androidframeworkbase.Tools.Data.SQL.BaseSQLEntityManager;
-import com.xmx.androidframeworkbase.User.Callback.AutoLoginCallback;
-import com.xmx.androidframeworkbase.User.UserManager;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -96,7 +95,7 @@ public abstract class BaseSyncEntityManager<Entity extends ISyncEntity> {
     public void syncFromCloud(final Map<String, Object> conditions,
                               final SelectCallback<Entity> callback) {
         if (!checkDatabase()) {
-            callback.notInit();
+            callback.syncError(DataConstants.NOT_INIT);
             return;
         }
         cloudManager.selectByCondition(conditions, null, false, new SelectCallback<Entity>() {
@@ -113,33 +112,13 @@ public abstract class BaseSyncEntityManager<Entity extends ISyncEntity> {
             }
 
             @Override
-            public void notInit() {
-                callback.notInit();
+            public void syncError(int error) {
+                callback.syncError(error);
             }
 
             @Override
             public void syncError(AVException e) {
                 callback.syncError(e);
-            }
-
-            @Override
-            public void notLoggedIn() {
-                callback.notLoggedIn();
-            }
-
-            @Override
-            public void errorNetwork() {
-                callback.errorNetwork();
-            }
-
-            @Override
-            public void errorUsername() {
-                callback.errorUsername();
-            }
-
-            @Override
-            public void errorChecksum() {
-                callback.errorChecksum();
             }
         });
     }
@@ -147,7 +126,7 @@ public abstract class BaseSyncEntityManager<Entity extends ISyncEntity> {
     //向云端添加数据，成功后添加至数据库
     public void insertData(final Entity entity, final InsertCallback callback) {
         if (!checkDatabase()) {
-            callback.notInit();
+            callback.syncError(DataConstants.NOT_INIT);
             return;
         }
         cloudManager.insertToCloud(entity, new InsertCallback() {
@@ -160,33 +139,13 @@ public abstract class BaseSyncEntityManager<Entity extends ISyncEntity> {
             }
 
             @Override
-            public void notInit() {
-                callback.notInit();
+            public void syncError(int error) {
+                callback.syncError(error);
             }
 
             @Override
             public void syncError(AVException e) {
                 callback.syncError(e);
-            }
-
-            @Override
-            public void notLoggedIn() {
-                callback.notLoggedIn();
-            }
-
-            @Override
-            public void errorNetwork() {
-                callback.errorNetwork();
-            }
-
-            @Override
-            public void errorUsername() {
-                callback.errorUsername();
-            }
-
-            @Override
-            public void errorChecksum() {
-                callback.errorChecksum();
             }
         });
     }
@@ -194,7 +153,7 @@ public abstract class BaseSyncEntityManager<Entity extends ISyncEntity> {
     //从云端删除一条记录，成功后删除数据库中对应记录
     public void deleteData(final String objectId, final DelCallback callback) {
         if (!checkDatabase()) {
-            callback.notInit();
+            callback.syncError(DataConstants.NOT_INIT);
             return;
         }
         cloudManager.deleteFromCloud(objectId, new DelCallback() {
@@ -206,33 +165,13 @@ public abstract class BaseSyncEntityManager<Entity extends ISyncEntity> {
             }
 
             @Override
-            public void notInit() {
-                callback.notInit();
+            public void syncError(int error) {
+                callback.syncError(error);
             }
 
             @Override
             public void syncError(AVException e) {
                 callback.syncError(e);
-            }
-
-            @Override
-            public void notLoggedIn() {
-                callback.notLoggedIn();
-            }
-
-            @Override
-            public void errorNetwork() {
-                callback.errorNetwork();
-            }
-
-            @Override
-            public void errorUsername() {
-                callback.errorUsername();
-            }
-
-            @Override
-            public void errorChecksum() {
-                callback.errorChecksum();
             }
         });
     }
@@ -241,7 +180,7 @@ public abstract class BaseSyncEntityManager<Entity extends ISyncEntity> {
     public void updateData(final String objectId, final Map<String, Object> update,
                            final UpdateCallback callback) {
         if (!checkDatabase()) {
-            callback.notInit();
+            callback.syncError(DataConstants.NOT_INIT);
             return;
         }
         cloudManager.updateToCloud(objectId, update, new UpdateCallback() {
@@ -266,33 +205,13 @@ public abstract class BaseSyncEntityManager<Entity extends ISyncEntity> {
             }
 
             @Override
-            public void notInit() {
-                callback.notInit();
+            public void syncError(int error) {
+                callback.syncError(error);
             }
 
             @Override
             public void syncError(AVException e) {
                 callback.syncError(e);
-            }
-
-            @Override
-            public void notLoggedIn() {
-                callback.notLoggedIn();
-            }
-
-            @Override
-            public void errorNetwork() {
-                callback.errorNetwork();
-            }
-
-            @Override
-            public void errorUsername() {
-                callback.errorUsername();
-            }
-
-            @Override
-            public void errorChecksum() {
-                callback.errorChecksum();
             }
         });
     }

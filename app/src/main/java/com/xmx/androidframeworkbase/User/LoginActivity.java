@@ -6,6 +6,7 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.avos.avoscloud.AVException;
 import com.avos.avoscloud.AVObject;
 import com.xmx.androidframeworkbase.Constants;
 import com.xmx.androidframeworkbase.MainActivity;
@@ -47,21 +48,23 @@ public class LoginActivity extends BaseActivity {
                                 }
 
                                 @Override
-                                public void errorNetwork() {
+                                public void error(AVException e) {
                                     showToast(R.string.network_error);
                                     login.setEnabled(true);
                                 }
 
                                 @Override
-                                public void errorUsername() {
-                                    showToast(R.string.username_error);
-                                    login.setEnabled(true);
-                                }
-
-                                @Override
-                                public void errorPassword() {
-                                    showToast(R.string.password_error);
-                                    login.setEnabled(true);
+                                public void error(int error) {
+                                    switch (error) {
+                                        case UserConstants.USERNAME_ERROR:
+                                            showToast(R.string.username_error);
+                                            login.setEnabled(true);
+                                            break;
+                                        case UserConstants.PASSWORD_ERROR:
+                                            showToast(R.string.password_error);
+                                            login.setEnabled(true);
+                                            break;
+                                    }
                                 }
                             });
                 }

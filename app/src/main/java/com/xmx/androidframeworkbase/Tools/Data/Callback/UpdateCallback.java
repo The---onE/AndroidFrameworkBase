@@ -10,15 +10,7 @@ public abstract class UpdateCallback {
 
     public abstract void success(AVObject user);
 
-    public abstract void notInit();
+    public abstract void syncError(int error);
 
     public abstract void syncError(AVException e);
-
-    public abstract void notLoggedIn();
-
-    public abstract void errorNetwork();
-
-    public abstract void errorUsername();
-
-    public abstract void errorChecksum();
 }

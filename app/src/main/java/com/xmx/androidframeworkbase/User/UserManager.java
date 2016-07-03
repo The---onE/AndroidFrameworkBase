@@ -12,7 +12,6 @@ import com.avos.avoscloud.FindCallback;
 import com.avos.avoscloud.GetCallback;
 import com.avos.avoscloud.SaveCallback;
 import com.xmx.androidframeworkbase.Constants;
-import com.xmx.androidframeworkbase.Sync.SyncEntityManager;
 import com.xmx.androidframeworkbase.User.Callback.AutoLoginCallback;
 import com.xmx.androidframeworkbase.User.Callback.LoginCallback;
 import com.xmx.androidframeworkbase.User.Callback.LogoutCallback;
@@ -157,7 +156,7 @@ public class UserManager {
             public void done(final int count, AVException e) {
                 if (e == null) {
                     if (count > 0) {
-                        registerCallback.usernameExist();
+                        registerCallback.error(UserConstants.USERNAME_EXIST);
                     } else {
                         AVQuery<AVObject> query2 = AVQuery.getQuery(Constants.USER_DATA_TABLE);
                         query2.whereEqualTo("nickname", nickname);
@@ -166,7 +165,7 @@ public class UserManager {
                             public void done(int i, AVException e) {
                                 if (e == null) {
                                     if (i > 0) {
-                                        registerCallback.nicknameExist();
+                                        registerCallback.error(UserConstants.NICKNAME_EXIST);
                                     } else {
                                         final AVObject post = new AVObject(Constants.USER_INFO_TABLE);
                                         post.put("username", username);
@@ -194,19 +193,19 @@ public class UserManager {
                                                     login(data, username, checksum, nickname);
                                                     registerCallback.success();
                                                 } else {
-                                                    registerCallback.errorNetwork();
+                                                    registerCallback.error(e);
                                                 }
                                             }
                                         });
                                     }
                                 } else {
-                                    registerCallback.errorNetwork();
+                                    registerCallback.error(e);
                                 }
                             }
                         });
                     }
                 } else {
-                    registerCallback.errorNetwork();
+                    registerCallback.error(e);
                 }
             }
         });
@@ -237,23 +236,23 @@ public class UserManager {
                                                     login(data, username, newChecksum, nickname);
                                                     loginCallback.success(user);
                                                 } else {
-                                                    loginCallback.errorNetwork();
+                                                    loginCallback.error(e);
                                                 }
                                             }
                                         });
                                     } else {
-                                        loginCallback.errorNetwork();
+                                        loginCallback.error(e);
                                     }
                                 }
                             });
                         } else {
-                            loginCallback.errorPassword();
+                            loginCallback.error(UserConstants.PASSWORD_ERROR);
                         }
                     } else {
-                        loginCallback.errorUsername();
+                        loginCallback.error(UserConstants.USERNAME_ERROR);
                     }
                 } else {
-                    loginCallback.errorNetwork();
+                    loginCallback.error(e);
                 }
             }
         });
@@ -262,7 +261,7 @@ public class UserManager {
     public void autoLogin(final AutoLoginCallback loginCallback) {
         final String username = getUsername();
         if (!isLoggedIn() || username.equals("")) {
-            loginCallback.notLoggedIn();
+            loginCallback.error(UserConstants.NOT_LOGGED_IN);
             return;
         }
         AVQuery<AVObject> query = new AVQuery<>(Constants.USER_DATA_TABLE);
@@ -285,19 +284,19 @@ public class UserManager {
                                         login(user, username, newChecksum, nickname);
                                         loginCallback.success(user);
                                     } else {
-                                        loginCallback.errorNetwork();
+                                        loginCallback.error(e);
                                     }
                                 }
                             });
                         } else {
                             logout(user, logoutCallback);
-                            loginCallback.errorChecksum();
+                            loginCallback.error(UserConstants.CHECKSUM_ERROR);
                         }
                     } else {
-                        loginCallback.errorUsername();
+                        loginCallback.error(UserConstants.USERNAME_ERROR);
                     }
                 } else {
-                    loginCallback.errorNetwork();
+                    loginCallback.error(e);
                 }
             }
         });
@@ -306,7 +305,7 @@ public class UserManager {
     public void checkLogin(final AutoLoginCallback loginCallback) {
         String username = getUsername();
         if (!isLoggedIn() || username.equals("")) {
-            loginCallback.notLoggedIn();
+            loginCallback.error(UserConstants.NOT_LOGGED_IN);
             return;
         }
         AVQuery<AVObject> query = new AVQuery<>(Constants.USER_DATA_TABLE);
@@ -322,13 +321,13 @@ public class UserManager {
                             loginCallback.success(user);
                         } else {
                             logout(user, logoutCallback);
-                            loginCallback.errorChecksum();
+                            loginCallback.error(UserConstants.CHECKSUM_ERROR);
                         }
                     } else {
-                        loginCallback.errorUsername();
+                        loginCallback.error(UserConstants.USERNAME_ERROR);
                     }
                 } else {
-                    loginCallback.errorNetwork();
+                    loginCallback.error(e);
                 }
             }
         });

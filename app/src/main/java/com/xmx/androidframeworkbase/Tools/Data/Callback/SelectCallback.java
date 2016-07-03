@@ -13,15 +13,7 @@ public abstract class SelectCallback<Entity extends ICloudEntity> {
 
     public abstract void success(AVObject user, List<Entity> entities);
 
-    public abstract void notInit();
+    public abstract void syncError(int error);
 
     public abstract void syncError(AVException e);
-
-    public abstract void notLoggedIn();
-
-    public abstract void errorNetwork();
-
-    public abstract void errorUsername();
-
-    public abstract void errorChecksum();
 }

@@ -18,6 +18,7 @@ import com.xmx.androidframeworkbase.Cloud.Cloud;
 import com.xmx.androidframeworkbase.Cloud.CloudAdapter;
 import com.xmx.androidframeworkbase.Cloud.CloudEntityManager;
 import com.xmx.androidframeworkbase.R;
+import com.xmx.androidframeworkbase.Tools.Data.DataConstants;
 import com.xmx.androidframeworkbase.Tools.FragmentBase.BaseFragment;
 import com.xmx.androidframeworkbase.Tools.Data.Callback.DelCallback;
 import com.xmx.androidframeworkbase.Tools.Data.Callback.InsertCallback;
@@ -76,33 +77,26 @@ public class CloudFragment extends BaseFragment {
                             }
 
                             @Override
-                            public void notInit() {
-                                showToast(R.string.failure);
+                            public void syncError(int error) {
+                                switch (error) {
+                                    case DataConstants.NOT_INIT:
+                                        showToast(R.string.failure);
+                                        break;
+                                    case DataConstants.NOT_LOGGED_IN:
+                                        showToast(R.string.not_loggedin);
+                                        break;
+                                    case DataConstants.USERNAME_ERROR:
+                                        showToast(R.string.username_error);
+                                        break;
+                                    case DataConstants.CHECKSUM_ERROR:
+                                        showToast(R.string.not_loggedin);
+                                        break;
+                                }
                             }
 
                             @Override
                             public void syncError(AVException e) {
                                 showToast(R.string.sync_failure);
-                            }
-
-                            @Override
-                            public void notLoggedIn() {
-                                showToast(R.string.not_loggedin);
-                            }
-
-                            @Override
-                            public void errorNetwork() {
-                                showToast(R.string.network_error);
-                            }
-
-                            @Override
-                            public void errorUsername() {
-                                showToast(R.string.username_error);
-                            }
-
-                            @Override
-                            public void errorChecksum() {
-                                showToast(R.string.not_loggedin);
                             }
                         });
                     }
@@ -121,33 +115,26 @@ public class CloudFragment extends BaseFragment {
                                     }
 
                                     @Override
-                                    public void notInit() {
-                                        showToast(R.string.failure);
+                                    public void syncError(int error) {
+                                        switch (error) {
+                                            case DataConstants.NOT_INIT:
+                                                showToast(R.string.failure);
+                                                break;
+                                            case DataConstants.NOT_LOGGED_IN:
+                                                showToast(R.string.not_loggedin);
+                                                break;
+                                            case DataConstants.USERNAME_ERROR:
+                                                showToast(R.string.username_error);
+                                                break;
+                                            case DataConstants.CHECKSUM_ERROR:
+                                                showToast(R.string.not_loggedin);
+                                                break;
+                                        }
                                     }
 
                                     @Override
                                     public void syncError(AVException e) {
                                         showToast(R.string.sync_failure);
-                                    }
-
-                                    @Override
-                                    public void notLoggedIn() {
-                                        showToast(R.string.not_loggedin);
-                                    }
-
-                                    @Override
-                                    public void errorNetwork() {
-                                        showToast(R.string.network_error);
-                                    }
-
-                                    @Override
-                                    public void errorUsername() {
-                                        showToast(R.string.username_error);
-                                    }
-
-                                    @Override
-                                    public void errorChecksum() {
-                                        showToast(R.string.not_loggedin);
                                     }
                                 });
                     }
@@ -179,33 +166,26 @@ public class CloudFragment extends BaseFragment {
                     }
 
                     @Override
-                    public void notInit() {
-                        showToast(R.string.failure);
+                    public void syncError(int error) {
+                        switch (error) {
+                            case DataConstants.NOT_INIT:
+                                showToast(R.string.failure);
+                                break;
+                            case DataConstants.NOT_LOGGED_IN:
+                                showToast(R.string.not_loggedin);
+                                break;
+                            case DataConstants.USERNAME_ERROR:
+                                showToast(R.string.username_error);
+                                break;
+                            case DataConstants.CHECKSUM_ERROR:
+                                showToast(R.string.not_loggedin);
+                                break;
+                        }
                     }
 
                     @Override
                     public void syncError(AVException e) {
                         showToast(R.string.sync_failure);
-                    }
-
-                    @Override
-                    public void notLoggedIn() {
-                        showToast(R.string.not_loggedin);
-                    }
-
-                    @Override
-                    public void errorNetwork() {
-                        showToast(R.string.network_error);
-                    }
-
-                    @Override
-                    public void errorUsername() {
-                        showToast(R.string.username_error);
-                    }
-
-                    @Override
-                    public void errorChecksum() {
-                        showToast(R.string.not_loggedin);
                     }
                 });
                 text.setText("");
@@ -222,40 +202,33 @@ public class CloudFragment extends BaseFragment {
         CloudEntityManager.getInstance().selectByCondition(null,
                 "Time", false,
                 new SelectCallback<Cloud>() {
-            @Override
-            public void success(AVObject user, List<Cloud> clouds) {
-                cloudAdapter.updateList(clouds);
-            }
+                    @Override
+                    public void success(AVObject user, List<Cloud> clouds) {
+                        cloudAdapter.updateList(clouds);
+                    }
 
-            @Override
-            public void notInit() {
-                showToast(R.string.failure);
-            }
+                    @Override
+                    public void syncError(int error) {
+                        switch (error) {
+                            case DataConstants.NOT_INIT:
+                                showToast(R.string.failure);
+                                break;
+                            case DataConstants.NOT_LOGGED_IN:
+                                showToast(R.string.not_loggedin);
+                                break;
+                            case DataConstants.USERNAME_ERROR:
+                                showToast(R.string.username_error);
+                                break;
+                            case DataConstants.CHECKSUM_ERROR:
+                                showToast(R.string.not_loggedin);
+                                break;
+                        }
+                    }
 
-            @Override
-            public void syncError(AVException e) {
-                showToast(R.string.sync_failure);
-            }
-
-            @Override
-            public void notLoggedIn() {
-                showToast(R.string.not_loggedin);
-            }
-
-            @Override
-            public void errorNetwork() {
-                showToast(R.string.network_error);
-            }
-
-            @Override
-            public void errorUsername() {
-                showToast(R.string.username_error);
-            }
-
-            @Override
-            public void errorChecksum() {
-                showToast(R.string.not_loggedin);
-            }
-        });
+                    @Override
+                    public void syncError(AVException e) {
+                        showToast(R.string.sync_failure);
+                    }
+                });
     }
 }

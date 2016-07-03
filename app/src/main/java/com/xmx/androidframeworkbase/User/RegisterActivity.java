@@ -5,6 +5,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.avos.avoscloud.AVException;
 import com.xmx.androidframeworkbase.R;
 import com.xmx.androidframeworkbase.Tools.ActivityBase.BaseTempActivity;
 import com.xmx.androidframeworkbase.User.Callback.RegisterCallback;
@@ -57,21 +58,23 @@ public class RegisterActivity extends BaseTempActivity {
                     }
 
                     @Override
-                    public void usernameExist() {
-                        showToast(R.string.username_exist);
-                        register.setEnabled(true);
-                    }
-
-                    @Override
-                    public void nicknameExist() {
-                        showToast(R.string.nickname_exist);
-                        register.setEnabled(true);
-                    }
-
-                    @Override
-                    public void errorNetwork() {
+                    public void error(AVException e) {
                         showToast(R.string.network_error);
                         register.setEnabled(true);
+                    }
+
+                    @Override
+                    public void error(int error) {
+                        switch (error) {
+                            case UserConstants.USERNAME_ERROR:
+                                showToast(R.string.username_exist);
+                                register.setEnabled(true);
+                                break;
+                            case UserConstants.NICKNAME_EXIST:
+                                showToast(R.string.nickname_exist);
+                                register.setEnabled(true);
+                                break;
+                        }
                     }
                 });
             }

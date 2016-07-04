@@ -29,13 +29,13 @@ import java.util.List;
 public class HomeFragment extends BaseFragment {
 
     @ViewInject(R.id.edit_id)
-    EditText idView;
+    private EditText idView;
 
     @ViewInject(R.id.edit_title)
-    EditText titleView;
+    private EditText titleView;
 
     @ViewInject(R.id.edit_content)
-    EditText contentView;
+    private EditText contentView;
 
     @Override
     protected View getContentView(LayoutInflater inflater, ViewGroup container) {
@@ -48,7 +48,7 @@ public class HomeFragment extends BaseFragment {
     }
 
     @Event(value = R.id.btn_remind)
-    void onRemindClick(View view) {
+    private void onRemindClick(View view) {
         String id = idView.getText().toString();
         int i = id.hashCode();
         String title = titleView.getText().toString();
@@ -62,7 +62,7 @@ public class HomeFragment extends BaseFragment {
     }
 
     @Event(value = R.id.btn_notification)
-    void onNotificationClick(View view) {
+    private void onNotificationClick(View view) {
         String id = idView.getText().toString();
         int i = id.hashCode();
         String title = titleView.getText().toString();
@@ -77,7 +77,7 @@ public class HomeFragment extends BaseFragment {
     }
 
     @Event(value = R.id.btn_remove_notification)
-    void onRemoveClick(View view) {
+    private void onRemoveClick(View view) {
         String id = idView.getText().toString();
         int i = id.hashCode();
         NotificationUtils.removeNotification(getContext(), i);
@@ -85,14 +85,14 @@ public class HomeFragment extends BaseFragment {
     }
 
     @Event(value = R.id.btn_start_service)
-    void onStartServiceClick(View view) {
+    private void onStartServiceClick(View view) {
         Intent service = new Intent(getContext(), MainService.class);
         getContext().startService(service);
         showToast("已开启服务");
     }
 
     @Event(value = R.id.btn_end_service)
-    void onEndServiceClick(View view) {
+    private void onEndServiceClick(View view) {
         ActivityManager manager =
                 (ActivityManager) getActivity().getSystemService(Context.ACTIVITY_SERVICE);
         int defaultNum = 1000;

@@ -5,14 +5,12 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.EditText;
 
 import com.xmx.androidframeworkbase.R;
 import com.xmx.androidframeworkbase.Services.MainService;
-import com.xmx.androidframeworkbase.Tools.FragmentBase.BaseFragment;
+import com.xmx.androidframeworkbase.Tools.FragmentBase.xUtilsFragment;
 import com.xmx.androidframeworkbase.Tools.Notification.NotificationTempActivity;
 import com.xmx.androidframeworkbase.Tools.Notification.NotificationUtils;
 
@@ -26,7 +24,7 @@ import java.util.List;
  * A simple {@link Fragment} subclass.
  */
 @ContentView(R.layout.fragment_home)
-public class HomeFragment extends BaseFragment {
+public class HomeFragment extends xUtilsFragment {
 
     @ViewInject(R.id.edit_id)
     private EditText idView;
@@ -36,16 +34,6 @@ public class HomeFragment extends BaseFragment {
 
     @ViewInject(R.id.edit_content)
     private EditText contentView;
-
-    @Override
-    protected View getContentView(LayoutInflater inflater, ViewGroup container) {
-        xUtilsFlag = true;
-        return inflater.inflate(R.layout.fragment_home, container, false);
-    }
-
-    @Override
-    protected void initView(View view) {
-    }
 
     @Event(value = R.id.btn_remind)
     private void onRemindClick(View view) {
@@ -117,11 +105,7 @@ public class HomeFragment extends BaseFragment {
     }
 
     @Override
-    protected void setListener(View view) {
-    }
-
-    @Override
-    protected void processLogic(View view, Bundle savedInstanceState) {
+    protected void processLogic(Bundle savedInstanceState) {
 
     }
 

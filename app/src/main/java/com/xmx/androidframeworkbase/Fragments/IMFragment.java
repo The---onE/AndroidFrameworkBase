@@ -21,6 +21,7 @@ import com.xmx.androidframeworkbase.IM.IMTextMessageHandler;
 import com.xmx.androidframeworkbase.IM.OnReceiveCallback;
 import com.xmx.androidframeworkbase.R;
 import com.xmx.androidframeworkbase.Tools.FragmentBase.BaseFragment;
+import com.xmx.androidframeworkbase.Tools.FragmentBase.xUtilsFragment;
 import com.xmx.androidframeworkbase.Tools.IM.Callback.CreateConversationCallback;
 import com.xmx.androidframeworkbase.Tools.IM.Callback.GetTextChatLogCallback;
 import com.xmx.androidframeworkbase.Tools.IM.Callback.JoinConversationCallback;
@@ -31,27 +32,151 @@ import com.xmx.androidframeworkbase.User.Callback.AutoLoginCallback;
 import com.xmx.androidframeworkbase.User.UserConstants;
 import com.xmx.androidframeworkbase.User.UserManager;
 
+import org.xutils.view.annotation.ContentView;
+import org.xutils.view.annotation.Event;
+import org.xutils.view.annotation.ViewInject;
+
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class IMFragment extends BaseFragment {
+@ContentView(R.layout.fragment_im)
+public class IMFragment extends xUtilsFragment {
 
-    EditText text;
     IMAdapter imAdapter;
-    ListView imList;
 
-    @Override
-    protected View getContentView(LayoutInflater inflater, ViewGroup container) {
-        return inflater.inflate(R.layout.fragment_im, container, false);
+    @ViewInject(R.id.edit_im)
+    private EditText text;
+
+    @ViewInject(R.id.list_im)
+    private ListView imList;
+
+    @Event(value = R.id.btn_open_client)
+    private void onOpenClick(View view) {
+        UserManager.getInstance().checkLogin(new AutoLoginCallback() {
+            @Override
+            public void success(AVObject user) {
+                showToast("IM客户端打开中……");
+
+                IMClientManager.getInstance().openClient(user.getString("username"),
+                        new AVIMClientCallback() {
+                            @Override
+                            public void done(AVIMClient avimClient, AVIMException e) {
+                                showToast("IM客户端打开成功");
+                            }
+                        });
+            }
+
+            @Override
+            public void error(AVException e) {
+                showToast(R.string.network_error);
+            }
+
+            @Override
+            public void error(int error) {
+                switch (error) {
+                    case UserConstants.NOT_LOGGED_IN:
+                        showToast(R.string.not_loggedin);
+                        break;
+
+                    case UserConstants.USERNAME_ERROR:
+                        showToast(R.string.username_error);
+                        break;
+
+                    case UserConstants.CHECKSUM_ERROR:
+                        showToast(R.string.not_loggedin);
+                        break;
+                }
+            }
+        });
+    }
+
+    @Event(value = R.id.btn_join_conversation)
+    private void onJoinClick(View view) {
+        IMClientManager.getInstance().createConversation("test", new CreateConversationCallback() {
+            @Override
+            public void success(AVIMConversation conversation) {
+                showToast("创建对话成功");
+                IMClientManager.getInstance().joinConversation(conversation, new JoinConversationCallback() {
+                    @Override
+                    public void success(AVIMConversation conversation) {
+                        showToast("加入对话成功");
+                        updateList();
+                    }
+
+                    @Override
+                    public void failure(Exception e) {
+                        showToast("加入对话失败");
+                    }
+
+                    @Override
+                    public void clientError() {
+                        showToast("IM客户端未打开");
+                    }
+                });
+            }
+
+            @Override
+            public void failure(Exception e) {
+                showToast("创建对话失败");
+            }
+
+            @Override
+            public void exist(AVIMConversation conversation) {
+                showToast("对话已存在");
+                IMClientManager.getInstance().joinConversation(conversation, new JoinConversationCallback() {
+                    @Override
+                    public void success(AVIMConversation conversation) {
+                        showToast("加入对话成功");
+                        updateList();
+                    }
+
+                    @Override
+                    public void failure(Exception e) {
+                        showToast("加入对话失败");
+                    }
+
+                    @Override
+                    public void clientError() {
+                        showToast("IM客户端未打开");
+                    }
+                });
+            }
+
+            @Override
+            public void clientError() {
+                showToast("IM客户端未打开");
+            }
+        });
+    }
+
+    @Event(value = R.id.btn_send_message)
+    private void onSendClick(View view) {
+        String data = text.getText().toString();
+        text.setText("");
+        IMClientManager.getInstance().sendText(data, new SendMessageCallback() {
+            @Override
+            public void success() {
+                showToast("发送成功");
+                updateList();
+            }
+
+            @Override
+            public void failure(Exception e) {
+                showToast("发送失败");
+            }
+
+            @Override
+            public void conversationError() {
+                showToast("对话未建立");
+            }
+        });
     }
 
     @Override
-    protected void initView(View view) {
-        text = (EditText) view.findViewById(R.id.edit_im);
-        imList = (ListView) view.findViewById(R.id.list_im);
+    protected void processLogic(Bundle savedInstanceState) {
         imAdapter = new IMAdapter(getContext(), new ArrayList<AVIMTextMessage>());
         imList.setAdapter(imAdapter);
 
@@ -62,145 +187,6 @@ public class IMFragment extends BaseFragment {
             }
         });
         IMMessageHandlerManager.getInstance().addTextMessageHandler(handler);
-    }
-
-    @Override
-    protected void setListener(View view) {
-        Button open = (Button) view.findViewById(R.id.btn_open_client);
-        open.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                UserManager.getInstance().checkLogin(new AutoLoginCallback() {
-                    @Override
-                    public void success(AVObject user) {
-                        showToast("IM客户端打开中……");
-
-                        IMClientManager.getInstance().openClient(user.getString("username"),
-                                new AVIMClientCallback() {
-                                    @Override
-                                    public void done(AVIMClient avimClient, AVIMException e) {
-                                        showToast("IM客户端打开成功");
-                                    }
-                                });
-                    }
-
-                    @Override
-                    public void error(AVException e) {
-                        showToast(R.string.network_error);
-                    }
-
-                    @Override
-                    public void error(int error) {
-                        switch (error) {
-                            case UserConstants.NOT_LOGGED_IN:
-                                showToast(R.string.not_loggedin);
-                                break;
-
-                            case UserConstants.USERNAME_ERROR:
-                                showToast(R.string.username_error);
-                                break;
-
-                            case UserConstants.CHECKSUM_ERROR:
-                                showToast(R.string.not_loggedin);
-                                break;
-                        }
-                    }
-                });
-            }
-        });
-
-        Button join = (Button) view.findViewById(R.id.btn_join_conversation);
-        join.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                IMClientManager.getInstance().createConversation("test", new CreateConversationCallback() {
-                    @Override
-                    public void success(AVIMConversation conversation) {
-                        showToast("创建对话成功");
-                        IMClientManager.getInstance().joinConversation(conversation, new JoinConversationCallback() {
-                            @Override
-                            public void success(AVIMConversation conversation) {
-                                showToast("加入对话成功");
-                                updateList();
-                            }
-
-                            @Override
-                            public void failure(Exception e) {
-                                showToast("加入对话失败");
-                            }
-
-                            @Override
-                            public void clientError() {
-                                showToast("IM客户端未打开");
-                            }
-                        });
-                    }
-
-                    @Override
-                    public void failure(Exception e) {
-                        showToast("创建对话失败");
-                    }
-
-                    @Override
-                    public void exist(AVIMConversation conversation) {
-                        showToast("对话已存在");
-                        IMClientManager.getInstance().joinConversation(conversation, new JoinConversationCallback() {
-                            @Override
-                            public void success(AVIMConversation conversation) {
-                                showToast("加入对话成功");
-                                updateList();
-                            }
-
-                            @Override
-                            public void failure(Exception e) {
-                                showToast("加入对话失败");
-                            }
-
-                            @Override
-                            public void clientError() {
-                                showToast("IM客户端未打开");
-                            }
-                        });
-                    }
-
-                    @Override
-                    public void clientError() {
-                        showToast("IM客户端未打开");
-                    }
-                });
-            }
-        });
-
-        Button send = (Button) view.findViewById(R.id.btn_send_message);
-        send.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                String data = text.getText().toString();
-                text.setText("");
-                IMClientManager.getInstance().sendText(data, new SendMessageCallback() {
-                    @Override
-                    public void success() {
-                        showToast("发送成功");
-                        updateList();
-                    }
-
-                    @Override
-                    public void failure(Exception e) {
-                        showToast("发送失败");
-                    }
-
-                    @Override
-                    public void conversationError() {
-                        showToast("对话未建立");
-                    }
-                });
-            }
-        });
-    }
-
-    @Override
-    protected void processLogic(View view, Bundle savedInstanceState) {
-
     }
 
     public void updateList() {

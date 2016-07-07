@@ -24,6 +24,11 @@ import com.xmx.androidframeworkbase.Tools.Data.Callback.DelCallback;
 import com.xmx.androidframeworkbase.Tools.Data.Callback.InsertCallback;
 import com.xmx.androidframeworkbase.Tools.Data.Callback.SelectCallback;
 import com.xmx.androidframeworkbase.Tools.Data.Callback.UpdateCallback;
+import com.xmx.androidframeworkbase.Tools.FragmentBase.xUtilsFragment;
+
+import org.xutils.view.annotation.ContentView;
+import org.xutils.view.annotation.Event;
+import org.xutils.view.annotation.ViewInject;
 
 import java.util.Date;
 import java.util.HashMap;
@@ -33,137 +38,31 @@ import java.util.Map;
 /**
  * Created by xmx on 2016/6/1.
  */
-public class SyncFragment extends BaseFragment {
+@ContentView(R.layout.fragment_sync)
+public class SyncFragment extends xUtilsFragment {
 
     SyncAdapter syncAdapter;
+
+    @ViewInject(R.id.list_sync)
     ListView syncList;
-    Button add;
+
+    @ViewInject(R.id.edit_sync)
     EditText text;
 
-    @Override
-    protected View getContentView(LayoutInflater inflater, ViewGroup container) {
-        return inflater.inflate(R.layout.fragment_sync, container, false);
-    }
+    @Event(value = R.id.list_sync, type = ListView.OnItemLongClickListener.class)
+    private boolean onSyncLongClick(AdapterView<?> adapterView, View view, int i, long l) {
+        final Sync sync = (Sync) syncAdapter.getItem(i);
 
-    @Override
-    protected void initView(View view) {
-        syncList = (ListView) view.findViewById(R.id.list_sync);
-        SyncManager.getInstance().updateData();
-        syncAdapter = new SyncAdapter(getContext());
-        syncList.setAdapter(syncAdapter);
-
-        text = (EditText) view.findViewById(R.id.edit_sync);
-        add = (Button) view.findViewById(R.id.btn_sync);
-    }
-
-    @Override
-    protected void setListener(View view) {
-        syncList.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+        builder.setMessage("要更新该记录吗？");
+        builder.setTitle("提示");
+        builder.setNegativeButton("删除", new DialogInterface.OnClickListener() {
             @Override
-            public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
-                final Sync sync = (Sync) syncAdapter.getItem(i);
-
-                AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-                builder.setMessage("要更新该记录吗？");
-                builder.setTitle("提示");
-                builder.setNegativeButton("删除", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialogInterface, int i) {
+                SyncEntityManager.getInstance().deleteData(sync.mCloudId, new DelCallback() {
                     @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        SyncEntityManager.getInstance().deleteData(sync.mCloudId, new DelCallback() {
-                            @Override
-                            public void success(AVObject user) {
-                                showToast(R.string.delete_success);
-                                SyncManager.getInstance().updateData();
-                                syncAdapter.updateList();
-                            }
-
-                            @Override
-                            public void syncError(int error) {
-                                switch (error) {
-                                    case DataConstants.NOT_INIT:
-                                        showToast(R.string.failure);
-                                        break;
-                                    case DataConstants.NOT_LOGGED_IN:
-                                        showToast(R.string.not_loggedin);
-                                        break;
-                                    case DataConstants.USERNAME_ERROR:
-                                        showToast(R.string.username_error);
-                                        break;
-                                    case DataConstants.CHECKSUM_ERROR:
-                                        showToast(R.string.not_loggedin);
-                                        break;
-                                }
-                            }
-
-                            @Override
-                            public void syncError(AVException e) {
-                                showToast(R.string.sync_failure);
-                            }
-                        });
-                    }
-                });
-                builder.setPositiveButton("更新", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        Map<String, Object> update = new HashMap<>();
-                        update.put("Time", new Date());
-                        SyncEntityManager.getInstance().updateData(sync.mCloudId, update,
-                                new UpdateCallback() {
-                                    @Override
-                                    public void success(AVObject user) {
-                                        showToast(R.string.update_success);
-                                        SyncManager.getInstance().updateData();
-                                        syncAdapter.updateList();
-                                    }
-
-                                    @Override
-                                    public void syncError(int error) {
-                                        switch (error) {
-                                            case DataConstants.NOT_INIT:
-                                                showToast(R.string.failure);
-                                                break;
-                                            case DataConstants.NOT_LOGGED_IN:
-                                                showToast(R.string.not_loggedin);
-                                                break;
-                                            case DataConstants.USERNAME_ERROR:
-                                                showToast(R.string.username_error);
-                                                break;
-                                            case DataConstants.CHECKSUM_ERROR:
-                                                showToast(R.string.not_loggedin);
-                                                break;
-                                        }
-                                    }
-
-                                    @Override
-                                    public void syncError(AVException e) {
-                                        showToast(R.string.sync_failure);
-                                    }
-                                });
-                    }
-                });
-                builder.setNeutralButton("取消", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        dialogInterface.dismiss();
-                    }
-                });
-                builder.show();
-                return false;
-            }
-        });
-
-
-        add.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                String data = text.getText().toString();
-                final Sync entity = new Sync();
-                entity.mData = data;
-                entity.mTime = new Date();
-                SyncEntityManager.getInstance().insertData(entity, new InsertCallback() {
-                    @Override
-                    public void success(AVObject user, String objectId) {
-                        showToast(R.string.add_success);
+                    public void success(AVObject user) {
+                        showToast(R.string.delete_success);
                         SyncManager.getInstance().updateData();
                         syncAdapter.updateList();
                     }
@@ -191,13 +90,103 @@ public class SyncFragment extends BaseFragment {
                         showToast(R.string.sync_failure);
                     }
                 });
-                text.setText("");
             }
         });
+        builder.setPositiveButton("更新", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                Map<String, Object> update = new HashMap<>();
+                update.put("Time", new Date());
+                SyncEntityManager.getInstance().updateData(sync.mCloudId, update,
+                        new UpdateCallback() {
+                            @Override
+                            public void success(AVObject user) {
+                                showToast(R.string.update_success);
+                                SyncManager.getInstance().updateData();
+                                syncAdapter.updateList();
+                            }
+
+                            @Override
+                            public void syncError(int error) {
+                                switch (error) {
+                                    case DataConstants.NOT_INIT:
+                                        showToast(R.string.failure);
+                                        break;
+                                    case DataConstants.NOT_LOGGED_IN:
+                                        showToast(R.string.not_loggedin);
+                                        break;
+                                    case DataConstants.USERNAME_ERROR:
+                                        showToast(R.string.username_error);
+                                        break;
+                                    case DataConstants.CHECKSUM_ERROR:
+                                        showToast(R.string.not_loggedin);
+                                        break;
+                                }
+                            }
+
+                            @Override
+                            public void syncError(AVException e) {
+                                showToast(R.string.sync_failure);
+                            }
+                        });
+            }
+        });
+        builder.setNeutralButton("取消", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                dialogInterface.dismiss();
+            }
+        });
+        builder.show();
+        return false;
+    }
+
+    @Event(value = R.id.btn_sync)
+    private void onAddClick(View view) {
+        String data = text.getText().toString();
+        final Sync entity = new Sync();
+        entity.mData = data;
+        entity.mTime = new Date();
+        SyncEntityManager.getInstance().insertData(entity, new InsertCallback() {
+            @Override
+            public void success(AVObject user, String objectId) {
+                showToast(R.string.add_success);
+                SyncManager.getInstance().updateData();
+                syncAdapter.updateList();
+            }
+
+            @Override
+            public void syncError(int error) {
+                switch (error) {
+                    case DataConstants.NOT_INIT:
+                        showToast(R.string.failure);
+                        break;
+                    case DataConstants.NOT_LOGGED_IN:
+                        showToast(R.string.not_loggedin);
+                        break;
+                    case DataConstants.USERNAME_ERROR:
+                        showToast(R.string.username_error);
+                        break;
+                    case DataConstants.CHECKSUM_ERROR:
+                        showToast(R.string.not_loggedin);
+                        break;
+                }
+            }
+
+            @Override
+            public void syncError(AVException e) {
+                showToast(R.string.sync_failure);
+            }
+        });
+        text.setText("");
     }
 
     @Override
-    protected void processLogic(View view, Bundle savedInstanceState) {
+    protected void processLogic(Bundle savedInstanceState) {
+        SyncManager.getInstance().updateData();
+        syncAdapter = new SyncAdapter(getContext());
+        syncList.setAdapter(syncAdapter);
+
         SyncEntityManager.getInstance().syncFromCloud(null,
                 new SelectCallback<Sync>() {
                     @Override

@@ -9,6 +9,9 @@ import android.widget.TextView;
 
 import com.xmx.androidframeworkbase.R;
 
+import org.xutils.view.annotation.ViewInject;
+import org.xutils.x;
+
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.List;
@@ -51,8 +54,11 @@ public class SyncAdapter extends BaseAdapter {
     }
 
     static class ViewHolder {
-        TextView data;
-        TextView time;
+        @ViewInject(R.id.item_data)
+        private TextView data;
+
+        @ViewInject(R.id.item_time)
+        private TextView time;
     }
 
     @Override
@@ -61,8 +67,7 @@ public class SyncAdapter extends BaseAdapter {
         if (convertView == null) {
             convertView = LayoutInflater.from(mContext).inflate(R.layout.item_sync, null);
             holder = new ViewHolder();
-            holder.data = (TextView) convertView.findViewById(R.id.item_data);
-            holder.time = (TextView) convertView.findViewById(R.id.item_time);
+            x.view().inject(holder,convertView);
             convertView.setTag(holder);
         } else {
             holder = (ViewHolder) convertView.getTag();

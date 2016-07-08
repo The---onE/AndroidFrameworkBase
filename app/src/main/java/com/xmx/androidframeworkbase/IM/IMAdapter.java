@@ -10,6 +10,9 @@ import android.widget.TextView;
 import com.avos.avoscloud.im.v2.messages.AVIMTextMessage;
 import com.xmx.androidframeworkbase.R;
 
+import org.xutils.view.annotation.ViewInject;
+import org.xutils.x;
+
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.List;
@@ -51,7 +54,10 @@ public class IMAdapter extends BaseAdapter {
     }
 
     static class ViewHolder {
+        @ViewInject(R.id.item_data)
         TextView data;
+
+        @ViewInject(R.id.item_time)
         TextView time;
     }
 
@@ -61,8 +67,7 @@ public class IMAdapter extends BaseAdapter {
         if (convertView == null) {
             convertView = LayoutInflater.from(mContext).inflate(R.layout.item_im, null);
             holder = new ViewHolder();
-            holder.data = (TextView) convertView.findViewById(R.id.item_data);
-            holder.time = (TextView) convertView.findViewById(R.id.item_time);
+            x.view().inject(holder,convertView);
             convertView.setTag(holder);
         } else {
             holder = (ViewHolder) convertView.getTag();

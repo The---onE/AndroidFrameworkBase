@@ -97,6 +97,7 @@ public class CloudFragment extends BaseFragment {
                             @Override
                             public void syncError(AVException e) {
                                 showToast(R.string.sync_failure);
+                                filterException(e);
                             }
                         });
                     }
@@ -135,6 +136,7 @@ public class CloudFragment extends BaseFragment {
                                     @Override
                                     public void syncError(AVException e) {
                                         showToast(R.string.sync_failure);
+                                        filterException(e);
                                     }
                                 });
                     }
@@ -186,6 +188,7 @@ public class CloudFragment extends BaseFragment {
                     @Override
                     public void syncError(AVException e) {
                         showToast(R.string.sync_failure);
+                        filterException(e);
                     }
                 });
                 text.setText("");
@@ -228,6 +231,7 @@ public class CloudFragment extends BaseFragment {
                     @Override
                     public void syncError(AVException e) {
                         showToast(R.string.sync_failure);
+                        filterException(e);
                     }
                 });
     }

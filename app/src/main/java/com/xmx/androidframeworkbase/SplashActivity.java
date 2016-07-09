@@ -58,6 +58,7 @@ public class SplashActivity extends BaseActivity {
             @Override
             public void error(AVException e) {
                 showToast(R.string.network_error);
+                filterException(e);
                 notLoginFlag = true;
                 if (timeFlag) {
                     startLoginActivity();

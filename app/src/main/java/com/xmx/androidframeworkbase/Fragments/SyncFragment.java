@@ -3,11 +3,8 @@ package com.xmx.androidframeworkbase.Fragments;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 
@@ -19,7 +16,6 @@ import com.xmx.androidframeworkbase.Sync.SyncAdapter;
 import com.xmx.androidframeworkbase.Sync.SyncEntityManager;
 import com.xmx.androidframeworkbase.Sync.SyncManager;
 import com.xmx.androidframeworkbase.Tools.Data.DataConstants;
-import com.xmx.androidframeworkbase.Tools.FragmentBase.BaseFragment;
 import com.xmx.androidframeworkbase.Tools.Data.Callback.DelCallback;
 import com.xmx.androidframeworkbase.Tools.Data.Callback.InsertCallback;
 import com.xmx.androidframeworkbase.Tools.Data.Callback.SelectCallback;
@@ -88,6 +84,7 @@ public class SyncFragment extends xUtilsFragment {
                     @Override
                     public void syncError(AVException e) {
                         showToast(R.string.sync_failure);
+                        filterException(e);
                     }
                 });
             }
@@ -127,6 +124,7 @@ public class SyncFragment extends xUtilsFragment {
                             @Override
                             public void syncError(AVException e) {
                                 showToast(R.string.sync_failure);
+                                filterException(e);
                             }
                         });
             }
@@ -176,6 +174,7 @@ public class SyncFragment extends xUtilsFragment {
             @Override
             public void syncError(AVException e) {
                 showToast(R.string.sync_failure);
+                filterException(e);
             }
         });
         text.setText("");
@@ -217,6 +216,7 @@ public class SyncFragment extends xUtilsFragment {
                     @Override
                     public void syncError(AVException e) {
                         showToast(R.string.sync_failure);
+                        filterException(e);
                     }
                 });
     }

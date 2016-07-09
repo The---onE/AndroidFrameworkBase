@@ -2,10 +2,7 @@ package com.xmx.androidframeworkbase.Fragments;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 
@@ -20,7 +17,6 @@ import com.xmx.androidframeworkbase.IM.IMAdapter;
 import com.xmx.androidframeworkbase.IM.IMTextMessageHandler;
 import com.xmx.androidframeworkbase.IM.OnReceiveCallback;
 import com.xmx.androidframeworkbase.R;
-import com.xmx.androidframeworkbase.Tools.FragmentBase.BaseFragment;
 import com.xmx.androidframeworkbase.Tools.FragmentBase.xUtilsFragment;
 import com.xmx.androidframeworkbase.Tools.IM.Callback.CreateConversationCallback;
 import com.xmx.androidframeworkbase.Tools.IM.Callback.GetTextChatLogCallback;
@@ -72,6 +68,7 @@ public class IMFragment extends xUtilsFragment {
             @Override
             public void error(AVException e) {
                 showToast(R.string.network_error);
+                filterException(e);
             }
 
             @Override
@@ -109,6 +106,7 @@ public class IMFragment extends xUtilsFragment {
                     @Override
                     public void failure(Exception e) {
                         showToast("加入对话失败");
+                        filterException(e);
                     }
 
                     @Override

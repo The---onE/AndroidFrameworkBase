@@ -4,6 +4,8 @@ package com.xmx.androidframeworkbase;
  * Created by The_onE on 2016/2/24.
  */
 public class Constants {
+    public static final boolean EXCEPTION_DEBUG = true;
+
     public static final String APP_ID = "vBb01A8F2LI63zJBqkQWiuWc-gzGzoHsz";
     public static final String APP_KEY = "tfMtJ1uRTmRre40QhxT46yVl";
 

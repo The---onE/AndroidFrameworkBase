@@ -9,6 +9,7 @@ import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.xmx.androidframeworkbase.Constants;
 import com.xmx.androidframeworkbase.MainActivity;
 import com.xmx.androidframeworkbase.R;
 
@@ -60,7 +61,7 @@ public abstract class BaseService extends Service {
     }
 
     protected boolean filterException(Exception e) {
-        if (e != null) {
+        if (e != null && Constants.EXCEPTION_DEBUG) {
             e.printStackTrace();
             showToast(e.getMessage());
             return false;

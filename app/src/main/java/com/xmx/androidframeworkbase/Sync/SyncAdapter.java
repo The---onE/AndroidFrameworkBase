@@ -8,6 +8,7 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.xmx.androidframeworkbase.R;
+import com.xmx.androidframeworkbase.Tools.Data.BaseEntityAdapter;
 
 import org.xutils.view.annotation.ViewInject;
 import org.xutils.x;
@@ -19,38 +20,10 @@ import java.util.List;
 /**
  * Created by The_onE on 2016/3/27.
  */
-public class SyncAdapter extends BaseAdapter {
-    Context mContext;
+public class SyncAdapter extends BaseEntityAdapter<Sync> {
 
-    public SyncAdapter(Context context) {
-        mContext = context;
-    }
-
-    public void updateList() {
-        notifyDataSetChanged();
-    }
-
-    @Override
-    public int getCount() {
-        return SyncManager.getInstance().getData().size();
-    }
-
-    @Override
-    public Object getItem(int i) {
-        if (i < SyncManager.getInstance().getData().size()) {
-            return SyncManager.getInstance().getData().get(i);
-        } else {
-            return null;
-        }
-    }
-
-    @Override
-    public long getItemId(int i) {
-        if (i < SyncManager.getInstance().getData().size()) {
-            return SyncManager.getInstance().getData().get(i).mId;
-        } else {
-            return i;
-        }
+    public SyncAdapter(Context context, List<Sync> data) {
+        super(context, data);
     }
 
     static class ViewHolder {

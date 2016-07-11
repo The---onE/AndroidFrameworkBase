@@ -4,10 +4,10 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.xmx.androidframeworkbase.R;
+import com.xmx.androidframeworkbase.Tools.Data.BaseEntityAdapter;
 
 import org.xutils.view.annotation.ViewInject;
 import org.xutils.x;
@@ -19,37 +19,10 @@ import java.util.List;
 /**
  * Created by The_onE on 2016/3/27.
  */
-public class CloudAdapter extends BaseAdapter {
-    Context mContext;
-    List<Cloud> mData;
+public class CloudAdapter extends BaseEntityAdapter<Cloud> {
 
     public CloudAdapter(Context context, List<Cloud> data) {
-        mContext = context;
-        mData = data;
-    }
-
-    public void updateList(List<Cloud> data) {
-        mData = data;
-        notifyDataSetChanged();
-    }
-
-    @Override
-    public int getCount() {
-        return mData.size();
-    }
-
-    @Override
-    public Object getItem(int i) {
-        if (i < mData.size()) {
-            return mData.get(i);
-        } else {
-            return null;
-        }
-    }
-
-    @Override
-    public long getItemId(int i) {
-        return i;
+        super(context, data);
     }
 
     static class ViewHolder {

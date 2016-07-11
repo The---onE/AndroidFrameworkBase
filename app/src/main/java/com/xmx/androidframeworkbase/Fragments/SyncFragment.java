@@ -60,7 +60,7 @@ public class SyncFragment extends xUtilsFragment {
                     public void success(AVObject user) {
                         showToast(R.string.delete_success);
                         SyncManager.getInstance().updateData();
-                        syncAdapter.updateList();
+                        syncAdapter.updateList(SyncManager.getInstance().getData());
                     }
 
                     @Override
@@ -100,7 +100,7 @@ public class SyncFragment extends xUtilsFragment {
                             public void success(AVObject user) {
                                 showToast(R.string.update_success);
                                 SyncManager.getInstance().updateData();
-                                syncAdapter.updateList();
+                                syncAdapter.updateList(SyncManager.getInstance().getData());
                             }
 
                             @Override
@@ -150,7 +150,7 @@ public class SyncFragment extends xUtilsFragment {
             public void success(AVObject user, String objectId) {
                 showToast(R.string.add_success);
                 SyncManager.getInstance().updateData();
-                syncAdapter.updateList();
+                syncAdapter.updateList(SyncManager.getInstance().getData());
             }
 
             @Override
@@ -183,7 +183,7 @@ public class SyncFragment extends xUtilsFragment {
     @Override
     protected void processLogic(Bundle savedInstanceState) {
         SyncManager.getInstance().updateData();
-        syncAdapter = new SyncAdapter(getContext());
+        syncAdapter = new SyncAdapter(getContext(), SyncManager.getInstance().getData());
         syncList.setAdapter(syncAdapter);
 
         SyncEntityManager.getInstance().syncFromCloud(null,
@@ -191,7 +191,7 @@ public class SyncFragment extends xUtilsFragment {
                     @Override
                     public void success(AVObject user, List<Sync> syncs) {
                         SyncManager.getInstance().updateData();
-                        syncAdapter.updateList();
+                        syncAdapter.updateList(SyncManager.getInstance().getData());
                         showToast(R.string.sync_success);
                     }
 

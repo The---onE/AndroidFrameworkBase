@@ -8,6 +8,7 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.xmx.androidframeworkbase.R;
+import com.xmx.androidframeworkbase.Tools.Data.BaseEntityAdapter;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -16,41 +17,10 @@ import java.util.List;
 /**
  * Created by The_onE on 2016/3/27.
  */
-public class SQLAdapter extends BaseAdapter {
-    Context mContext;
-    List<SQL> mData;
+public class SQLAdapter extends BaseEntityAdapter<SQL> {
 
     public SQLAdapter(Context context, List<SQL> data) {
-        mContext = context;
-        mData = data;
-    }
-
-    public void updateList(List<SQL> data) {
-        mData = data;
-        notifyDataSetChanged();
-    }
-
-    @Override
-    public int getCount() {
-        return mData.size();
-    }
-
-    @Override
-    public Object getItem(int i) {
-        if (i < mData.size()) {
-            return mData.get(i);
-        } else {
-            return null;
-        }
-    }
-
-    @Override
-    public long getItemId(int i) {
-        if (i < mData.size()) {
-            return mData.get(i).mId;
-        } else {
-            return i;
-        }
+        super(context, data);
     }
 
     static class ViewHolder {

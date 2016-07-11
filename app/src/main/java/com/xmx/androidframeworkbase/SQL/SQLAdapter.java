@@ -1,14 +1,12 @@
 package com.xmx.androidframeworkbase.SQL;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
-import com.xmx.androidframeworkbase.Constants;
 import com.xmx.androidframeworkbase.R;
 
 import java.text.DateFormat;
@@ -20,24 +18,27 @@ import java.util.List;
  */
 public class SQLAdapter extends BaseAdapter {
     Context mContext;
+    List<SQL> mData;
 
-    public SQLAdapter(Context context) {
+    public SQLAdapter(Context context, List<SQL> data) {
         mContext = context;
+        mData = data;
     }
 
-    public void updateList() {
+    public void updateList(List<SQL> data) {
+        mData = data;
         notifyDataSetChanged();
     }
 
     @Override
     public int getCount() {
-        return SQLManager.getInstance().getData().size();
+        return mData.size();
     }
 
     @Override
     public Object getItem(int i) {
-        if (i < SQLManager.getInstance().getData().size()) {
-            return SQLManager.getInstance().getData().get(i);
+        if (i < mData.size()) {
+            return mData.get(i);
         } else {
             return null;
         }
@@ -45,8 +46,8 @@ public class SQLAdapter extends BaseAdapter {
 
     @Override
     public long getItemId(int i) {
-        if (i < SQLManager.getInstance().getData().size()) {
-            return SQLManager.getInstance().getData().get(i).mId;
+        if (i < mData.size()) {
+            return mData.get(i).mId;
         } else {
             return i;
         }
@@ -70,9 +71,8 @@ public class SQLAdapter extends BaseAdapter {
             holder = (ViewHolder) convertView.getTag();
         }
 
-        List<SQL> sqlList = SQLManager.getInstance().getData();
-        if (position < sqlList.size()) {
-            SQL sql = sqlList.get(position);
+        if (position < mData.size()) {
+            SQL sql = mData.get(position);
             holder.data.setText(sql.mData);
             DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             String timeString = df.format(sql.mTime);

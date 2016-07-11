@@ -19,6 +19,7 @@ import com.xmx.androidframeworkbase.SQL.SQLEntityManager;
 import com.xmx.androidframeworkbase.SQL.SQLManager;
 import com.xmx.androidframeworkbase.Tools.FragmentBase.BaseFragment;
 
+import java.util.ArrayList;
 import java.util.Date;
 
 /**
@@ -39,7 +40,7 @@ public class SQLFragment extends BaseFragment {
     @Override
     protected void initView(View view) {
         sqlList = (ListView) view.findViewById(R.id.list_sql);
-        sqlAdapter = new SQLAdapter(getContext());
+        sqlAdapter = new SQLAdapter(getContext(), new ArrayList<SQL>());
         sqlList.setAdapter(sqlAdapter);
 
         text = (EditText) view.findViewById(R.id.edit_sql);
@@ -61,7 +62,7 @@ public class SQLFragment extends BaseFragment {
                     public void onClick(DialogInterface dialogInterface, int i) {
                         SQLEntityManager.getInstance().deleteById(sql.mId);
                         SQLManager.getInstance().updateData();
-                        sqlAdapter.updateList();
+                        sqlAdapter.updateList(SQLManager.getInstance().getData());
                     }
                 });
                 builder.setPositiveButton("更新", new DialogInterface.OnClickListener() {
@@ -70,7 +71,7 @@ public class SQLFragment extends BaseFragment {
                         SQLEntityManager.getInstance().updateDate(sql.mId,
                                 "Time = " + new Date().getTime());
                         SQLManager.getInstance().updateData();
-                        sqlAdapter.updateList();
+                        sqlAdapter.updateList(SQLManager.getInstance().getData());
                     }
                 });
                 builder.setNeutralButton("取消", new DialogInterface.OnClickListener() {
@@ -96,7 +97,7 @@ public class SQLFragment extends BaseFragment {
                 text.setText("");
                 showToast(R.string.add_success);
                 SQLManager.getInstance().updateData();
-                sqlAdapter.updateList();
+                sqlAdapter.updateList(SQLManager.getInstance().getData());
             }
         });
     }
@@ -104,7 +105,7 @@ public class SQLFragment extends BaseFragment {
     @Override
     protected void processLogic(View view, Bundle savedInstanceState) {
         SQLManager.getInstance().updateData();
-        sqlAdapter.updateList();
+        sqlAdapter.updateList(SQLManager.getInstance().getData());
     }
 
 }

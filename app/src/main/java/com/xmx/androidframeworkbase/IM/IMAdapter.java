@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import com.avos.avoscloud.im.v2.messages.AVIMTextMessage;
 import com.xmx.androidframeworkbase.R;
+import com.xmx.androidframeworkbase.Tools.Data.BaseEntityAdapter;
 
 import org.xutils.view.annotation.ViewInject;
 import org.xutils.x;
@@ -20,37 +21,10 @@ import java.util.List;
 /**
  * Created by The_onE on 2016/3/27.
  */
-public class IMAdapter extends BaseAdapter {
-    Context mContext;
-    List<AVIMTextMessage> mData;
+public class IMAdapter extends BaseEntityAdapter<AVIMTextMessage> {
 
     public IMAdapter(Context context, List<AVIMTextMessage> data) {
-        mContext = context;
-        mData = data;
-    }
-
-    public void updateList(List<AVIMTextMessage> data) {
-        mData = data;
-        notifyDataSetChanged();
-    }
-
-    @Override
-    public int getCount() {
-        return mData.size();
-    }
-
-    @Override
-    public Object getItem(int i) {
-        if (i < mData.size()) {
-            return mData.get(i);
-        } else {
-            return null;
-        }
-    }
-
-    @Override
-    public long getItemId(int i) {
-        return i;
+        super(context, data);
     }
 
     static class ViewHolder {

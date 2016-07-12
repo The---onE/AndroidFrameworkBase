@@ -119,6 +119,7 @@ public class IMFragment extends xUtilsFragment {
             @Override
             public void failure(Exception e) {
                 showToast("创建对话失败");
+                filterException(e);
             }
 
             @Override
@@ -134,6 +135,7 @@ public class IMFragment extends xUtilsFragment {
                     @Override
                     public void failure(Exception e) {
                         showToast("加入对话失败");
+                        filterException(e);
                     }
 
                     @Override
@@ -164,6 +166,7 @@ public class IMFragment extends xUtilsFragment {
             @Override
             public void failure(Exception e) {
                 showToast("发送失败");
+                filterException(e);
             }
 
             @Override
@@ -197,6 +200,7 @@ public class IMFragment extends xUtilsFragment {
             @Override
             public void failure(Exception e) {
                 showToast("获取聊天记录失败");
+                filterException(e);
             }
 
             @Override

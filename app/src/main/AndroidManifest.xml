@@ -52,6 +52,18 @@
             android:name=".User.RegisterActivity"
             android:theme="@style/AppTheme.NoActionBar" />
 
+        <activity
+            android:name=".Tools.ChoosePhoto.AlbumActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+
+        <activity
+            android:name=".Tools.ChoosePhoto.BigPhotoActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+
+        <activity
+            android:name=".Tools.ChoosePhoto.PhotoActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+
         <service
             android:name=".Services.MainService"
             android:enabled="true"

@@ -78,4 +78,7 @@
     <string name="minute">分钟</string>
     <string name="second">秒</string>
 
+    <string name="upend">倒放</string>
+    <string name="pause">暂停</string>
+    <string name="play">正放</string>
 </resources>

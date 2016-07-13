@@ -41,4 +41,6 @@ dependencies {
     compile('cn.leancloud.android:avoscloud-push:v3.+@aar') { transitive = true }
     //avoscloud-statistics 为 LeanCloud 统计包
     compile ('cn.leancloud.android:avoscloud-statistics:v3.+')
+
+    compile 'com.nostra13.universalimageloader:universal-image-loader:1.9.5'
 }

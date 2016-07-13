@@ -10,6 +10,7 @@ import android.widget.EditText;
 
 import com.xmx.androidframeworkbase.R;
 import com.xmx.androidframeworkbase.Services.MainService;
+import com.xmx.androidframeworkbase.Tools.ChoosePhoto.AlbumActivity;
 import com.xmx.androidframeworkbase.Tools.FragmentBase.xUtilsFragment;
 import com.xmx.androidframeworkbase.Tools.Notification.NotificationTempActivity;
 import com.xmx.androidframeworkbase.Tools.Notification.NotificationUtils;
@@ -102,6 +103,11 @@ public class HomeFragment extends xUtilsFragment {
         if (!flag) {
             showToast("服务未开启");
         }
+    }
+
+    @Event(R.id.btn_choose_photo)
+    private void onChoosePhotoClick(View view) {
+        startActivity(AlbumActivity.class);
     }
 
     @Override

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.xmx.androidframeworkbase.Tools.ChoosePhoto.entities.BigGifImageView
+        android:id="@+id/big_photo"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <TextView
+        android:id="@+id/big_photo_index"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:gravity="center"
+        android:text="0/0" />
+
+    <LinearLayout
+        android:id="@+id/big_photo_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/big_photo_upend"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/upend"
+            android:textSize="12sp" />
+
+        <Button
+            android:id="@+id/big_photo_pause"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/pause"
+            android:textSize="12sp" />
+
+        <Button
+            android:id="@+id/big_photo_play"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/play"
+            android:textSize="12sp" />
+
+    </LinearLayout>
+
+</RelativeLayout>

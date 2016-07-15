@@ -15,6 +15,7 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 
+import com.xmx.androidframeworkbase.Constants;
 import com.xmx.androidframeworkbase.R;
 import com.xmx.androidframeworkbase.Tools.ChoosePhoto.adapter.AlbumAdapter;
 import com.xmx.androidframeworkbase.Tools.ChoosePhoto.entities.AlbumItem;
@@ -44,21 +45,19 @@ public class AlbumActivity extends Activity {
         albumGV.setOnItemClickListener(albumClickListener);
     }
 
-    //相册点击事件
-    static final int CHOOSE_IMAGE = 1;
     OnItemClickListener albumClickListener = new OnItemClickListener() {
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
             Intent intent = new Intent(AlbumActivity.this, PhotoActivity.class);
             intent.putExtra("album", albumList.get(position));
-            startActivityForResult(intent, CHOOSE_IMAGE);
+            startActivityForResult(intent, Constants.CHOOSE_PHOTO);
         }
     };
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == CHOOSE_IMAGE && resultCode == Activity.RESULT_OK && data != null) {
+        if (requestCode == Constants.CHOOSE_PHOTO && resultCode == Activity.RESULT_OK && data != null) {
             setResult(RESULT_OK, data);
             finish();
         }

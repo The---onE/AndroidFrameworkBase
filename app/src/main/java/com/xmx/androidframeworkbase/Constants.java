@@ -21,6 +21,8 @@ public class Constants {
     public static final long SPLASH_TIME = 2000;
     public static final long LONGEST_SPLASH_TIME = 6000;
 
+    public static final int CHOOSE_PHOTO = 1;
+
     public static final long UPDATE_FREQUENCY = 1000;
 
     public static final long DAY_TIME = 60 * 60 * 24 * 1000;

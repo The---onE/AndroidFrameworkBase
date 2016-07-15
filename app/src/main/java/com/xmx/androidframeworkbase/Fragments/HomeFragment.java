@@ -1,5 +1,6 @@
 package com.xmx.androidframeworkbase.Fragments;
 
+import android.app.Activity;
 import android.app.ActivityManager;
 import android.content.Context;
 import android.content.Intent;
@@ -8,6 +9,7 @@ import android.support.v4.app.Fragment;
 import android.view.View;
 import android.widget.EditText;
 
+import com.xmx.androidframeworkbase.Constants;
 import com.xmx.androidframeworkbase.R;
 import com.xmx.androidframeworkbase.Services.MainService;
 import com.xmx.androidframeworkbase.Tools.ChoosePhoto.AlbumActivity;
@@ -107,7 +109,21 @@ public class HomeFragment extends xUtilsFragment {
 
     @Event(R.id.btn_choose_photo)
     private void onChoosePhotoClick(View view) {
-        startActivity(AlbumActivity.class);
+        Intent i = new Intent(getActivity(), AlbumActivity.class);
+        startActivityForResult(i, Constants.CHOOSE_PHOTO);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == Constants.CHOOSE_PHOTO && resultCode == Activity.RESULT_OK && data != null) {
+            List<String> paths = data.getStringArrayListExtra("paths");
+
+            for (String path : paths) {
+                showToast(path);
+            }
+        }
     }
 
     @Override

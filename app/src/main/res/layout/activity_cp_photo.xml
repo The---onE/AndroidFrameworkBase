@@ -4,6 +4,8 @@
     android:layout_height="fill_parent"
     android:orientation="vertical">
 
+    <include layout="@layout/tool_bar" />
+
     <TextView
         android:id="@+id/photo_path"
         android:layout_width="match_parent"

@@ -5,4 +5,5 @@
     android:id="@+id/photo_layout"
     android:gravity="center|center_horizontal|center_vertical"
     android:orientation="vertical">
+
 </LinearLayout>

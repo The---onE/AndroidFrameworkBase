@@ -1,6 +1,5 @@
 package com.xmx.androidframeworkbase.Tools.ChoosePhoto;
 
-import android.app.Activity;
 import android.content.res.Configuration;
 import android.net.Uri;
 import android.os.Bundle;
@@ -15,11 +14,12 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.xmx.androidframeworkbase.R;
+import com.xmx.androidframeworkbase.Tools.ActivityBase.BaseActivity;
 import com.xmx.androidframeworkbase.Tools.ChoosePhoto.entities.BigGifImageView;
 
 import java.util.ArrayList;
 
-public class BigPhotoActivity extends Activity {
+public class BigPhotoActivity extends BaseActivity {
     LinearLayout layout;
     //JazzyViewPager vp;
     ViewPager vp;
@@ -72,8 +72,7 @@ public class BigPhotoActivity extends Activity {
     }
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    protected void initView(Bundle savedInstanceState) {
         setContentView(R.layout.activity_cp_big_photo);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
@@ -136,6 +135,16 @@ public class BigPhotoActivity extends Activity {
             layout.addView(vp);
             vp.setCurrentItem(index);
         }
+    }
+
+    @Override
+    protected void setListener() {
+
+    }
+
+    @Override
+    protected void processLogic(Bundle savedInstanceState) {
+
     }
 
     @Override

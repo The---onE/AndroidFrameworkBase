@@ -17,11 +17,12 @@ import android.widget.ListView;
 
 import com.xmx.androidframeworkbase.Constants;
 import com.xmx.androidframeworkbase.R;
+import com.xmx.androidframeworkbase.Tools.ActivityBase.BaseTempActivity;
 import com.xmx.androidframeworkbase.Tools.ChoosePhoto.adapter.AlbumAdapter;
 import com.xmx.androidframeworkbase.Tools.ChoosePhoto.entities.AlbumItem;
 import com.xmx.androidframeworkbase.Tools.ChoosePhoto.entities.PhotoInf;
 
-public class AlbumActivity extends Activity {
+public class AlbumActivity extends BaseTempActivity {
     private ListView albumGV;
     private List<AlbumItem> albumList;
 
@@ -36,23 +37,30 @@ public class AlbumActivity extends Activity {
     };
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    protected void initView(Bundle savedInstanceState) {
         setContentView(R.layout.activity_cp_album);
-        albumGV = (ListView) findViewById(R.id.album_listview);
-        albumList = getPhotoAlbum();
-        albumGV.setAdapter(new AlbumAdapter(albumList, this));
-        albumGV.setOnItemClickListener(albumClickListener);
+        albumGV = getViewById(R.id.album_listview);
+
+        setTitle(R.string.choose_album);
     }
 
-    OnItemClickListener albumClickListener = new OnItemClickListener() {
-        @Override
-        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-            Intent intent = new Intent(AlbumActivity.this, PhotoActivity.class);
-            intent.putExtra("album", albumList.get(position));
-            startActivityForResult(intent, Constants.CHOOSE_PHOTO);
-        }
-    };
+    @Override
+    protected void setListener() {
+        albumGV.setOnItemClickListener(new OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Intent intent = new Intent(AlbumActivity.this, PhotoActivity.class);
+                intent.putExtra("album", albumList.get(i));
+                startActivityForResult(intent, Constants.CHOOSE_PHOTO);
+            }
+        });
+    }
+
+    @Override
+    protected void processLogic(Bundle savedInstanceState) {
+        albumList = getPhotoAlbum();
+        albumGV.setAdapter(new AlbumAdapter(albumList, this));
+    }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {

@@ -81,4 +81,8 @@
     <string name="upend">倒放</string>
     <string name="pause">暂停</string>
     <string name="play">正放</string>
+
+    <string name="choose_album">选择目录</string>
+    <string name="choose_photo">选择图片</string>
+
 </resources>

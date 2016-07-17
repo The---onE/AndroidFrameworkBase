@@ -12,7 +12,6 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 
 import com.xmx.androidframeworkbase.Constants;
@@ -22,8 +21,15 @@ import com.xmx.androidframeworkbase.Tools.ChoosePhoto.adapter.AlbumAdapter;
 import com.xmx.androidframeworkbase.Tools.ChoosePhoto.entities.AlbumItem;
 import com.xmx.androidframeworkbase.Tools.ChoosePhoto.entities.PhotoInf;
 
+import org.xutils.view.annotation.ContentView;
+import org.xutils.view.annotation.Event;
+import org.xutils.view.annotation.ViewInject;
+
+@ContentView(R.layout.activity_cp_album)
 public class AlbumActivity extends BaseTempActivity {
+    @ViewInject(R.id.album_listview)
     private ListView albumGV;
+
     private List<AlbumItem> albumList;
 
     //设置获取图片的字段信息
@@ -38,22 +44,18 @@ public class AlbumActivity extends BaseTempActivity {
 
     @Override
     protected void initView(Bundle savedInstanceState) {
-        setContentView(R.layout.activity_cp_album);
-        albumGV = getViewById(R.id.album_listview);
-
         setTitle(R.string.choose_album);
+    }
+
+    @Event(value = R.id.album_listview, type = ListView.OnItemClickListener.class)
+    private void onAlbumItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+        Intent intent = new Intent(AlbumActivity.this, PhotoActivity.class);
+        intent.putExtra("album", albumList.get(i));
+        startActivityForResult(intent, Constants.CHOOSE_PHOTO);
     }
 
     @Override
     protected void setListener() {
-        albumGV.setOnItemClickListener(new OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Intent intent = new Intent(AlbumActivity.this, PhotoActivity.class);
-                intent.putExtra("album", albumList.get(i));
-                startActivityForResult(intent, Constants.CHOOSE_PHOTO);
-            }
-        });
     }
 
     @Override

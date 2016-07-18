@@ -110,14 +110,14 @@ public class HomeFragment extends xUtilsFragment {
     @Event(R.id.btn_choose_photo)
     private void onChoosePhotoClick(View view) {
         Intent i = new Intent(getActivity(), AlbumActivity.class);
-        startActivityForResult(i, Constants.CHOOSE_PHOTO);
+        startActivityForResult(i, Constants.CHOOSE_ALBUM);
     }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (requestCode == Constants.CHOOSE_PHOTO && resultCode == Activity.RESULT_OK && data != null) {
+        if (requestCode == Constants.CHOOSE_ALBUM && resultCode == Activity.RESULT_OK && data != null) {
             List<String> paths = data.getStringArrayListExtra("paths");
 
             for (String path : paths) {

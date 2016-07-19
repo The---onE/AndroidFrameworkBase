@@ -22,6 +22,8 @@ import java.util.List;
 public class MainActivity extends BaseNavigationActivity {
     private long mExitTime = 0;
 
+    ViewPager vp;
+
     @Override
     protected void initView(Bundle savedInstanceState) {
         setContentView(R.layout.activity_main);
@@ -42,7 +44,7 @@ public class MainActivity extends BaseNavigationActivity {
 
         PagerAdapter adapter = new PagerAdapter(getSupportFragmentManager(), fragments, titles);
 
-        ViewPager vp = (ViewPager) findViewById(R.id.pager_main);
+        vp = getViewById(R.id.pager_main);
         vp.setAdapter(adapter);
     }
 
@@ -69,6 +71,36 @@ public class MainActivity extends BaseNavigationActivity {
                 super.onBackPressed();
             }
         }
+    }
+
+    @SuppressWarnings("StatementWithEmptyBody")
+    @Override
+    public boolean onNavigationItemSelected(MenuItem item) {
+        super.onNavigationItemSelected(item);
+
+        int id = item.getItemId();
+
+        switch (id) {
+            case R.id.nav_home:
+                vp.setCurrentItem(0);
+                break;
+            case R.id.nav_sync:
+                vp.setCurrentItem(1);
+                break;
+            case R.id.nav_sql:
+                vp.setCurrentItem(2);
+                break;
+            case R.id.nav_cloud:
+                vp.setCurrentItem(3);
+                break;
+            case R.id.nav_im:
+                vp.setCurrentItem(4);
+                break;
+        }
+
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        drawer.closeDrawer(GravityCompat.START);
+        return true;
     }
 
     @Override

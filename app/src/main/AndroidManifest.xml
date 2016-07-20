@@ -30,6 +30,17 @@
         </receiver>
         <!-- 实时通信模块、推送 END -->
 
+        <receiver
+            android:name=".Tools.PushMessage.ItemMessageReceiver"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <action android:name="android.intent.action.USER_PRESENT" />
+                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
+                <action android:name="com.avos.ITEM_MESSAGE" />
+            </intent-filter>
+        </receiver>
+
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name"
@@ -52,8 +63,7 @@
             android:name=".User.RegisterActivity"
             android:theme="@style/AppTheme.NoActionBar" />
 
-        <activity
-            android:name=".Tools.ChoosePhoto.AlbumActivity" />
+        <activity android:name=".Tools.ChoosePhoto.AlbumActivity" />
 
         <activity
             android:name=".Tools.ChoosePhoto.BigPhotoActivity"
@@ -61,6 +71,16 @@
 
         <activity
             android:name=".Tools.ChoosePhoto.PhotoActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+
+        <activity
+            android:name=".Tools.PushMessage.ReceiveMessageActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".Tools.PushMessage.PushMessageActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".Tools.PushMessage.PushItemMessageActivity"
             android:theme="@style/AppTheme.NoActionBar" />
 
         <service

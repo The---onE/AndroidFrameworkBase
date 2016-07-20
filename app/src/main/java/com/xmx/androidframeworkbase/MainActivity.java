@@ -10,6 +10,7 @@ import android.view.MenuItem;
 
 import com.xmx.androidframeworkbase.Fragments.CloudFragment;
 import com.xmx.androidframeworkbase.Fragments.HomeFragment;
+import com.xmx.androidframeworkbase.Fragments.PushFragment;
 import com.xmx.androidframeworkbase.Fragments.SQLFragment;
 import com.xmx.androidframeworkbase.Fragments.SyncFragment;
 import com.xmx.androidframeworkbase.Fragments.IMFragment;
@@ -34,6 +35,7 @@ public class MainActivity extends BaseNavigationActivity {
         fragments.add(new SQLFragment());
         fragments.add(new CloudFragment());
         fragments.add(new IMFragment());
+        fragments.add(new PushFragment());
 
         List<String> titles = new ArrayList<>();
         titles.add("首页");
@@ -41,6 +43,7 @@ public class MainActivity extends BaseNavigationActivity {
         titles.add("SQL");
         titles.add("Cloud");
         titles.add("IM");
+        titles.add("推送");
 
         PagerAdapter adapter = new PagerAdapter(getSupportFragmentManager(), fragments, titles);
 

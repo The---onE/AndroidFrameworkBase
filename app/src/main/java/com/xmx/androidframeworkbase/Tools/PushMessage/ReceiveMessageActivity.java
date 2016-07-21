@@ -10,11 +10,12 @@ import com.xmx.androidframeworkbase.Tools.ActivityBase.BaseTempActivity;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.xutils.view.annotation.ContentView;
 
+@ContentView(R.layout.activity_receive_message)
 public class ReceiveMessageActivity extends BaseTempActivity {
     @Override
     protected void initView(Bundle savedInstanceState) {
-        setContentView(R.layout.activity_receive_message);
     }
 
     @Override

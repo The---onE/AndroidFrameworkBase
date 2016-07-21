@@ -17,10 +17,17 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.xutils.view.annotation.ContentView;
 import org.xutils.view.annotation.Event;
+import org.xutils.view.annotation.ViewInject;
 
 @ContentView(R.layout.activity_push_item_message)
 public class PushItemMessageActivity extends BaseTempActivity {
     String item;
+
+    @ViewInject(R.id.message_content)
+    private EditText content;
+
+    @ViewInject(R.id.message_title)
+    private EditText title;
 
     @Override
     protected void initView(Bundle savedInstanceState) {
@@ -33,7 +40,6 @@ public class PushItemMessageActivity extends BaseTempActivity {
         try {
             JSONObject object = new JSONObject();
 
-            EditText title = getViewById(R.id.message_title);
             if (!title.getText().toString().equals("")) {
                 object.put("alert", title.getText().toString());
             } else {
@@ -41,7 +47,6 @@ public class PushItemMessageActivity extends BaseTempActivity {
                 return;
             }
 
-            EditText content = getViewById(R.id.message_content);
             if (!content.getText().toString().equals("")) {
                 object.put("content", content.getText().toString());
             }

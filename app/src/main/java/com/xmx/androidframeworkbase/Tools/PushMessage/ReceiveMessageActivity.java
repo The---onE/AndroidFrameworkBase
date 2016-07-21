@@ -11,9 +11,17 @@ import com.xmx.androidframeworkbase.Tools.ActivityBase.BaseTempActivity;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.xutils.view.annotation.ContentView;
+import org.xutils.view.annotation.ViewInject;
 
 @ContentView(R.layout.activity_receive_message)
 public class ReceiveMessageActivity extends BaseTempActivity {
+
+    @ViewInject(R.id.message_content)
+    private TextView contentView;
+
+    @ViewInject(R.id.file_url)
+    private EditText urlView;
+
     @Override
     protected void initView(Bundle savedInstanceState) {
     }
@@ -42,19 +50,17 @@ public class ReceiveMessageActivity extends BaseTempActivity {
 
             try {
                 String content = json.getString("content");
-                TextView contentView = getViewById(R.id.message_content);
+
                 if (content != null) {
                     contentView.setText(content);
                 } else {
                     contentView.setText("");
                 }
             } catch (JSONException e) {
-                TextView contentView = getViewById(R.id.message_content);
                 contentView.setText("");
             }
 
             try {
-                EditText urlView = getViewById(R.id.file_url);
                 String url = json.getString("file_url");
                 if (url != null) {
                     urlView.setText(url);
@@ -62,7 +68,6 @@ public class ReceiveMessageActivity extends BaseTempActivity {
                     urlView.setVisibility(View.INVISIBLE);
                 }
             } catch (JSONException e) {
-                EditText urlView = getViewById(R.id.file_url);
                 urlView.setVisibility(View.INVISIBLE);
             }
         } catch (JSONException e) {

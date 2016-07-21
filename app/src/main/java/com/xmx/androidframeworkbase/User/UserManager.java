@@ -5,13 +5,16 @@ import android.content.SharedPreferences;
 
 import com.avos.avoscloud.AVACL;
 import com.avos.avoscloud.AVException;
+import com.avos.avoscloud.AVInstallation;
 import com.avos.avoscloud.AVObject;
 import com.avos.avoscloud.AVQuery;
 import com.avos.avoscloud.CountCallback;
 import com.avos.avoscloud.FindCallback;
 import com.avos.avoscloud.GetCallback;
+import com.avos.avoscloud.PushService;
 import com.avos.avoscloud.SaveCallback;
 import com.xmx.androidframeworkbase.Constants;
+import com.xmx.androidframeworkbase.Tools.PushMessage.ReceiveMessageActivity;
 import com.xmx.androidframeworkbase.User.Callback.AutoLoginCallback;
 import com.xmx.androidframeworkbase.User.Callback.LoginCallback;
 import com.xmx.androidframeworkbase.User.Callback.LogoutCallback;
@@ -88,6 +91,14 @@ public class UserManager {
         editor.apply();
 
         saveLog(un);
+
+        List<String> subscribing = user.getList("subscribing");
+        if (subscribing != null) {
+            for (String sub : subscribing) {
+                PushService.subscribe(mContext, UserManager.getSHA(sub), ReceiveMessageActivity.class);
+            }
+            AVInstallation.getCurrentInstallation().saveInBackground();
+        }
     }
 
     public void logout(AVObject user, LogoutCallback callback) {
@@ -97,6 +108,14 @@ public class UserManager {
         editor.putString("checksum", "");
         editor.putString("nickname", "");
         editor.apply();
+
+        List<String> subscribing = user.getList("subscribing");
+        if (subscribing != null) {
+            for (String sub : subscribing) {
+                PushService.unsubscribe(mContext, UserManager.getSHA(sub));
+            }
+            AVInstallation.getCurrentInstallation().saveInBackground();
+        }
 
         callback.logout(user);
     }

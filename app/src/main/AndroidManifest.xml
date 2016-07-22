@@ -77,9 +77,6 @@
             android:name=".Tools.PushMessage.ReceiveMessageActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".Tools.PushMessage.PushMessageActivity"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
             android:name=".Tools.PushMessage.PushItemMessageActivity"
             android:theme="@style/AppTheme.NoActionBar" />
 

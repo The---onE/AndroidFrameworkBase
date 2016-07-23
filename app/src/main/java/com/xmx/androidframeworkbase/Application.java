@@ -3,6 +3,7 @@ package com.xmx.androidframeworkbase;
 import com.avos.avoscloud.AVInstallation;
 import com.avos.avoscloud.AVOSCloud;
 import com.avos.avoscloud.PushService;
+import com.facebook.drawee.backends.pipeline.Fresco;
 import com.xmx.androidframeworkbase.Tools.Data.DataManager;
 import com.xmx.androidframeworkbase.Tools.PushMessage.ReceiveMessageActivity;
 import com.xmx.androidframeworkbase.User.UserManager;
@@ -29,5 +30,7 @@ public class Application extends android.app.Application {
         UserManager.getInstance().setContext(this);
 
         DataManager.getInstance().setContext(this);
+
+        Fresco.initialize(this);
     }
 }

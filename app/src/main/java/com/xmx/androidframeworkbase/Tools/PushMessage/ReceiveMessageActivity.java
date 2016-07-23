@@ -1,10 +1,16 @@
 package com.xmx.androidframeworkbase.Tools.PushMessage;
 
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.facebook.drawee.drawable.ScalingUtils;
+import com.facebook.drawee.generic.GenericDraweeHierarchy;
+import com.facebook.drawee.generic.GenericDraweeHierarchyBuilder;
+import com.facebook.drawee.view.SimpleDraweeView;
 import com.xmx.androidframeworkbase.R;
 import com.xmx.androidframeworkbase.Tools.ActivityBase.BaseTempActivity;
 
@@ -15,6 +21,9 @@ import org.xutils.view.annotation.ViewInject;
 
 @ContentView(R.layout.activity_receive_message)
 public class ReceiveMessageActivity extends BaseTempActivity {
+
+    @ViewInject(R.id.message_layout)
+    LinearLayout layout;
 
     @ViewInject(R.id.message_content)
     private TextView contentView;
@@ -64,6 +73,28 @@ public class ReceiveMessageActivity extends BaseTempActivity {
                 String url = json.getString("file_url");
                 if (url != null) {
                     urlView.setText(url);
+
+                    SimpleDraweeView imageView = new SimpleDraweeView(this);
+                    LinearLayout.LayoutParams params =
+                            new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
+                                    LinearLayout.LayoutParams.WRAP_CONTENT);
+                    imageView.setLayoutParams(params);
+                    imageView.setAspectRatio(1);
+
+                    GenericDraweeHierarchyBuilder builder =
+                            new GenericDraweeHierarchyBuilder(getResources());
+                    GenericDraweeHierarchy hierarchy = builder
+                            .setActualImageScaleType(ScalingUtils.ScaleType.FIT_CENTER)
+                            .build();
+                    hierarchy.setPlaceholderImage(R.mipmap.ic_launcher);
+                    imageView.setHierarchy(hierarchy);
+
+                    //String url = image.getString("url");
+                    Uri uri = Uri.parse(url);
+                    imageView.setImageURI(uri);
+
+                    layout.addView(imageView);
+
                 } else {
                     urlView.setVisibility(View.INVISIBLE);
                 }

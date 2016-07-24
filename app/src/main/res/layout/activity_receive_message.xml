@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:fresco="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -11,7 +12,6 @@
     <include layout="@layout/tool_bar" />
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/message_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
@@ -26,11 +26,24 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
-        <EditText
-            android:id="@+id/file_url"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:inputType="textUri" />
+        <LinearLayout
+            android:id="@+id/image_layout"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <EditText
+                android:id="@+id/file_url"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:inputType="textUri" />
+
+            <com.facebook.drawee.view.SimpleDraweeView
+                android:id="@+id/fresco_image"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                fresco:viewAspectRatio="1" />
+        </LinearLayout>
 
     </LinearLayout>
 

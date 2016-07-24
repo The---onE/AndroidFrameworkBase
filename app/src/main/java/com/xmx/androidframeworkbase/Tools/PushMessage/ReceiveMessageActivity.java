@@ -22,14 +22,17 @@ import org.xutils.view.annotation.ViewInject;
 @ContentView(R.layout.activity_receive_message)
 public class ReceiveMessageActivity extends BaseTempActivity {
 
-    @ViewInject(R.id.message_layout)
-    LinearLayout layout;
+    @ViewInject(R.id.image_layout)
+    LinearLayout image;
 
     @ViewInject(R.id.message_content)
     private TextView contentView;
 
     @ViewInject(R.id.file_url)
     private EditText urlView;
+
+    @ViewInject(R.id.fresco_image)
+    private SimpleDraweeView imageView;
 
     @Override
     protected void initView(Bundle savedInstanceState) {
@@ -74,12 +77,12 @@ public class ReceiveMessageActivity extends BaseTempActivity {
                 if (url != null) {
                     urlView.setText(url);
 
-                    SimpleDraweeView imageView = new SimpleDraweeView(this);
-                    LinearLayout.LayoutParams params =
-                            new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
-                                    LinearLayout.LayoutParams.WRAP_CONTENT);
-                    imageView.setLayoutParams(params);
-                    imageView.setAspectRatio(1);
+//                    SimpleDraweeView imageView = new SimpleDraweeView(this);
+//                    LinearLayout.LayoutParams params =
+//                            new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
+//                                    LinearLayout.LayoutParams.WRAP_CONTENT);
+//                    imageView.setLayoutParams(params);
+//                    imageView.setAspectRatio(1);
 
                     GenericDraweeHierarchyBuilder builder =
                             new GenericDraweeHierarchyBuilder(getResources());
@@ -89,17 +92,16 @@ public class ReceiveMessageActivity extends BaseTempActivity {
                     hierarchy.setPlaceholderImage(R.mipmap.ic_launcher);
                     imageView.setHierarchy(hierarchy);
 
-                    //String url = image.getString("url");
                     Uri uri = Uri.parse(url);
                     imageView.setImageURI(uri);
 
-                    layout.addView(imageView);
+//                    layout.addView(imageView);
 
                 } else {
-                    urlView.setVisibility(View.INVISIBLE);
+                    image.setVisibility(View.INVISIBLE);
                 }
             } catch (JSONException e) {
-                urlView.setVisibility(View.INVISIBLE);
+                image.setVisibility(View.INVISIBLE);
             }
         } catch (JSONException e) {
             e.printStackTrace();

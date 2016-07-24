@@ -99,6 +99,9 @@ public class MainActivity extends BaseNavigationActivity {
             case R.id.nav_im:
                 vp.setCurrentItem(4);
                 break;
+            case R.id.nav_push:
+                vp.setCurrentItem(5);
+                break;
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

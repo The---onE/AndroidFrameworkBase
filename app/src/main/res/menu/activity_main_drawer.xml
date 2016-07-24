@@ -17,6 +17,9 @@
         <item
             android:id="@+id/nav_im"
             android:title="IM" />
+        <item
+            android:id="@+id/nav_push"
+            android:title="推送" />
     </group>
 
     <group android:checkableBehavior="single">

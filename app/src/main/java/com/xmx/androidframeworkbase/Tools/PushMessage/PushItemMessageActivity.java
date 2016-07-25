@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -34,6 +35,10 @@ import java.util.List;
 public class PushItemMessageActivity extends BaseTempActivity {
     String item;
     List<String> paths = new ArrayList<>();
+    int pushImage = 0;
+
+    @ViewInject(R.id.push_btn)
+    private Button btnPush;
 
     @ViewInject(R.id.message_content)
     private EditText content;
@@ -93,6 +98,9 @@ public class PushItemMessageActivity extends BaseTempActivity {
             final AVQuery pushQuery = AVInstallation.getQuery();
             pushQuery.whereEqualTo("channels", UserManager.getSHA(item));
 
+            btnPush.setText("正在推送…");
+            btnPush.setEnabled(false);
+
             if (paths.size() > 0) {
                 for (String path : paths) {
                     String fileName;
@@ -120,8 +128,12 @@ public class PushItemMessageActivity extends BaseTempActivity {
                                         @Override
                                         public void done(AVException e) {
                                             if (e == null) {
-                                                showToast("推送成功");
-                                                finish();
+                                                pushImage++;
+                                                if (pushImage >= paths.size()
+                                                            ) {
+                                                    showToast("推送成功");
+                                                    finish();
+                                                }
                                             } else {
                                                 filterException(e);
                                             }

@@ -136,14 +136,23 @@ public class PushItemMessageActivity extends BaseTempActivity {
                                                 }
                                             } else {
                                                 filterException(e);
+
+                                                btnPush.setText("推送");
+                                                btnPush.setEnabled(true);
                                             }
                                         }
                                     });
                                 } catch (Exception ex) {
                                     filterException(ex);
+
+                                    btnPush.setText("推送");
+                                    btnPush.setEnabled(true);
                                 }
                             } else {
                                 filterException(e);
+
+                                btnPush.setText("推送");
+                                btnPush.setEnabled(true);
                             }
                         }
                     });
@@ -161,12 +170,18 @@ public class PushItemMessageActivity extends BaseTempActivity {
                             finish();
                         } else {
                             filterException(e);
+
+                            btnPush.setText("推送");
+                            btnPush.setEnabled(true);
                         }
                     }
                 });
             }
         } catch (Exception e) {
             filterException(e);
+
+            btnPush.setText("推送");
+            btnPush.setEnabled(true);
         }
     }
 

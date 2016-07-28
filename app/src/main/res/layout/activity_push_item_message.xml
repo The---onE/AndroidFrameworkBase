@@ -38,6 +38,12 @@
             android:layout_height="wrap_content"
             android:text="选择图片" />
 
+        <Button
+            android:id="@+id/btn_take_photo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="拍照" />
+
         <TextView
             android:id="@+id/photo_path"
             android:layout_width="match_parent"

@@ -23,6 +23,7 @@ public class Constants {
 
     public static final int CHOOSE_ALBUM = 1;
     public static final int CHOOSE_PHOTO = 2;
+    public static final int TAKE_PHOTO = 3;
 
     public static final long UPDATE_FREQUENCY = 1000;
 

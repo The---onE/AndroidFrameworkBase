@@ -2,7 +2,10 @@ package com.xmx.androidframeworkbase.Tools.PushMessage;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
+import android.provider.MediaStore;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -21,19 +24,21 @@ import com.xmx.androidframeworkbase.Tools.ActivityBase.BaseTempActivity;
 import com.xmx.androidframeworkbase.Tools.ChoosePhoto.AlbumActivity;
 import com.xmx.androidframeworkbase.User.UserManager;
 
-import org.json.JSONException;
 import org.json.JSONObject;
 import org.xutils.view.annotation.ContentView;
 import org.xutils.view.annotation.Event;
 import org.xutils.view.annotation.ViewInject;
 
-import java.io.FileNotFoundException;
+import java.io.File;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @ContentView(R.layout.activity_push_item_message)
 public class PushItemMessageActivity extends BaseTempActivity {
     String item;
+    String takePhotoPath;
     List<String> paths = new ArrayList<>();
     int pushImage = 0;
 
@@ -61,6 +66,37 @@ public class PushItemMessageActivity extends BaseTempActivity {
         startActivityForResult(i, Constants.CHOOSE_ALBUM);
     }
 
+    private Uri getOutputMediaFileUri() {
+        return Uri.fromFile(getOutputMediaFile());
+    }
+
+    private File getOutputMediaFile() {
+        File mediaStorageDir = new File(Environment.getExternalStoragePublicDirectory(
+                Environment.DIRECTORY_PICTURES), "Camera");
+
+        if (!mediaStorageDir.exists()) {
+            if (!mediaStorageDir.mkdirs()) {
+                showToast("创建目录失败");
+                return null;
+            }
+        }
+
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+
+        return new File(mediaStorageDir.getPath() + File.separator +
+                "IMG_" + timeStamp + ".jpg");
+    }
+
+    @Event(R.id.btn_take_photo)
+    private void onTakePhotoClick(View view) {
+        Intent i = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        Uri fileUri = getOutputMediaFileUri();
+        takePhotoPath = fileUri.getPath();
+        i.putExtra(MediaStore.EXTRA_OUTPUT, fileUri);
+
+        startActivityForResult(i, Constants.TAKE_PHOTO);
+    }
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -73,6 +109,11 @@ public class PushItemMessageActivity extends BaseTempActivity {
                 p += path + "\n";
             }
             path.setText(p);
+        } else if (requestCode == Constants.TAKE_PHOTO && resultCode == Activity.RESULT_OK) {
+            paths = new ArrayList<>();
+            paths.add(takePhotoPath);
+
+            path.setText(takePhotoPath);
         }
     }
 
@@ -106,7 +147,7 @@ public class PushItemMessageActivity extends BaseTempActivity {
                     String fileName;
                     int end = path.lastIndexOf("/");
                     if (end != -1) {
-                        fileName = path.substring(end+1);
+                        fileName = path.substring(end + 1);
                     } else {
                         fileName = "image.png";
                     }
@@ -130,7 +171,7 @@ public class PushItemMessageActivity extends BaseTempActivity {
                                             if (e == null) {
                                                 pushImage++;
                                                 if (pushImage >= paths.size()
-                                                            ) {
+                                                        ) {
                                                     showToast("推送成功");
                                                     finish();
                                                 }

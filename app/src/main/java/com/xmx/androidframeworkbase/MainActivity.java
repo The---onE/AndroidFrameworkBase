@@ -31,19 +31,19 @@ public class MainActivity extends BaseNavigationActivity {
 
         List<Fragment> fragments = new ArrayList<>();
         fragments.add(new HomeFragment());
+        fragments.add(new IMFragment());
+        fragments.add(new PushFragment());
         fragments.add(new SyncFragment());
         fragments.add(new SQLFragment());
         fragments.add(new CloudFragment());
-        fragments.add(new IMFragment());
-        fragments.add(new PushFragment());
 
         List<String> titles = new ArrayList<>();
         titles.add("首页");
+        titles.add("IM");
+        titles.add("推送");
         titles.add("Sync");
         titles.add("SQL");
         titles.add("Cloud");
-        titles.add("IM");
-        titles.add("推送");
 
         PagerAdapter adapter = new PagerAdapter(getSupportFragmentManager(), fragments, titles);
 
@@ -87,19 +87,19 @@ public class MainActivity extends BaseNavigationActivity {
             case R.id.nav_home:
                 vp.setCurrentItem(0);
                 break;
-            case R.id.nav_sync:
+            case R.id.nav_im:
                 vp.setCurrentItem(1);
                 break;
-            case R.id.nav_sql:
+            case R.id.nav_push:
                 vp.setCurrentItem(2);
                 break;
-            case R.id.nav_cloud:
+            case R.id.nav_sync:
                 vp.setCurrentItem(3);
                 break;
-            case R.id.nav_im:
+            case R.id.nav_sql:
                 vp.setCurrentItem(4);
                 break;
-            case R.id.nav_push:
+            case R.id.nav_cloud:
                 vp.setCurrentItem(5);
                 break;
         }

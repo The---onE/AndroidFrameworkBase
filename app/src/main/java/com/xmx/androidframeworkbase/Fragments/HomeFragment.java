@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.EditText;
 
 import com.xmx.androidframeworkbase.Constants;
+import com.xmx.androidframeworkbase.QRCode.CreateQRCodeActivity;
 import com.xmx.androidframeworkbase.R;
 import com.xmx.androidframeworkbase.Services.MainService;
 import com.xmx.androidframeworkbase.Tools.ChoosePhoto.AlbumActivity;
@@ -105,6 +106,11 @@ public class HomeFragment extends xUtilsFragment {
         if (!flag) {
             showToast("服务未开启");
         }
+    }
+
+    @Event(value = R.id.btn_create_qr)
+    private void onCilckCreateQRCode(View view) {
+        startActivity(CreateQRCodeActivity.class);
     }
 
     @Override

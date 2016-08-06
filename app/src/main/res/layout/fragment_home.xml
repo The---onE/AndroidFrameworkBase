@@ -53,4 +53,10 @@
         android:layout_height="wrap_content"
         android:text="关闭服务" />
 
+    <Button
+        android:id="@+id/btn_create_qr"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="生成二维码" />
+
 </LinearLayout>

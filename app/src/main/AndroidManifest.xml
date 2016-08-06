@@ -63,22 +63,22 @@
         <activity
             android:name=".User.RegisterActivity"
             android:theme="@style/AppTheme.NoActionBar" />
-
         <activity android:name=".Tools.ChoosePhoto.AlbumActivity" />
-
         <activity
             android:name=".Tools.ChoosePhoto.BigPhotoActivity"
             android:theme="@style/AppTheme.NoActionBar" />
-
         <activity
             android:name=".Tools.ChoosePhoto.PhotoActivity"
             android:theme="@style/AppTheme.NoActionBar" />
-
         <activity
             android:name=".Tools.PushMessage.ReceiveMessageActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".Tools.PushMessage.PushItemMessageActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+
+        <activity
+            android:name=".QRCode.CreateQRCodeActivity"
             android:theme="@style/AppTheme.NoActionBar" />
 
         <service

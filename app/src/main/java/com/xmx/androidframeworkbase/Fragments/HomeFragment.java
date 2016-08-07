@@ -11,6 +11,7 @@ import android.widget.EditText;
 
 import com.xmx.androidframeworkbase.Constants;
 import com.xmx.androidframeworkbase.QRCode.CreateQRCodeActivity;
+import com.xmx.androidframeworkbase.QRCode.ScanQRCodeActivity;
 import com.xmx.androidframeworkbase.R;
 import com.xmx.androidframeworkbase.Services.MainService;
 import com.xmx.androidframeworkbase.Tools.ChoosePhoto.AlbumActivity;
@@ -111,6 +112,11 @@ public class HomeFragment extends xUtilsFragment {
     @Event(value = R.id.btn_create_qr)
     private void onCilckCreateQRCode(View view) {
         startActivity(CreateQRCodeActivity.class);
+    }
+
+    @Event(value = R.id.btn_scan_qr)
+    private void onCilckScanQRCode(View view) {
+        startActivity(ScanQRCodeActivity.class);
     }
 
     @Override

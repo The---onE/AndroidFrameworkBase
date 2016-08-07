@@ -9,6 +9,7 @@
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.VIBRATE" />
 
     <!-- 基础模块 END -->
     <application
@@ -63,7 +64,8 @@
         <activity
             android:name=".User.RegisterActivity"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".Tools.ChoosePhoto.AlbumActivity"
+        <activity
+            android:name=".Tools.ChoosePhoto.AlbumActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".Tools.ChoosePhoto.BigPhotoActivity"
@@ -80,6 +82,10 @@
 
         <activity
             android:name=".QRCode.CreateQRCodeActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+
+        <activity
+            android:name=".QRCode.ScanQRCodeActivity"
             android:theme="@style/AppTheme.NoActionBar" />
 
         <service

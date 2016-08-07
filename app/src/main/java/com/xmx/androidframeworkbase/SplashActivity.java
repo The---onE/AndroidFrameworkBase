@@ -16,6 +16,7 @@ public class SplashActivity extends BaseActivity {
     boolean loginFlag = false;
     boolean timeFlag = false;
     boolean notLoginFlag = false;
+    boolean startFlag = false;
 
     @Override
     protected void initView(Bundle savedInstanceState) {
@@ -25,11 +26,13 @@ public class SplashActivity extends BaseActivity {
             @Override
             public void run() {
                 timeFlag = true;
-                if (loginFlag) {
-                    startMainActivity();
-                }
-                if (notLoginFlag) {
-                    startLoginActivity();
+                if (!startFlag) {
+                    if (loginFlag) {
+                        startMainActivity();
+                    }
+                    if (notLoginFlag) {
+                        startLoginActivity();
+                    }
                 }
             }
         }, Constants.SPLASH_TIME);
@@ -37,10 +40,12 @@ public class SplashActivity extends BaseActivity {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                if (loginFlag) {
-                    startMainActivity();
-                } else {
-                    startLoginActivity();
+                if (!startFlag) {
+                    if (loginFlag) {
+                        startMainActivity();
+                    } else {
+                        startLoginActivity();
+                    }
                 }
             }
         }, Constants.LONGEST_SPLASH_TIME);
@@ -102,12 +107,14 @@ public class SplashActivity extends BaseActivity {
     }
 
     void startLoginActivity() {
+        startFlag = true;
         Intent loginIntent = new Intent(SplashActivity.this, LoginActivity.class);
         startActivity(loginIntent);
         finish();
     }
 
     void startMainActivity() {
+        startFlag = true;
         Intent mainIntent = new Intent(SplashActivity.this, MainActivity.class);
         startActivity(mainIntent);
         finish();

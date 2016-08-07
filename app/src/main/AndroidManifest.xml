@@ -63,7 +63,8 @@
         <activity
             android:name=".User.RegisterActivity"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".Tools.ChoosePhoto.AlbumActivity" />
+        <activity android:name=".Tools.ChoosePhoto.AlbumActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".Tools.ChoosePhoto.BigPhotoActivity"
             android:theme="@style/AppTheme.NoActionBar" />

@@ -16,7 +16,7 @@ import android.widget.ListView;
 
 import com.xmx.androidframeworkbase.Constants;
 import com.xmx.androidframeworkbase.R;
-import com.xmx.androidframeworkbase.Tools.ActivityBase.BaseActivity;
+import com.xmx.androidframeworkbase.Tools.ActivityBase.BaseTempActivity;
 import com.xmx.androidframeworkbase.Tools.ChoosePhoto.adapter.AlbumAdapter;
 import com.xmx.androidframeworkbase.Tools.ChoosePhoto.entities.AlbumItem;
 import com.xmx.androidframeworkbase.Tools.ChoosePhoto.entities.PhotoInf;
@@ -26,7 +26,7 @@ import org.xutils.view.annotation.Event;
 import org.xutils.view.annotation.ViewInject;
 
 @ContentView(R.layout.activity_cp_album)
-public class AlbumActivity extends BaseActivity {
+public class AlbumActivity extends BaseTempActivity {
     @ViewInject(R.id.album_listview)
     private ListView albumGV;
 

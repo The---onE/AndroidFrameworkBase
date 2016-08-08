@@ -5,70 +5,35 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Vibrator;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
-import android.widget.Toast;
 
 import com.xmx.androidframeworkbase.R;
+import com.xmx.androidframeworkbase.Tools.ActivityBase.BaseTempActivity;
+
+import org.xutils.view.annotation.ContentView;
+import org.xutils.view.annotation.ViewInject;
 
 import cn.bingoogolapple.photopicker.activity.BGAPhotoPickerActivity;
 import cn.bingoogolapple.qrcode.core.QRCodeView;
 import cn.bingoogolapple.qrcode.zxing.QRCodeDecoder;
-import cn.bingoogolapple.qrcode.zxing.ZXingView;
 
-public class ScanQRCodeActivity extends AppCompatActivity implements QRCodeView.Delegate {
+@ContentView(R.layout.activity_scan_qrcode)
+public class ScanQRCodeActivity extends BaseTempActivity implements QRCodeView.Delegate {
     private static final String TAG = ScanQRCodeActivity.class.getSimpleName();
     private static final int REQUEST_CODE_CHOOSE_QRCODE_FROM_GALLERY = 666;
 
+    @ViewInject(R.id.zxingview)
     private QRCodeView mQRCodeView;
 
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_scan_qrcode);
-        setSupportActionBar((Toolbar) findViewById(R.id.toolbar));
-
-        mQRCodeView = (ZXingView) findViewById(R.id.zxingview);
+    @Override
+    protected void initView(Bundle savedInstanceState) {
         mQRCodeView.setDelegate(this);
     }
 
     @Override
-    protected void onStart() {
-        super.onStart();
-        mQRCodeView.startCamera();
-//        mQRCodeView.startCamera(Camera.CameraInfo.CAMERA_FACING_FRONT);
-    }
-
-    @Override
-    protected void onStop() {
-        mQRCodeView.stopCamera();
-        super.onStop();
-    }
-
-    @Override
-    protected void onDestroy() {
-        mQRCodeView.onDestroy();
-        super.onDestroy();
-    }
-
-    private void vibrate() {
-        Vibrator vibrator = (Vibrator) getSystemService(VIBRATOR_SERVICE);
-        vibrator.vibrate(200);
-    }
-
-    @Override
-    public void onScanQRCodeSuccess(String result) {
-        Log.i(TAG, "result:" + result);
-        Toast.makeText(this, result, Toast.LENGTH_SHORT).show();
-        vibrate();
-        mQRCodeView.startSpot();
-    }
-
-    @Override
     public void onScanQRCodeOpenCameraError() {
-        Log.e(TAG, "打开相机出错");
+        showToast("打开相机出错");
     }
 
     public void onClick(View v) {
@@ -121,6 +86,47 @@ public class ScanQRCodeActivity extends AppCompatActivity implements QRCodeView.
     }
 
     @Override
+    protected void setListener() {
+
+    }
+
+    @Override
+    protected void processLogic(Bundle savedInstanceState) {
+
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        mQRCodeView.startCamera();
+        //mQRCodeView.startCamera(Camera.CameraInfo.CAMERA_FACING_FRONT);
+    }
+
+    @Override
+    protected void onStop() {
+        mQRCodeView.stopCamera();
+        super.onStop();
+    }
+
+    @Override
+    protected void onDestroy() {
+        mQRCodeView.onDestroy();
+        super.onDestroy();
+    }
+
+    private void vibrate() {
+        Vibrator vibrator = (Vibrator) getSystemService(VIBRATOR_SERVICE);
+        vibrator.vibrate(200);
+    }
+
+    @Override
+    public void onScanQRCodeSuccess(String result) {
+        showToast(result);
+        vibrate();
+        mQRCodeView.startSpot();
+    }
+
+    @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
@@ -142,14 +148,12 @@ public class ScanQRCodeActivity extends AppCompatActivity implements QRCodeView.
                 @Override
                 protected void onPostExecute(String result) {
                     if (TextUtils.isEmpty(result)) {
-                        Toast.makeText(ScanQRCodeActivity.this, "未发现二维码", Toast.LENGTH_SHORT).show();
+                        showToast("未发现二维码");
                     } else {
-                        Toast.makeText(ScanQRCodeActivity.this, result, Toast.LENGTH_SHORT).show();
+                        showToast(result);
                     }
                 }
             }.execute();
         }
     }
-
-
 }

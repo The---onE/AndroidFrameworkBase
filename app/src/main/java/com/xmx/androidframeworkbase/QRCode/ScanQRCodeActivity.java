@@ -1,17 +1,22 @@
 package com.xmx.androidframeworkbase.QRCode;
 
 import android.app.Activity;
+import android.content.ClipData;
+import android.content.ClipboardManager;
+import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Vibrator;
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.TextView;
 
 import com.xmx.androidframeworkbase.R;
 import com.xmx.androidframeworkbase.Tools.ActivityBase.BaseTempActivity;
 
 import org.xutils.view.annotation.ContentView;
+import org.xutils.view.annotation.Event;
 import org.xutils.view.annotation.ViewInject;
 
 import cn.bingoogolapple.photopicker.activity.BGAPhotoPickerActivity;
@@ -23,8 +28,13 @@ public class ScanQRCodeActivity extends BaseTempActivity implements QRCodeView.D
     private static final String TAG = ScanQRCodeActivity.class.getSimpleName();
     private static final int REQUEST_CODE_CHOOSE_QRCODE_FROM_GALLERY = 666;
 
+    private boolean successFlag = false;
+
     @ViewInject(R.id.zxingview)
     private QRCodeView mQRCodeView;
+
+    @ViewInject(R.id.scan_result)
+    private TextView scanResultView;
 
     @Override
     protected void initView(Bundle savedInstanceState) {
@@ -34,6 +44,17 @@ public class ScanQRCodeActivity extends BaseTempActivity implements QRCodeView.D
     @Override
     public void onScanQRCodeOpenCameraError() {
         showToast("打开相机出错");
+    }
+
+    @Event(value = R.id.scan_result)
+    private void onResultClick(View view) {
+        if (successFlag) {
+            ClipboardManager cmb = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
+            String res = scanResultView.getText().toString();
+            ClipData clipData = ClipData.newPlainText("label", res); //文本型数据 clipData 的构造方法。
+            cmb.setPrimaryClip(clipData);
+            showToast("已将扫描的内容加入剪切板");
+        }
     }
 
     public void onClick(View v) {
@@ -122,8 +143,10 @@ public class ScanQRCodeActivity extends BaseTempActivity implements QRCodeView.D
     @Override
     public void onScanQRCodeSuccess(String result) {
         showToast(result);
+        scanResultView.setText(result);
         vibrate();
         mQRCodeView.startSpot();
+        successFlag = true;
     }
 
     @Override

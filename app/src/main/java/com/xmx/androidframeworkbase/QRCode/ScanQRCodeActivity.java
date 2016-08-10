@@ -174,6 +174,9 @@ public class ScanQRCodeActivity extends BaseTempActivity implements QRCodeView.D
                         showToast("未发现二维码");
                     } else {
                         showToast(result);
+                        scanResultView.setText(result);
+                        vibrate();
+                        successFlag = true;
                     }
                 }
             }.execute();

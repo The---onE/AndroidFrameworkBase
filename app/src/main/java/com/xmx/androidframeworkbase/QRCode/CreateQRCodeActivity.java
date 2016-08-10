@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Environment;
@@ -33,6 +34,8 @@ import cn.bingoogolapple.qrcode.zxing.QRCodeEncoder;
 @ContentView(R.layout.activity_create_qrcode)
 public class CreateQRCodeActivity extends BaseTempActivity {
     private static final int REQUEST_CODE_CHOOSE_LOGO_FROM_GALLERY = 666;
+    private static final int BORDER_WIDTH = 50;
+
 
     @ViewInject(R.id.edit_qr)
     EditText contentEdit;
@@ -101,6 +104,14 @@ public class CreateQRCodeActivity extends BaseTempActivity {
                 showToast("生成二维码失败");
                 return;
             }
+
+            int width = image.getWidth() + BORDER_WIDTH * 2;
+            int height = image.getHeight() + BORDER_WIDTH * 2;
+            Bitmap file = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
+            Canvas canvas = new Canvas(file);
+            canvas.drawColor(Color.WHITE);
+            canvas.drawBitmap(image, BORDER_WIDTH, BORDER_WIDTH, null);
+
             Bitmap.CompressFormat format = Bitmap.CompressFormat.JPEG;
             int quality = 100;
             OutputStream stream;
@@ -122,7 +133,7 @@ public class CreateQRCodeActivity extends BaseTempActivity {
 
                 stream = new FileOutputStream(filepath);
 
-                image.compress(format, quality, stream);
+                file.compress(format, quality, stream);
 
                 showToast("图片保存至" + filepath);
             } catch (FileNotFoundException e) {

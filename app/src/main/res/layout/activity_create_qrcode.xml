@@ -16,6 +16,18 @@
         android:hint="请输入内容"/>
 
     <Button
+        android:id="@+id/btn_choose_logo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="选择LOGO" />
+
+    <TextView
+        android:id="@+id/logo_path"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="未选择LOGO" />
+
+    <Button
         android:id="@+id/btn_qr"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

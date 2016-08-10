@@ -1,15 +1,19 @@
 package com.xmx.androidframeworkbase.QRCode;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Environment;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.xmx.androidframeworkbase.R;
 import com.xmx.androidframeworkbase.Tools.ActivityBase.BaseTempActivity;
-import com.xmx.androidframeworkbase.Tools.NewThread;
 
 import org.xutils.view.annotation.ContentView;
 import org.xutils.view.annotation.Event;
@@ -22,10 +26,13 @@ import java.io.OutputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import cn.bingoogolapple.photopicker.activity.BGAPhotoPickerActivity;
+import cn.bingoogolapple.qrcode.core.BGAQRCodeUtil;
 import cn.bingoogolapple.qrcode.zxing.QRCodeEncoder;
 
 @ContentView(R.layout.activity_create_qrcode)
 public class CreateQRCodeActivity extends BaseTempActivity {
+    private static final int REQUEST_CODE_CHOOSE_LOGO_FROM_GALLERY = 666;
 
     @ViewInject(R.id.edit_qr)
     EditText contentEdit;
@@ -33,12 +40,40 @@ public class CreateQRCodeActivity extends BaseTempActivity {
     @ViewInject(R.id.image_qr)
     ImageView qrImage;
 
+    String logoPath;
+    @ViewInject(R.id.logo_path)
+    TextView logoPathView;
+
+    @Event(value = R.id.btn_choose_logo)
+    private void onClickChooseLogo(View view) {
+        startActivityForResult(BGAPhotoPickerActivity.newIntent(this, null, 1, null),
+                REQUEST_CODE_CHOOSE_LOGO_FROM_GALLERY);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (resultCode == Activity.RESULT_OK && requestCode == REQUEST_CODE_CHOOSE_LOGO_FROM_GALLERY) {
+            logoPath = BGAPhotoPickerActivity.getSelectedImages(data).get(0);
+            logoPathView.setText(logoPath);
+        }
+    }
+
     @Event(value = R.id.btn_qr)
     private void onClickCreateQR(View view) {
         final String content = contentEdit.getText().toString();
 
         if (!content.equals("")) {
-            Bitmap image = QRCodeEncoder.syncEncodeQRCode(content, 500);
+            Bitmap image;
+            if (logoPath != null) {
+                Bitmap logoBitmap = BitmapFactory.decodeFile(logoPath);
+                image = QRCodeEncoder.syncEncodeQRCode(content,
+                        BGAQRCodeUtil.dp2px(CreateQRCodeActivity.this, 150), Color.BLACK, logoBitmap);
+            } else {
+                image = QRCodeEncoder.syncEncodeQRCode(content,
+                        BGAQRCodeUtil.dp2px(CreateQRCodeActivity.this, 150));
+            }
             qrImage.setImageBitmap(image);
         } else {
             showToast("内容不能为空");
@@ -50,7 +85,16 @@ public class CreateQRCodeActivity extends BaseTempActivity {
         final String content = contentEdit.getText().toString();
 
         if (!content.equals("")) {
-            Bitmap image = QRCodeEncoder.syncEncodeQRCode(content, 500);
+            Bitmap image;
+            if (logoPath != null) {
+                Bitmap logoBitmap = BitmapFactory.decodeFile(logoPath);
+                image = QRCodeEncoder.syncEncodeQRCode(content,
+                        BGAQRCodeUtil.dp2px(CreateQRCodeActivity.this, 150), Color.BLACK, logoBitmap);
+            } else {
+                image = QRCodeEncoder.syncEncodeQRCode(content,
+                        BGAQRCodeUtil.dp2px(CreateQRCodeActivity.this, 150));
+            }
+
             qrImage.setImageBitmap(image);
 
             if (image == null) {

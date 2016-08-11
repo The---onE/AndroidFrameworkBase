@@ -10,6 +10,7 @@ import android.view.MenuItem;
 
 import com.xmx.androidframeworkbase.Fragments.CloudFragment;
 import com.xmx.androidframeworkbase.Fragments.HomeFragment;
+import com.xmx.androidframeworkbase.Fragments.NotificationFragment;
 import com.xmx.androidframeworkbase.Fragments.PushFragment;
 import com.xmx.androidframeworkbase.Fragments.SQLFragment;
 import com.xmx.androidframeworkbase.Fragments.SyncFragment;
@@ -31,6 +32,7 @@ public class MainActivity extends BaseNavigationActivity {
 
         List<Fragment> fragments = new ArrayList<>();
         fragments.add(new HomeFragment());
+        fragments.add(new NotificationFragment());
         fragments.add(new IMFragment());
         fragments.add(new PushFragment());
         fragments.add(new SyncFragment());
@@ -39,6 +41,7 @@ public class MainActivity extends BaseNavigationActivity {
 
         List<String> titles = new ArrayList<>();
         titles.add("首页");
+        titles.add("通知");
         titles.add("IM");
         titles.add("推送");
         titles.add("Sync");
@@ -87,20 +90,23 @@ public class MainActivity extends BaseNavigationActivity {
             case R.id.nav_home:
                 vp.setCurrentItem(0);
                 break;
-            case R.id.nav_im:
+            case R.id.nav_notification:
                 vp.setCurrentItem(1);
                 break;
-            case R.id.nav_push:
+            case R.id.nav_im:
                 vp.setCurrentItem(2);
                 break;
-            case R.id.nav_sync:
+            case R.id.nav_push:
                 vp.setCurrentItem(3);
                 break;
-            case R.id.nav_sql:
+            case R.id.nav_sync:
                 vp.setCurrentItem(4);
                 break;
-            case R.id.nav_cloud:
+            case R.id.nav_sql:
                 vp.setCurrentItem(5);
+                break;
+            case R.id.nav_cloud:
+                vp.setCurrentItem(6);
                 break;
         }
 

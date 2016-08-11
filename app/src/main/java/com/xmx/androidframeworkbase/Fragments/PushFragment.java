@@ -11,7 +11,7 @@ import com.avos.avoscloud.PushService;
 import com.avos.avoscloud.SaveCallback;
 import com.xmx.androidframeworkbase.R;
 import com.xmx.androidframeworkbase.Tools.FragmentBase.xUtilsFragment;
-import com.xmx.androidframeworkbase.Tools.PushMessage.PushItemMessageActivity;
+import com.xmx.androidframeworkbase.Message.PushItemMessageActivity;
 import com.xmx.androidframeworkbase.Tools.PushMessage.ReceiveMessageActivity;
 import com.xmx.androidframeworkbase.User.Callback.AutoLoginCallback;
 import com.xmx.androidframeworkbase.User.UserConstants;

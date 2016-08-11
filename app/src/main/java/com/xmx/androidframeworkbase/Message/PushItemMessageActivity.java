@@ -1,4 +1,4 @@
-package com.xmx.androidframeworkbase.Tools.PushMessage;
+package com.xmx.androidframeworkbase.Message;
 
 import android.app.Activity;
 import android.content.Intent;

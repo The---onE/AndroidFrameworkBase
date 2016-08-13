@@ -6,6 +6,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
 import android.view.View;
@@ -68,16 +69,32 @@ public class CreateQRCodeActivity extends BaseTempActivity {
         final String content = contentEdit.getText().toString();
 
         if (!content.equals("")) {
-            Bitmap image;
-            if (logoPath != null) {
-                Bitmap logoBitmap = BitmapFactory.decodeFile(logoPath);
-                image = QRCodeEncoder.syncEncodeQRCode(content,
-                        BGAQRCodeUtil.dp2px(CreateQRCodeActivity.this, 150), Color.BLACK, logoBitmap);
-            } else {
-                image = QRCodeEncoder.syncEncodeQRCode(content,
-                        BGAQRCodeUtil.dp2px(CreateQRCodeActivity.this, 150));
-            }
-            qrImage.setImageBitmap(image);
+            new AsyncTask<Void, Void, Bitmap>() {
+                @Override
+                protected void onPreExecute() {
+                    setTitle("正在生成");
+                }
+
+                @Override
+                protected Bitmap doInBackground(Void... params) {
+                    Bitmap image;
+                    if (logoPath != null) {
+                        Bitmap logoBitmap = BitmapFactory.decodeFile(logoPath);
+                        image = QRCodeEncoder.syncEncodeQRCode(content,
+                                BGAQRCodeUtil.dp2px(CreateQRCodeActivity.this, 150), Color.BLACK, logoBitmap);
+                    } else {
+                        image = QRCodeEncoder.syncEncodeQRCode(content,
+                                BGAQRCodeUtil.dp2px(CreateQRCodeActivity.this, 150));
+                    }
+                    return image;
+                }
+
+                @Override
+                protected void onPostExecute(Bitmap result) {
+                    qrImage.setImageBitmap(result);
+                    setTitle("生成成功");
+                }
+            }.execute();
         } else {
             showToast("内容不能为空");
         }
@@ -88,57 +105,99 @@ public class CreateQRCodeActivity extends BaseTempActivity {
         final String content = contentEdit.getText().toString();
 
         if (!content.equals("")) {
-            Bitmap image;
-            if (logoPath != null) {
-                Bitmap logoBitmap = BitmapFactory.decodeFile(logoPath);
-                image = QRCodeEncoder.syncEncodeQRCode(content,
-                        BGAQRCodeUtil.dp2px(CreateQRCodeActivity.this, 150), Color.BLACK, logoBitmap);
-            } else {
-                image = QRCodeEncoder.syncEncodeQRCode(content,
-                        BGAQRCodeUtil.dp2px(CreateQRCodeActivity.this, 150));
-            }
-
-            qrImage.setImageBitmap(image);
-
-            if (image == null) {
-                showToast("生成二维码失败");
-                return;
-            }
-
-            int width = image.getWidth() + BORDER_WIDTH * 2;
-            int height = image.getHeight() + BORDER_WIDTH * 2;
-            Bitmap file = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
-            Canvas canvas = new Canvas(file);
-            canvas.drawColor(Color.WHITE);
-            canvas.drawBitmap(image, BORDER_WIDTH, BORDER_WIDTH, null);
-
-            Bitmap.CompressFormat format = Bitmap.CompressFormat.JPEG;
-            int quality = 100;
-            OutputStream stream;
-            try {
-                File mediaStorageDir = new File(Environment.getExternalStoragePublicDirectory(
-                        Environment.DIRECTORY_PICTURES), "Camera");
-
-                if (!mediaStorageDir.exists()) {
-                    if (!mediaStorageDir.mkdirs()) {
-                        showToast("创建目录失败");
-                        return;
-                    }
+            new AsyncTask<Void, Void, Bitmap>() {
+                @Override
+                protected void onPreExecute() {
+                    setTitle("正在生成");
                 }
 
-                String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+                @Override
+                protected Bitmap doInBackground(Void... params) {
+                    Bitmap image;
+                    if (logoPath != null) {
+                        Bitmap logoBitmap = BitmapFactory.decodeFile(logoPath);
+                        image = QRCodeEncoder.syncEncodeQRCode(content,
+                                BGAQRCodeUtil.dp2px(CreateQRCodeActivity.this, 150), Color.BLACK, logoBitmap);
+                    } else {
+                        image = QRCodeEncoder.syncEncodeQRCode(content,
+                                BGAQRCodeUtil.dp2px(CreateQRCodeActivity.this, 150));
+                    }
 
-                String filepath = mediaStorageDir.getPath() + File.separator +
-                        "IMG_" + timeStamp + ".jpg";
+                    return image;
+                }
 
-                stream = new FileOutputStream(filepath);
+                @Override
+                protected void onPostExecute(final Bitmap image) {
+                    if (image == null) {
+                        showToast("生成二维码失败");
+                        setTitle("生成失败");
+                        return;
+                    }
+                    qrImage.setImageBitmap(image);
+                    setTitle("生成成功");
 
-                file.compress(format, quality, stream);
+                    new AsyncTask<Void, Boolean, String>() {
+                        @Override
+                        protected void onPreExecute() {
+                            setTitle("正在保存");
+                        }
 
-                showToast("图片保存至" + filepath);
-            } catch (FileNotFoundException e) {
-                filterException(e);
-            }
+                        @Override
+                        protected String doInBackground(Void... voids) {
+                            int width = image.getWidth() + BORDER_WIDTH * 2;
+                            int height = image.getHeight() + BORDER_WIDTH * 2;
+                            Bitmap file = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
+                            Canvas canvas = new Canvas(file);
+                            canvas.drawColor(Color.WHITE);
+                            canvas.drawBitmap(image, BORDER_WIDTH, BORDER_WIDTH, null);
+
+                            Bitmap.CompressFormat format = Bitmap.CompressFormat.JPEG;
+                            int quality = 100;
+                            OutputStream stream;
+                            try {
+                                File mediaStorageDir = new File(Environment.getExternalStoragePublicDirectory(
+                                        Environment.DIRECTORY_PICTURES), "Camera");
+
+                                if (!mediaStorageDir.exists()) {
+                                    if (!mediaStorageDir.mkdirs()) {
+                                        publishProgress(false);
+                                        return "创建目录失败";
+                                    }
+                                }
+
+                                String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+
+                                String filepath = mediaStorageDir.getPath() + File.separator +
+                                        "IMG_" + timeStamp + ".jpg";
+
+                                stream = new FileOutputStream(filepath);
+
+                                file.compress(format, quality, stream);
+
+                                publishProgress(true);
+                                return "图片保存至" + filepath;
+                            } catch (FileNotFoundException e) {
+                                filterException(e);
+                            }
+                            return null;
+                        }
+
+                        @Override
+                        protected void onProgressUpdate(Boolean... values) {
+                            if (values[0]) {
+                                setTitle("保存成功");
+                            } else {
+                                setTitle("保存失败");
+                            }
+                        }
+
+                        @Override
+                        protected void onPostExecute(String s) {
+                            showToast(s);
+                        }
+                    }.execute();
+                }
+            }.execute();
         } else {
             showToast("内容不能为空");
         }

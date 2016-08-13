@@ -55,12 +55,12 @@
         <TextView
             android:id="@+id/start_preview"
             style="@style/AutoWrapTv"
-            android:text="开始预览" />
+            android:text="打开摄像头" />
 
         <TextView
             android:id="@+id/stop_preview"
             style="@style/AutoWrapTv"
-            android:text="停止预览" />
+            android:text="关闭摄像头" />
 
         <TextView
             android:id="@+id/scan_barcode"

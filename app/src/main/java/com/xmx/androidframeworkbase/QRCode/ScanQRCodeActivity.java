@@ -39,11 +39,15 @@ public class ScanQRCodeActivity extends BaseTempActivity implements QRCodeView.D
     @Override
     protected void initView(Bundle savedInstanceState) {
         mQRCodeView.setDelegate(this);
+
+        mQRCodeView.startSpotAndShowRect();
+        setTitle("正在扫描");
     }
 
     @Override
     public void onScanQRCodeOpenCameraError() {
         showToast("打开相机出错");
+        setTitle("打开相机出错");
     }
 
     @Event(value = R.id.scan_result)
@@ -61,15 +65,19 @@ public class ScanQRCodeActivity extends BaseTempActivity implements QRCodeView.D
         switch (v.getId()) {
             case R.id.start_spot:
                 mQRCodeView.startSpot();
+                setTitle("正在扫描");
                 break;
             case R.id.stop_spot:
                 mQRCodeView.stopSpot();
+                setTitle("停止扫描");
                 break;
             case R.id.start_spot_showrect:
                 mQRCodeView.startSpotAndShowRect();
+                setTitle("正在扫描");
                 break;
             case R.id.stop_spot_hiddenrect:
                 mQRCodeView.stopSpotAndHiddenRect();
+                setTitle("停止扫描");
                 break;
             case R.id.show_rect:
                 mQRCodeView.showScanRect();
@@ -79,9 +87,12 @@ public class ScanQRCodeActivity extends BaseTempActivity implements QRCodeView.D
                 break;
             case R.id.start_preview:
                 mQRCodeView.startCamera();
+                mQRCodeView.startSpotAndShowRect();
+                setTitle("正在扫描");
                 break;
             case R.id.stop_preview:
                 mQRCodeView.stopCamera();
+                setTitle("摄像头关闭");
                 break;
             case R.id.open_flashlight:
                 mQRCodeView.openFlashlight();
@@ -120,12 +131,15 @@ public class ScanQRCodeActivity extends BaseTempActivity implements QRCodeView.D
     protected void onStart() {
         super.onStart();
         mQRCodeView.startCamera();
+        mQRCodeView.startSpotAndShowRect();
+        setTitle("正在扫描");
         //mQRCodeView.startCamera(Camera.CameraInfo.CAMERA_FACING_FRONT);
     }
 
     @Override
     protected void onStop() {
         mQRCodeView.stopCamera();
+        setTitle("摄像头关闭");
         super.onStop();
     }
 
@@ -146,6 +160,7 @@ public class ScanQRCodeActivity extends BaseTempActivity implements QRCodeView.D
         scanResultView.setText(result);
         vibrate();
         mQRCodeView.startSpot();
+        setTitle("正在扫描");
         successFlag = true;
     }
 

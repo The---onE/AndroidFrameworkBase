@@ -1,6 +1,7 @@
 package com.xmx.androidframeworkbase;
 
 import android.os.Bundle;
+import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
@@ -8,6 +9,8 @@ import android.support.v4.widget.DrawerLayout;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.avos.avoscloud.AVException;
+import com.avos.avoscloud.AVObject;
 import com.xmx.androidframeworkbase.Fragments.CloudFragment;
 import com.xmx.androidframeworkbase.Fragments.HomeFragment;
 import com.xmx.androidframeworkbase.Fragments.NotificationFragment;
@@ -17,6 +20,9 @@ import com.xmx.androidframeworkbase.Fragments.SyncFragment;
 import com.xmx.androidframeworkbase.Fragments.IMFragment;
 import com.xmx.androidframeworkbase.Tools.ActivityBase.BaseNavigationActivity;
 import com.xmx.androidframeworkbase.Tools.PagerAdapter;
+import com.xmx.androidframeworkbase.User.Callback.AutoLoginCallback;
+import com.xmx.androidframeworkbase.User.UserConstants;
+import com.xmx.androidframeworkbase.User.UserManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -61,7 +67,36 @@ public class MainActivity extends BaseNavigationActivity {
 
     @Override
     protected void processLogic(Bundle savedInstanceState) {
+        NavigationView navigation = getViewById(R.id.nav_view);
+        Menu menu = navigation.getMenu();
+        final MenuItem login = menu.findItem(R.id.nav_logout);
 
+        UserManager.getInstance().autoLogin(new AutoLoginCallback() {
+            @Override
+            public void success(final AVObject user) {
+                login.setTitle(user.getString("nickname") + " 点击注销");
+            }
+
+            @Override
+            public void error(AVException e) {
+                filterException(e);
+            }
+
+            @Override
+            public void error(int error) {
+                switch (error) {
+                    case UserConstants.NOT_LOGGED_IN:
+                        showToast("请在侧边栏中选择登录");
+                        break;
+                    case UserConstants.USERNAME_ERROR:
+                        showToast("请在侧边栏中选择登录");
+                        break;
+                    case UserConstants.CHECKSUM_ERROR:
+                        showToast("登录过期，请在侧边栏中重新登录");
+                        break;
+                }
+            }
+        });
     }
 
     @Override

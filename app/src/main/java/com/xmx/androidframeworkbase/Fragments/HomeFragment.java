@@ -18,6 +18,7 @@ import com.xmx.androidframeworkbase.Tools.ChoosePhoto.AlbumActivity;
 import com.xmx.androidframeworkbase.Tools.FragmentBase.xUtilsFragment;
 import com.xmx.androidframeworkbase.Tools.Notification.NotificationTempActivity;
 import com.xmx.androidframeworkbase.Tools.Notification.NotificationUtils;
+import com.xmx.androidframeworkbase.Tools.VibratorManager;
 
 import org.xutils.view.annotation.ContentView;
 import org.xutils.view.annotation.Event;
@@ -39,6 +40,21 @@ public class HomeFragment extends xUtilsFragment {
     @Event(value = R.id.btn_scan_qr)
     private void onCilckScanQRCode(View view) {
         startActivity(ScanQRCodeActivity.class);
+    }
+
+    @Event(value = R.id.btn_vibrate_once)
+    private void onCilckVibrateOnce(View view) {
+        VibratorManager.getInstance().vibrate(getContext(), 1000);
+    }
+
+    @Event(value = R.id.btn_vibrate_forever)
+    private void onCilckVibrateForever(View view) {
+        VibratorManager.getInstance().vibrate(getContext());
+    }
+
+    @Event(value = R.id.btn_cancel_vibrate)
+    private void onCilckCancelVibrate(View view) {
+        VibratorManager.getInstance().cancel(getContext());
     }
 
     @Override

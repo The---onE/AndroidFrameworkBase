@@ -17,4 +17,22 @@
         android:layout_height="wrap_content"
         android:text="扫描二维码" />
 
+    <Button
+        android:id="@+id/btn_vibrate_once"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="震动一秒" />
+
+    <Button
+        android:id="@+id/btn_vibrate_forever"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="持续震动" />
+
+    <Button
+        android:id="@+id/btn_cancel_vibrate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="取消震动" />
+
 </LinearLayout>

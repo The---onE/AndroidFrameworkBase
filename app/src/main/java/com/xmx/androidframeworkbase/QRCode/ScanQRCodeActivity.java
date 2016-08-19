@@ -64,13 +64,14 @@ public class ScanQRCodeActivity extends BaseTempActivity implements QRCodeView.D
     }
 
     @Event(value = R.id.scan_result, type = View.OnLongClickListener.class)
-    private void onResultLongClick(View view) {
+    private boolean onResultLongClick(View view) {
         if (successFlag) {
             String res = scanResultView.getText().toString();
             Uri uri = Uri.parse(res);
             Intent intent = new Intent(Intent.ACTION_VIEW, uri);
             startActivity(intent);
         }
+        return true;
     }
 
     public void onClick(View v) {

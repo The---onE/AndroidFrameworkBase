@@ -5,11 +5,13 @@ import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Vibrator;
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.xmx.androidframeworkbase.R;
@@ -58,6 +60,16 @@ public class ScanQRCodeActivity extends BaseTempActivity implements QRCodeView.D
             ClipData clipData = ClipData.newPlainText("label", res); //文本型数据 clipData 的构造方法。
             cmb.setPrimaryClip(clipData);
             showToast("已将扫描的内容加入剪切板");
+        }
+    }
+
+    @Event(value = R.id.scan_result, type = View.OnLongClickListener.class)
+    private void onResultLongClick(View view) {
+        if (successFlag) {
+            String res = scanResultView.getText().toString();
+            Uri uri = Uri.parse(res);
+            Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+            startActivity(intent);
         }
     }
 
@@ -119,7 +131,6 @@ public class ScanQRCodeActivity extends BaseTempActivity implements QRCodeView.D
 
     @Override
     protected void setListener() {
-
     }
 
     @Override

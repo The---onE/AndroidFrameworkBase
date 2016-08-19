@@ -1,10 +1,13 @@
-package com.xmx.androidframeworkbase;
+package com.xmx.androidframeworkbase.Splash;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
 
+import com.xmx.androidframeworkbase.Constants;
+import com.xmx.androidframeworkbase.MainActivity;
+import com.xmx.androidframeworkbase.R;
 import com.xmx.androidframeworkbase.Tools.ActivityBase.BaseActivity;
 import com.xmx.androidframeworkbase.User.LoginActivity;
 

@@ -1,16 +1,14 @@
-package com.xmx.androidframeworkbase;
+package com.xmx.androidframeworkbase.Splash;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 
-import com.avos.avoscloud.AVException;
-import com.avos.avoscloud.AVObject;
+import com.xmx.androidframeworkbase.Constants;
+import com.xmx.androidframeworkbase.MainActivity;
+import com.xmx.androidframeworkbase.R;
 import com.xmx.androidframeworkbase.Tools.ActivityBase.BaseActivity;
-import com.xmx.androidframeworkbase.User.Callback.AutoLoginCallback;
 import com.xmx.androidframeworkbase.User.LoginActivity;
-import com.xmx.androidframeworkbase.User.UserConstants;
-import com.xmx.androidframeworkbase.User.UserManager;
 
 public class SplashActivity extends BaseActivity {
 

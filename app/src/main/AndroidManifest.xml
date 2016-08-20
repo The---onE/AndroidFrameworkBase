@@ -83,9 +83,18 @@
         <activity
             android:name=".QRCode.CreateQRCodeActivity"
             android:theme="@style/AppTheme.NoActionBar" />
-
         <activity
             android:name=".QRCode.ScanQRCodeActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+
+        <activity
+            android:name=".Data.SQL.SQLActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".Data.Cloud.CloudActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".Data.Sync.SyncActivity"
             android:theme="@style/AppTheme.NoActionBar" />
 
         <service

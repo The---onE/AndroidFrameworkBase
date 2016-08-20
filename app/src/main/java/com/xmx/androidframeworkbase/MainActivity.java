@@ -11,12 +11,10 @@ import android.view.MenuItem;
 
 import com.avos.avoscloud.AVException;
 import com.avos.avoscloud.AVObject;
-import com.xmx.androidframeworkbase.Fragments.CloudFragment;
+import com.xmx.androidframeworkbase.Fragments.DataFragment;
 import com.xmx.androidframeworkbase.Fragments.HomeFragment;
 import com.xmx.androidframeworkbase.Fragments.NotificationFragment;
 import com.xmx.androidframeworkbase.Fragments.PushFragment;
-import com.xmx.androidframeworkbase.Fragments.SQLFragment;
-import com.xmx.androidframeworkbase.Fragments.SyncFragment;
 import com.xmx.androidframeworkbase.Fragments.IMFragment;
 import com.xmx.androidframeworkbase.Tools.ActivityBase.BaseNavigationActivity;
 import com.xmx.androidframeworkbase.Tools.PagerAdapter;
@@ -41,18 +39,14 @@ public class MainActivity extends BaseNavigationActivity {
         fragments.add(new NotificationFragment());
         fragments.add(new IMFragment());
         fragments.add(new PushFragment());
-        fragments.add(new SyncFragment());
-        fragments.add(new SQLFragment());
-        fragments.add(new CloudFragment());
+        fragments.add(new DataFragment());
 
         List<String> titles = new ArrayList<>();
         titles.add("首页");
         titles.add("通知");
         titles.add("IM");
         titles.add("推送");
-        titles.add("Sync");
-        titles.add("SQL");
-        titles.add("Cloud");
+        titles.add("数据");
 
         PagerAdapter adapter = new PagerAdapter(getSupportFragmentManager(), fragments, titles);
 
@@ -134,14 +128,8 @@ public class MainActivity extends BaseNavigationActivity {
             case R.id.nav_push:
                 vp.setCurrentItem(3);
                 break;
-            case R.id.nav_sync:
+            case R.id.nav_data:
                 vp.setCurrentItem(4);
-                break;
-            case R.id.nav_sql:
-                vp.setCurrentItem(5);
-                break;
-            case R.id.nav_cloud:
-                vp.setCurrentItem(6);
                 break;
         }
 

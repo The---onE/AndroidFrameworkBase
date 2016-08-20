@@ -1,4 +1,4 @@
-package com.xmx.androidframeworkbase.Fragments;
+package com.xmx.androidframeworkbase.Data.Sync;
 
 import android.content.DialogInterface;
 import android.os.Bundle;
@@ -11,16 +11,12 @@ import android.widget.ListView;
 import com.avos.avoscloud.AVException;
 import com.avos.avoscloud.AVObject;
 import com.xmx.androidframeworkbase.R;
-import com.xmx.androidframeworkbase.Sync.Sync;
-import com.xmx.androidframeworkbase.Sync.SyncAdapter;
-import com.xmx.androidframeworkbase.Sync.SyncEntityManager;
-import com.xmx.androidframeworkbase.Sync.SyncManager;
+import com.xmx.androidframeworkbase.Tools.ActivityBase.BaseTempActivity;
 import com.xmx.androidframeworkbase.Tools.Data.DataConstants;
 import com.xmx.androidframeworkbase.Tools.Data.Callback.DelCallback;
 import com.xmx.androidframeworkbase.Tools.Data.Callback.InsertCallback;
 import com.xmx.androidframeworkbase.Tools.Data.Callback.SelectCallback;
 import com.xmx.androidframeworkbase.Tools.Data.Callback.UpdateCallback;
-import com.xmx.androidframeworkbase.Tools.FragmentBase.xUtilsFragment;
 
 import org.xutils.view.annotation.ContentView;
 import org.xutils.view.annotation.Event;
@@ -34,8 +30,8 @@ import java.util.Map;
 /**
  * Created by xmx on 2016/6/1.
  */
-@ContentView(R.layout.fragment_sync)
-public class SyncFragment extends xUtilsFragment {
+@ContentView(R.layout.activity_sync)
+public class SyncActivity extends BaseTempActivity {
 
     SyncAdapter syncAdapter;
 
@@ -49,7 +45,7 @@ public class SyncFragment extends xUtilsFragment {
     private boolean onSyncLongClick(AdapterView<?> adapterView, View view, int i, long l) {
         final Sync sync = (Sync) syncAdapter.getItem(i);
 
-        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+        AlertDialog.Builder builder = new AlertDialog.Builder(getBaseContext());
         builder.setMessage("要更新该记录吗？");
         builder.setTitle("提示");
         builder.setNegativeButton("删除", new DialogInterface.OnClickListener() {
@@ -181,9 +177,19 @@ public class SyncFragment extends xUtilsFragment {
     }
 
     @Override
+    protected void initView(Bundle savedInstanceState) {
+
+    }
+
+    @Override
+    protected void setListener() {
+
+    }
+
+    @Override
     protected void processLogic(Bundle savedInstanceState) {
         SyncManager.getInstance().updateData();
-        syncAdapter = new SyncAdapter(getContext(), SyncManager.getInstance().getData());
+        syncAdapter = new SyncAdapter(this, SyncManager.getInstance().getData());
         syncList.setAdapter(syncAdapter);
 
         SyncEntityManager.getInstance().syncFromCloud(null,

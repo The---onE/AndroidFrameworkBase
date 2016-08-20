@@ -1,6 +1,5 @@
-package com.xmx.androidframeworkbase.SQL;
+package com.xmx.androidframeworkbase.Data.SQL;
 
-import com.xmx.androidframeworkbase.Constants;
 import com.xmx.androidframeworkbase.Tools.Data.SQL.BaseSQLEntityManager;
 
 /**

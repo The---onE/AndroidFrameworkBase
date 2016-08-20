@@ -1,4 +1,4 @@
-package com.xmx.androidframeworkbase.Cloud;
+package com.xmx.androidframeworkbase.Data.Sync;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -19,25 +19,25 @@ import java.util.List;
 /**
  * Created by The_onE on 2016/3/27.
  */
-public class CloudAdapter extends BaseEntityAdapter<Cloud> {
+public class SyncAdapter extends BaseEntityAdapter<Sync> {
 
-    public CloudAdapter(Context context, List<Cloud> data) {
+    public SyncAdapter(Context context, List<Sync> data) {
         super(context, data);
     }
 
     static class ViewHolder {
         @ViewInject(R.id.item_data)
-        TextView data;
+        private TextView data;
 
         @ViewInject(R.id.item_time)
-        TextView time;
+        private TextView time;
     }
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         final ViewHolder holder;
         if (convertView == null) {
-            convertView = LayoutInflater.from(mContext).inflate(R.layout.item_cloud, null);
+            convertView = LayoutInflater.from(mContext).inflate(R.layout.item_sync, null);
             holder = new ViewHolder();
             x.view().inject(holder,convertView);
             convertView.setTag(holder);
@@ -45,8 +45,9 @@ public class CloudAdapter extends BaseEntityAdapter<Cloud> {
             holder = (ViewHolder) convertView.getTag();
         }
 
-        if (position < mData.size()) {
-            Cloud sql = mData.get(position);
+        List<Sync> sqlList = SyncManager.getInstance().getData();
+        if (position < sqlList.size()) {
+            Sync sql = sqlList.get(position);
             holder.data.setText(sql.mData);
             DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             String timeString = df.format(sql.mTime);

@@ -1,4 +1,4 @@
-package com.xmx.androidframeworkbase.Sync;
+package com.xmx.androidframeworkbase.Data.Sync;
 
 import android.content.ContentValues;
 import android.database.Cursor;

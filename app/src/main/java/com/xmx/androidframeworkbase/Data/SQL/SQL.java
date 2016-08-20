@@ -1,4 +1,4 @@
-package com.xmx.androidframeworkbase.SQL;
+package com.xmx.androidframeworkbase.Data.SQL;
 
 import android.content.ContentValues;
 import android.database.Cursor;

@@ -1,23 +1,17 @@
-package com.xmx.androidframeworkbase.Fragments;
+package com.xmx.androidframeworkbase.Data.SQL;
 
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 
 import com.xmx.androidframeworkbase.R;
-import com.xmx.androidframeworkbase.SQL.SQL;
-import com.xmx.androidframeworkbase.SQL.SQLAdapter;
-import com.xmx.androidframeworkbase.SQL.SQLEntityManager;
-import com.xmx.androidframeworkbase.SQL.SQLManager;
-import com.xmx.androidframeworkbase.Tools.FragmentBase.BaseFragment;
+import com.xmx.androidframeworkbase.Tools.ActivityBase.BaseTempActivity;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -25,7 +19,7 @@ import java.util.Date;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class SQLFragment extends BaseFragment {
+public class SQLActivity extends BaseTempActivity {
 
     SQLAdapter sqlAdapter;
     ListView sqlList;
@@ -33,28 +27,25 @@ public class SQLFragment extends BaseFragment {
     EditText text;
 
     @Override
-    protected View getContentView(LayoutInflater inflater, ViewGroup container) {
-        return inflater.inflate(R.layout.fragment_sql, container, false);
-    }
+    protected void initView(Bundle savedInstanceState) {
+        setContentView(R.layout.activity_sql);
 
-    @Override
-    protected void initView(View view) {
-        sqlList = (ListView) view.findViewById(R.id.list_sql);
-        sqlAdapter = new SQLAdapter(getContext(), new ArrayList<SQL>());
+        sqlList = getViewById(R.id.list_sql);
+        sqlAdapter = new SQLAdapter(this, new ArrayList<SQL>());
         sqlList.setAdapter(sqlAdapter);
 
-        text = (EditText) view.findViewById(R.id.edit_sql);
-        add = (Button) view.findViewById(R.id.btn_sql);
+        text = getViewById(R.id.edit_sql);
+        add = getViewById(R.id.btn_sql);
     }
 
     @Override
-    protected void setListener(View view) {
+    protected void setListener() {
         sqlList.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
                 final SQL sql = (SQL) sqlAdapter.getItem(i);
 
-                AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                AlertDialog.Builder builder = new AlertDialog.Builder(getBaseContext());
                 builder.setMessage("要更新该记录吗？");
                 builder.setTitle("提示");
                 builder.setNegativeButton("删除", new DialogInterface.OnClickListener() {
@@ -103,9 +94,8 @@ public class SQLFragment extends BaseFragment {
     }
 
     @Override
-    protected void processLogic(View view, Bundle savedInstanceState) {
+    protected void processLogic(Bundle savedInstanceState) {
         SQLManager.getInstance().updateData();
         sqlAdapter.updateList(SQLManager.getInstance().getData());
     }
-
 }

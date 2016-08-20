@@ -1,4 +1,4 @@
-package com.xmx.androidframeworkbase.Cloud;
+package com.xmx.androidframeworkbase.Data.Cloud;
 
 import com.avos.avoscloud.AVObject;
 import com.xmx.androidframeworkbase.Tools.Data.Cloud.ICloudEntity;

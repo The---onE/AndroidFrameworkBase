@@ -1,0 +1,24 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.xmx.androidframeworkbase.Fragments.DataFragment">
+
+    <Button
+        android:id="@+id/btn_sql"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="SQL"/>
+    <Button
+        android:id="@+id/btn_cloud"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Cloud"/>
+    <Button
+        android:id="@+id/btn_sync"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Sync"/>
+
+</LinearLayout>

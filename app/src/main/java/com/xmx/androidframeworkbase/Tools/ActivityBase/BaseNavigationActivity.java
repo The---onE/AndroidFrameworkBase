@@ -10,7 +10,6 @@ import android.view.MenuItem;
 
 import com.avos.avoscloud.AVObject;
 import com.xmx.androidframeworkbase.R;
-import com.xmx.androidframeworkbase.Sync.SyncEntityManager;
 import com.xmx.androidframeworkbase.User.Callback.LogoutCallback;
 import com.xmx.androidframeworkbase.User.LoginActivity;
 import com.xmx.androidframeworkbase.User.UserManager;

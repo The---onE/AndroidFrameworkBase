@@ -11,6 +11,7 @@ import android.view.MenuItem;
 
 import com.avos.avoscloud.AVException;
 import com.avos.avoscloud.AVObject;
+import com.xmx.androidframeworkbase.Fragments.CartFragment;
 import com.xmx.androidframeworkbase.Fragments.DataFragment;
 import com.xmx.androidframeworkbase.Fragments.HomeFragment;
 import com.xmx.androidframeworkbase.Fragments.NotificationFragment;
@@ -36,6 +37,7 @@ public class MainActivity extends BaseNavigationActivity {
 
         List<Fragment> fragments = new ArrayList<>();
         fragments.add(new HomeFragment());
+        fragments.add(new CartFragment());
         fragments.add(new NotificationFragment());
         fragments.add(new IMFragment());
         fragments.add(new PushFragment());
@@ -43,6 +45,7 @@ public class MainActivity extends BaseNavigationActivity {
 
         List<String> titles = new ArrayList<>();
         titles.add("首页");
+        titles.add("购物车");
         titles.add("通知");
         titles.add("IM");
         titles.add("推送");
@@ -119,17 +122,20 @@ public class MainActivity extends BaseNavigationActivity {
             case R.id.nav_home:
                 vp.setCurrentItem(0);
                 break;
-            case R.id.nav_notification:
+            case R.id.nav_cart:
                 vp.setCurrentItem(1);
                 break;
-            case R.id.nav_im:
+            case R.id.nav_notification:
                 vp.setCurrentItem(2);
                 break;
-            case R.id.nav_push:
+            case R.id.nav_im:
                 vp.setCurrentItem(3);
                 break;
-            case R.id.nav_data:
+            case R.id.nav_push:
                 vp.setCurrentItem(4);
+                break;
+            case R.id.nav_data:
+                vp.setCurrentItem(5);
                 break;
         }
 

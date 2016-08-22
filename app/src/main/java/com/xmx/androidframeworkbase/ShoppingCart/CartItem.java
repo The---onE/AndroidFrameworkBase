@@ -10,6 +10,8 @@ import android.widget.TextView;
 import com.xmx.androidframeworkbase.R;
 import com.xmx.androidframeworkbase.Tools.ShoppingCart.ICartItem;
 
+import org.greenrobot.eventbus.EventBus;
+
 /**
  * Created by The_onE on 2016/8/21.
  */
@@ -80,6 +82,7 @@ public class CartItem implements ICartItem {
             @Override
             public void onClick(View view) {
                 count++;
+                EventBus.getDefault().post(new CartChangeEvent());
             }
         });
 

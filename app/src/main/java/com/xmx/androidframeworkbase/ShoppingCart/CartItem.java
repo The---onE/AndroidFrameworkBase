@@ -4,6 +4,8 @@ import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.Button;
+import android.widget.TextView;
 
 import com.xmx.androidframeworkbase.R;
 import com.xmx.androidframeworkbase.Tools.ShoppingCart.ICartItem;
@@ -16,7 +18,7 @@ public class CartItem implements ICartItem {
     String id;
     String name;
     Drawable image;
-    int count;
+    int count = 0;
     int max;
     int min;
 
@@ -29,6 +31,10 @@ public class CartItem implements ICartItem {
     @Override
     public String getName() {
         return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     @Override
@@ -51,10 +57,32 @@ public class CartItem implements ICartItem {
         return min;
     }
 
-    @Override
-    public View getView(Context context) {
-        View view = LayoutInflater.from(context).inflate(R.layout.item_cart, null);
+    class ItemHolder {
+        TextView nameView;
+        Button clickView;
+    }
 
-        return view;
+    @Override
+    public View getView(Context context, View convertView) {
+        ItemHolder holder;
+        if (convertView == null) {
+            convertView = LayoutInflater.from(context).inflate(R.layout.item_cart, null);
+            holder = new ItemHolder();
+            holder.nameView = (TextView) convertView.findViewById(R.id.item_name);
+            holder.clickView = (Button) convertView.findViewById(R.id.item_click);
+            convertView.setTag(holder);
+        } else {
+            holder = (ItemHolder) convertView.getTag();
+        }
+
+        holder.nameView.setText(name + (count > 0 ? " Count: " + count : ""));
+        holder.clickView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                count++;
+            }
+        });
+
+        return convertView;
     }
 }

@@ -1,6 +1,7 @@
 package com.xmx.androidframeworkbase.ShoppingCart;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,8 +10,6 @@ import android.widget.TextView;
 
 import com.xmx.androidframeworkbase.R;
 import com.xmx.androidframeworkbase.Tools.ShoppingCart.ICartItem;
-
-import org.greenrobot.eventbus.EventBus;
 
 /**
  * Created by The_onE on 2016/8/21.
@@ -77,12 +76,17 @@ public class CartItem implements ICartItem {
             holder = (ItemHolder) convertView.getTag();
         }
 
+        if (count > 0) {
+            convertView.setBackgroundColor(Color.LTGRAY);
+        } else {
+            convertView.setBackgroundColor(Color.GRAY);
+        }
         holder.nameView.setText(name + (count > 0 ? " Count: " + count : ""));
         holder.clickView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 count++;
-                EventBus.getDefault().post(new CartChangeEvent());
+                CartAdapter.update();
             }
         });
 

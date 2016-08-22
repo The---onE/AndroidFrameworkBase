@@ -11,6 +11,9 @@ import com.xmx.androidframeworkbase.Data.SQL.SQL;
 import com.xmx.androidframeworkbase.R;
 import com.xmx.androidframeworkbase.ShoppingCart.CartItem;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.List;
@@ -26,6 +29,8 @@ public abstract class BaseCartAdapter<Item extends ICartItem> extends BaseAdapte
     public BaseCartAdapter(Context context, List<Item> data) {
         mContext = context;
         mData = data;
+
+        EventBus.getDefault().register(this);
     }
 
     public void updateList(List<Item> data) {
@@ -59,5 +64,14 @@ public abstract class BaseCartAdapter<Item extends ICartItem> extends BaseAdapte
         } else {
             return new View(mContext);
         }
+    }
+
+    public static void update() {
+        EventBus.getDefault().post(new CartChangeEvent());
+    }
+
+    @Subscribe
+    public void onEvent(CartChangeEvent event) {
+        notifyDataSetChanged();
     }
 }

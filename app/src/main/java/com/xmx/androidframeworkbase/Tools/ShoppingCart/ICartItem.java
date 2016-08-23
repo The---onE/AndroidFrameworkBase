@@ -15,5 +15,6 @@ public interface ICartItem {
     int getMax();
     int getMin();
 
+    String getEntry();
     View getView(Context context, View convertView);
 }

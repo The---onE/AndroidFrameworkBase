@@ -1,39 +1,30 @@
 package com.xmx.androidframeworkbase.Tools.ShoppingCart;
 
 import android.content.Context;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.TextView;
 
-import com.xmx.androidframeworkbase.Data.SQL.SQL;
-import com.xmx.androidframeworkbase.R;
-import com.xmx.androidframeworkbase.ShoppingCart.CartItem;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.List;
-
 /**
  * Created by The_onE on 2016/8/21.
  */
-public abstract class BaseCartAdapter<Item extends ICartItem> extends BaseAdapter {
+public abstract class BaseCartAdapter extends BaseAdapter {
 
     protected Context mContext;
-    protected List<Item> mData;
+    protected CartList mData;
 
-    public BaseCartAdapter(Context context, List<Item> data) {
+    public BaseCartAdapter(Context context, CartList data) {
         mContext = context;
         mData = data;
 
         EventBus.getDefault().register(this);
     }
 
-    public void updateList(List<Item> data) {
+    public void updateList(CartList data) {
         mData = data;
         notifyDataSetChanged();
     }

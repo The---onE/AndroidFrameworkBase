@@ -16,6 +16,7 @@ import com.xmx.androidframeworkbase.Tools.ShoppingCart.ICartItem;
  */
 public class CartItem implements ICartItem {
 
+    static int itemCount = 0;
     String id;
     String name;
     Drawable image;
@@ -23,6 +24,11 @@ public class CartItem implements ICartItem {
     int max;
     int min;
 
+    public CartItem(String id, int count) {
+        itemCount++;
+        this.id = id;
+        this.count = count;
+    }
 
     @Override
     public String getID() {
@@ -56,6 +62,15 @@ public class CartItem implements ICartItem {
     @Override
     public int getMin() {
         return min;
+    }
+
+    @Override
+    public String getEntry() {
+        if (count > 0) {
+            return id + "=" + count;
+        } else {
+            return "";
+        }
     }
 
     class ItemHolder {

@@ -1,5 +1,6 @@
 package com.xmx.androidframeworkbase.Fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.View;
@@ -8,6 +9,7 @@ import android.widget.ListView;
 import com.xmx.androidframeworkbase.R;
 import com.xmx.androidframeworkbase.ShoppingCart.CartAdapter;
 import com.xmx.androidframeworkbase.ShoppingCart.CartItem;
+import com.xmx.androidframeworkbase.ShoppingCart.OrderCodeActivity;
 import com.xmx.androidframeworkbase.Tools.FragmentBase.xUtilsFragment;
 import com.xmx.androidframeworkbase.Tools.ShoppingCart.CartList;
 
@@ -31,6 +33,11 @@ public class CartFragment extends xUtilsFragment {
     private void onOrderCick(View view) {
         String order = cartItems.getOrder();
         showToast(order);
+        if (order != "") {
+            Intent intent = new Intent(getContext(), OrderCodeActivity.class);
+            intent.putExtra("order", order);
+            startActivity(intent);
+        }
     }
 
     @Override

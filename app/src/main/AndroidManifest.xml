@@ -79,14 +79,12 @@
         <activity
             android:name=".Message.PushItemMessageActivity"
             android:theme="@style/AppTheme.NoActionBar" />
-
         <activity
             android:name=".QRCode.CreateQRCodeActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".QRCode.ScanQRCodeActivity"
             android:theme="@style/AppTheme.NoActionBar" />
-
         <activity
             android:name=".Data.SQL.SQLActivity"
             android:theme="@style/AppTheme.NoActionBar" />
@@ -95,6 +93,8 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".Data.Sync.SyncActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".ShoppingCart.OrderCodeActivity"
             android:theme="@style/AppTheme.NoActionBar" />
 
         <service

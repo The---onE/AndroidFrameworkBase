@@ -5,10 +5,10 @@ import java.util.ArrayList;
 /**
  * Created by The_onE on 2016/8/23.
  */
-public class CartList extends ArrayList<ICartItem> {
+public abstract class CartList extends ArrayList<ICartItem> {
 
     public String getOrder() {
-        String order = "";
+        String order = getUserId() + "&";
         for (ICartItem item : this) {
             String entry = item.getEntry();
             if (entry != null && !entry.equals("")) {
@@ -17,4 +17,6 @@ public class CartList extends ArrayList<ICartItem> {
         }
         return order;
     }
+
+    public abstract String getUserId();
 }

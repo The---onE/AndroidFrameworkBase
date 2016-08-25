@@ -21,8 +21,8 @@ public class CartItem implements ICartItem {
     String name;
     Drawable image;
     int count = 0;
-    int max;
-    int min;
+    int max = 10;
+    int min = 0;
 
     public CartItem(String id, int count) {
         itemCount++;
@@ -54,14 +54,20 @@ public class CartItem implements ICartItem {
         return count;
     }
 
-    @Override
-    public int getMax() {
-        return max;
+    public int add(int delta) {
+        int re = count + delta;
+        if (min <= re && re <= max) {
+            count = re;
+        }
+        return count;
     }
 
-    @Override
-    public int getMin() {
-        return min;
+    public int sub(int delta) {
+        int re = count - delta;
+        if (min <= re && re <= max) {
+            count = re;
+        }
+        return count;
     }
 
     @Override
@@ -100,7 +106,7 @@ public class CartItem implements ICartItem {
         holder.clickView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                count++;
+                add(1);
                 CartAdapter.update();
             }
         });

@@ -12,8 +12,6 @@ public interface ICartItem {
     String getName();
     Drawable getImage();
     int getCount();
-    int getMax();
-    int getMin();
 
     String getEntry();
     View getView(Context context, View convertView);

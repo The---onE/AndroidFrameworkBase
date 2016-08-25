@@ -12,6 +12,7 @@ import com.xmx.androidframeworkbase.R;
 import com.xmx.androidframeworkbase.ShoppingCart.CartAdapter;
 import com.xmx.androidframeworkbase.ShoppingCart.CartItem;
 import com.xmx.androidframeworkbase.ShoppingCart.OrderCodeActivity;
+import com.xmx.androidframeworkbase.ShoppingCart.OrderManager;
 import com.xmx.androidframeworkbase.Tools.FragmentBase.xUtilsFragment;
 import com.xmx.androidframeworkbase.Tools.ShoppingCart.CartList;
 import com.xmx.androidframeworkbase.User.Callback.AutoLoginCallback;
@@ -31,13 +32,7 @@ public class CartFragment extends xUtilsFragment {
     @ViewInject(R.id.list_cart)
     ListView cartList;
 
-    String userId;
-    CartList cartItems = new CartList() {
-        @Override
-        public String getUserId() {
-            return userId;
-        }
-    };
+    CartList cartItems = new CartList();
     CartAdapter cartAdapter;
 
     @Event(value = R.id.btn_order)
@@ -45,10 +40,11 @@ public class CartFragment extends xUtilsFragment {
         UserManager.getInstance().checkLogin(new AutoLoginCallback() {
             @Override
             public void success(AVObject user) {
-                userId = user.getObjectId();
-                String order = cartItems.getOrder();
+                String userId = user.getObjectId();
+                OrderManager manager = new OrderManager(userId);
+                String order = manager.getOrder(cartItems);
                 showToast(order);
-                if (order != "") {
+                if (!order.equals("")) {
                     Intent intent = new Intent(getContext(), OrderCodeActivity.class);
                     intent.putExtra("order", order);
                     startActivity(intent);

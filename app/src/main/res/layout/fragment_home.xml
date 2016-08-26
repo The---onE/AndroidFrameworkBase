@@ -35,4 +35,16 @@
         android:layout_height="wrap_content"
         android:text="取消震动" />
 
+    <Button
+        android:id="@+id/btn_show_float"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="开启浮动窗口" />
+
+    <Button
+        android:id="@+id/btn_hide_float"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="关闭浮动窗口" />
+
 </LinearLayout>

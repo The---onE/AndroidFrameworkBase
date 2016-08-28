@@ -23,7 +23,7 @@ public class FloatService extends BaseService {
         params.flags = WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL
                 | WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE;// 设置窗口焦点
 
-        params.width = WindowManager.LayoutParams.FILL_PARENT;
+        params.width = WindowManager.LayoutParams.MATCH_PARENT;
         params.height = WindowManager.LayoutParams.WRAP_CONTENT;
         params.alpha = 80;
 
@@ -31,6 +31,7 @@ public class FloatService extends BaseService {
         // 以屏幕左上角为原点，设置x、y初始值,将悬浮窗口设置在屏幕中间的位置
         params.x = 0;
         params.y = wm.getDefaultDisplay().getHeight() / 2;
+
         tv = new FloatView(FloatService.this);
         tv.setTextSize(20);
         tv.setText("慢心してはダメ。全力で参りましょう");

@@ -3,16 +3,15 @@ package com.xmx.androidframeworkbase.Tools;
 import android.content.Context;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
-import android.view.View;
 import android.view.WindowManager;
-import android.widget.TextView;
+import android.widget.RelativeLayout;
 
 import java.lang.reflect.Field;
 
 /**
  * Created by The_onE on 2016/8/27.
  */
-public abstract class BaseFloatView extends TextView {
+public abstract class BaseFloatView extends RelativeLayout {
     public static WindowManager.LayoutParams params = new WindowManager.LayoutParams();
     private float startX;
     private float startY;

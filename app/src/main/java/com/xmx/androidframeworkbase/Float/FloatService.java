@@ -11,7 +11,7 @@ public class FloatService extends BaseService {
 
     WindowManager wm;
 
-    FloatView tv;
+    FloatView layout;
 
     @Override
     protected void processLogic() {
@@ -23,7 +23,7 @@ public class FloatService extends BaseService {
         params.flags = WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL
                 | WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE;// 设置窗口焦点
 
-        params.width = WindowManager.LayoutParams.MATCH_PARENT;
+        params.width = WindowManager.LayoutParams.WRAP_CONTENT;
         params.height = WindowManager.LayoutParams.WRAP_CONTENT;
         params.alpha = 80;
 
@@ -32,10 +32,8 @@ public class FloatService extends BaseService {
         params.x = 0;
         params.y = wm.getDefaultDisplay().getHeight() / 2;
 
-        tv = new FloatView(FloatService.this);
-        tv.setTextSize(20);
-        tv.setText("慢心してはダメ。全力で参りましょう");
-        wm.addView(tv, params);
+        layout = new FloatView(FloatService.this);
+        wm.addView(layout, params);
     }
 
     @Override
@@ -43,8 +41,8 @@ public class FloatService extends BaseService {
         WindowManager wm = (WindowManager) getApplicationContext()
                 .getSystemService(WINDOW_SERVICE);
 
-        if (tv != null && tv.isShown()) {
-            wm.removeView(tv);
+        if (layout != null && layout.isShown()) {
+            wm.removeView(layout);
         }
         super.onDestroy();
     }

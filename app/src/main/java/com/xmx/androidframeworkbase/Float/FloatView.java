@@ -3,9 +3,10 @@ package com.xmx.androidframeworkbase.Float;
 import android.content.Context;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 
 import com.xmx.androidframeworkbase.R;
-import com.xmx.androidframeworkbase.Tools.BaseFloatView;
+import com.xmx.androidframeworkbase.Tools.Float.BaseFloatView;
 
 /**
  * Created by The_onE on 2016/8/26.
@@ -27,6 +28,16 @@ public class FloatView extends BaseFloatView {
         LayoutInflater.from(context).inflate(R.layout.layout_float, this);
         floatText = (ScrollTextView) findViewById(R.id.tv_float);
         floatText.setText("慢心してはダメ。全力で参りましょう");
+    }
+
+    @Override
+    public void onTouchStart(MotionEvent event) {
+
+    }
+
+    @Override
+    public void onTouchEnd(MotionEvent event, long deltaTime) {
+
     }
 
     public void setText(String text) {

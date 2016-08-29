@@ -1,4 +1,4 @@
-package com.xmx.androidframeworkbase.Tools;
+package com.xmx.androidframeworkbase.Tools.Float;
 
 import android.content.Context;
 import android.util.AttributeSet;
@@ -7,6 +7,7 @@ import android.view.WindowManager;
 import android.widget.RelativeLayout;
 
 import java.lang.reflect.Field;
+import java.util.Date;
 
 /**
  * Created by The_onE on 2016/8/27.
@@ -15,6 +16,7 @@ public abstract class BaseFloatView extends RelativeLayout {
     public static WindowManager.LayoutParams params = new WindowManager.LayoutParams();
     private float startX;
     private float startY;
+    private long startTime;
 
     private WindowManager wm;
     private int statusBarHeight;
@@ -36,10 +38,18 @@ public abstract class BaseFloatView extends RelativeLayout {
             case MotionEvent.ACTION_DOWN:
                 startX = event.getX();
                 startY = event.getY();
+                onTouchStart(event);
+                startTime = new Date().getTime();
                 break;
+
             case MotionEvent.ACTION_MOVE:
+                updatePosition(x - startX, y - startY);
+                break;
+
             case MotionEvent.ACTION_UP:
                 updatePosition(x - startX, y - startY);
+                long now = new Date().getTime();
+                onTouchEnd(event, now - startTime);
                 break;
         }
         return true;
@@ -66,4 +76,8 @@ public abstract class BaseFloatView extends RelativeLayout {
             return 75;
         }
     }
+
+    abstract public void onTouchStart(MotionEvent event);
+
+    abstract public void onTouchEnd(MotionEvent event, long deltaTime);
 }

@@ -25,6 +25,7 @@ public class SmallFloatView extends BaseFloatView {
     public SmallFloatView(final Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
         LayoutInflater.from(context).inflate(R.layout.layout_small_float, this);
+        EDGE_MODE = EDGE_MODE_XY;
     }
 
     @Override
@@ -44,15 +45,6 @@ public class SmallFloatView extends BaseFloatView {
         if (deltaTime < 200 && distance < 25) {
             FloatViewManager.getInstance().showFloatView(getContext(),
                     new FloatView(getContext()));
-        } else {
-            float x = event.getRawX() - startX;
-            float y = event.getRawY() - statusBarHeight - startY;
-            if (x < wm.getDefaultDisplay().getWidth() / 2) {
-                x = 0;
-            } else {
-                x = wm.getDefaultDisplay().getWidth();
-            }
-            updatePosition(x, y);
         }
     }
 }

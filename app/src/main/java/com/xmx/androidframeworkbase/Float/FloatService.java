@@ -8,7 +8,7 @@ public class FloatService extends BaseService {
 
     @Override
     protected void processLogic() {
-        FloatViewManager.getInstance().showFloatView(this);
+        FloatViewManager.getInstance().showFloatView(this, new FloatView(getApplicationContext()));
     }
 
     @Override

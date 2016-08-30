@@ -19,10 +19,11 @@ public class FloatViewManager {
         return instance;
     }
 
-    FloatView layout;
+    BaseFloatView layout;
+    boolean floatFlag = false;
 
-    public void showFloatView(Context context) {
-        if (layout == null) {
+    public void showFloatView(Context context, BaseFloatView view) {
+        if (!floatFlag) {
             WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
             WindowManager.LayoutParams params = FloatView.params;
 
@@ -40,16 +41,18 @@ public class FloatViewManager {
             params.x = 0;
             params.y = wm.getDefaultDisplay().getHeight() / 2;
 
-            layout = new FloatView(context);
+            layout = view;
             wm.addView(layout, params);
+            floatFlag = true;
         }
     }
 
     public void hideFloatView(Context context) {
-        if (layout != null && layout.isShown()) {
+        if (floatFlag && layout != null && layout.isShown()) {
             WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
             wm.removeView(layout);
             layout = null;
+            floatFlag = false;
         }
     }
 }

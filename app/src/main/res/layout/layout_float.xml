@@ -8,7 +8,14 @@
         android:id="@+id/tv_float"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
+        android:layout_alignParentTop="true"
         android:textSize="20sp" />
+
+    <Button
+        android:id="@+id/btn_float"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_float"
+        android:text="打开程序" />
 
 </RelativeLayout>

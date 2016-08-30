@@ -13,13 +13,13 @@ import java.util.Date;
  * Created by The_onE on 2016/8/27.
  */
 public abstract class BaseFloatView extends RelativeLayout {
-    public static WindowManager.LayoutParams params = new WindowManager.LayoutParams();
-    private float startX;
-    private float startY;
+    protected static WindowManager.LayoutParams params = new WindowManager.LayoutParams();
+    protected WindowManager wm;
     private long startTime;
 
-    private WindowManager wm;
-    private int statusBarHeight;
+    protected float startX;
+    protected float startY;
+    protected int statusBarHeight;
 
     public BaseFloatView(Context context, AttributeSet attrs, int defStyle) {
         super(context);
@@ -34,6 +34,11 @@ public abstract class BaseFloatView extends RelativeLayout {
         float x = event.getRawX();
         float y = event.getRawY() - statusBarHeight;
 
+        long now = new Date().getTime();
+        float deltaX = event.getX() - startX;
+        float deltaY = event.getY() - startY;
+        double distance = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
+
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:
                 startX = event.getX();
@@ -44,19 +49,19 @@ public abstract class BaseFloatView extends RelativeLayout {
 
             case MotionEvent.ACTION_MOVE:
                 updatePosition(x - startX, y - startY);
+                onTouchMove(event, now - startTime, deltaX, deltaY, distance);
                 break;
 
             case MotionEvent.ACTION_UP:
                 updatePosition(x - startX, y - startY);
-                long now = new Date().getTime();
-                onTouchEnd(event, now - startTime);
+                onTouchEnd(event, now - startTime, deltaX, deltaY, distance);
                 break;
         }
         return true;
     }
 
     // 更新浮动窗口位置参数
-    private void updatePosition(float x, float y) {
+    protected void updatePosition(float x, float y) {
         // View的当前位置
         params.x = (int) x;
         params.y = (int) y;
@@ -79,5 +84,9 @@ public abstract class BaseFloatView extends RelativeLayout {
 
     abstract public void onTouchStart(MotionEvent event);
 
-    abstract public void onTouchEnd(MotionEvent event, long deltaTime);
+    abstract public void onTouchMove(MotionEvent event, long deltaTime,
+                                     float deltaX, float deltaY, double distance);
+
+    abstract public void onTouchEnd(MotionEvent event, long deltaTime,
+                                    float deltaX, float deltaY, double distance);
 }

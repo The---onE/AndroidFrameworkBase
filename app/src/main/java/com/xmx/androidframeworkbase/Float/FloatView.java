@@ -59,7 +59,14 @@ public class FloatView extends BaseFloatView {
     }
 
     @Override
-    public void onTouchEnd(MotionEvent event, long deltaTime) {
+    public void onTouchMove(MotionEvent event, long deltaTime,
+                            float deltaX, float deltaY, double distance) {
+
+    }
+
+    @Override
+    public void onTouchEnd(MotionEvent event, long deltaTime,
+                           float deltaX, float deltaY, double distance) {
 
     }
 

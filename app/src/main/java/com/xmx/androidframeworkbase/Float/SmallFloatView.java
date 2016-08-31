@@ -25,7 +25,7 @@ public class SmallFloatView extends BaseFloatView {
     public SmallFloatView(final Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
         LayoutInflater.from(context).inflate(R.layout.layout_small_float, this);
-        EDGE_MODE = EDGE_MODE_XY;
+        edgeMode = EDGE_MODE_XY;
     }
 
     @Override

@@ -24,7 +24,8 @@ public abstract class BaseFloatView extends RelativeLayout {
     protected static final int EDGE_MODE_X = 1;
     protected static final int EDGE_MODE_Y = 2;
     protected static final int EDGE_MODE_XY = 3;
-    protected int EDGE_MODE = EDGE_MODE_NO;
+    protected int edgeMode = EDGE_MODE_NO;
+    protected boolean edgeStrict = false;
 
     public BaseFloatView(Context context, AttributeSet attrs, int defStyle) {
         super(context);
@@ -35,21 +36,28 @@ public abstract class BaseFloatView extends RelativeLayout {
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        // 触摸点相对于屏幕左上角坐标
+        long now = new Date().getTime();
+
+        //触摸点相对于屏幕左上角坐标
         Coordinate raw = new Coordinate();
         raw.x = event.getRawX();
         raw.y = event.getRawY() - statusBarHeight;
 
+        //触摸点相对布局左上角坐标
         Coordinate coo = new Coordinate();
         coo.x = event.getX();
         coo.y = event.getY();
 
-        long now = new Date().getTime();
+        //触摸点相对起始点的偏移
         Coordinate delta = coo.sub(start);
         double distance = delta.distance();
 
+        //布局左上角应在的位置
+        Coordinate pos = raw.sub(start);
+
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:
+                //起始触摸点相对布局左上角坐标
                 start.x = event.getX();
                 start.y = event.getY();
                 startTime = new Date().getTime();
@@ -57,47 +65,16 @@ public abstract class BaseFloatView extends RelativeLayout {
                 break;
 
             case MotionEvent.ACTION_MOVE:
-                updatePosition(raw.sub(start));
+                if (edgeStrict) {
+                    pos = getCoordinateNearEdge(pos);
+                }
+                updatePosition(pos);
                 onTouchMove(event, now - startTime, delta.x, delta.y, distance);
                 break;
 
             case MotionEvent.ACTION_UP:
-                Coordinate change = raw.sub(start);
-
-                switch (EDGE_MODE) {
-                    case EDGE_MODE_X:
-                        if (change.x < wm.getDefaultDisplay().getWidth() / 2) {
-                            change.x = 0;
-                        } else {
-                            change.x = wm.getDefaultDisplay().getWidth();
-                        }
-                        break;
-                    case EDGE_MODE_Y:
-                        if (change.y < wm.getDefaultDisplay().getHeight() / 2) {
-                            change.y = 0;
-                        } else {
-                            change.y = wm.getDefaultDisplay().getHeight();
-                        }
-                        break;
-                    case EDGE_MODE_XY:
-                        float dx = Math.min(raw.x, wm.getDefaultDisplay().getWidth() - raw.x);
-                        float dy = Math.min(raw.y, wm.getDefaultDisplay().getHeight() - raw.y);
-                        if (dx < dy) {
-                            if (change.x < wm.getDefaultDisplay().getWidth() / 2) {
-                                change.x = 0;
-                            } else {
-                                change.x = wm.getDefaultDisplay().getWidth();
-                            }
-                        } else {
-                            if (change.y < wm.getDefaultDisplay().getHeight() / 2) {
-                                change.y = 0;
-                            } else {
-                                change.y = wm.getDefaultDisplay().getHeight();
-                            }
-                        }
-                        break;
-                }
-                updatePosition(change);
+                pos = getCoordinateNearEdge(pos);
+                updatePosition(pos);
                 onTouchEnd(event, now - startTime, delta.x, delta.y, distance);
                 break;
         }
@@ -124,6 +101,60 @@ public abstract class BaseFloatView extends RelativeLayout {
             e.printStackTrace();
             return 75;
         }
+    }
+
+    Coordinate getCoordinateNearEdge(Coordinate source) {
+        Coordinate pos = new Coordinate(source);
+
+        Coordinate leftTop = new Coordinate(source);
+
+        Coordinate rightTop = new Coordinate(source);
+        rightTop.x += getWidth();
+
+        Coordinate leftBottom = new Coordinate(source);
+        leftBottom.y += getHeight();
+
+        Coordinate rightBottom = new Coordinate(source);
+        rightBottom.x += getWidth();
+        rightBottom.y += getHeight();
+
+        int width = wm.getDefaultDisplay().getWidth();
+        int height = wm.getDefaultDisplay().getHeight() - statusBarHeight;
+
+        switch (edgeMode) {
+            case EDGE_MODE_X:
+                if (leftTop.x < width - rightTop.x) {
+                    pos.x = 0;
+                } else {
+                    pos.x = width;
+                }
+                break;
+            case EDGE_MODE_Y:
+                if (leftTop.y < height - leftBottom.y) {
+                    pos.y = 0;
+                } else {
+                    pos.y = height;
+                }
+                break;
+            case EDGE_MODE_XY:
+                float dx = Math.min(leftTop.x, width - rightTop.x);
+                float dy = Math.min(leftTop.y, height - leftBottom.y);
+                if (dx < dy) {
+                    if (leftTop.x < width - rightTop.x) {
+                        pos.x = 0;
+                    } else {
+                        pos.x = width;
+                    }
+                } else {
+                    if (leftTop.y < height - leftBottom.y) {
+                        pos.y = 0;
+                    } else {
+                        pos.y = height;
+                    }
+                }
+                break;
+        }
+        return pos;
     }
 
     abstract public void onTouchStart(MotionEvent event);

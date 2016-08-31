@@ -22,6 +22,8 @@ public class FloatViewManager {
     BaseFloatView layout;
     boolean floatFlag = false;
 
+    Coordinate pos = new Coordinate();
+
     public void showFloatView(Context context, BaseFloatView view) {
         if (floatFlag) {
             hideFloatView(context);
@@ -40,9 +42,9 @@ public class FloatViewManager {
         params.alpha = 80;
 
         params.gravity = Gravity.LEFT | Gravity.TOP;
-        // 以屏幕左上角为原点，设置x、y初始值,将悬浮窗口设置在屏幕中间的位置
-        params.x = 0;
-        params.y = wm.getDefaultDisplay().getHeight() / 2;
+        // 以屏幕左上角为原点，设置x、y初始值
+        params.x = (int) pos.x;
+        params.y = (int) pos.y;
 
         layout = view;
         wm.addView(layout, params);
@@ -52,6 +54,7 @@ public class FloatViewManager {
     public void hideFloatView(Context context) {
         if (floatFlag && layout != null && layout.isShown()) {
             WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
+            pos = new Coordinate(BaseFloatView.params.x, BaseFloatView.params.y);
             wm.removeView(layout);
             layout = null;
             floatFlag = false;

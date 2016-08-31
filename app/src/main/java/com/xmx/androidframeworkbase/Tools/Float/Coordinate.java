@@ -7,6 +7,21 @@ public class Coordinate {
     public float x;
     public float y;
 
+    public Coordinate() {
+        x = 0;
+        y = 0;
+    }
+
+    public Coordinate(float x, float y) {
+        this.x = x;
+        this.y = y;
+    }
+
+    public Coordinate(Coordinate other) {
+        this.x = other.x;
+        this.y = other.y;
+    }
+
     public Coordinate add(Coordinate other) {
         Coordinate newCoordinate = new Coordinate();
         newCoordinate.x = x + other.x;

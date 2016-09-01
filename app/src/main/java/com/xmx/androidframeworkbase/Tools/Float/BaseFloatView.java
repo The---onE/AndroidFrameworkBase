@@ -17,8 +17,12 @@ public abstract class BaseFloatView extends RelativeLayout {
     protected WindowManager wm;
     private long startTime;
 
+    //起始触摸点相对布局左上角坐标
     protected Coordinate start = new Coordinate();
     protected int statusBarHeight;
+
+    //起始触摸点相对屏幕左上角坐标
+    protected Coordinate startRaw = new Coordinate();
 
     protected static final int EDGE_MODE_NO = 0;
     protected static final int EDGE_MODE_X = 1;
@@ -26,6 +30,10 @@ public abstract class BaseFloatView extends RelativeLayout {
     protected static final int EDGE_MODE_XY = 3;
     protected int edgeMode = EDGE_MODE_NO;
     protected boolean edgeStrict = false;
+
+    protected static final int CLICK_DISTANCE = 25;
+    protected static final long LONG_CLICK_TIME = 500;
+    protected static final long CLICK_TIME = 200;
 
     public BaseFloatView(Context context, AttributeSet attrs, int defStyle) {
         super(context);
@@ -43,13 +51,8 @@ public abstract class BaseFloatView extends RelativeLayout {
         raw.x = event.getRawX();
         raw.y = event.getRawY() - statusBarHeight;
 
-        //触摸点相对布局左上角坐标
-        Coordinate coo = new Coordinate();
-        coo.x = event.getX();
-        coo.y = event.getY();
-
         //触摸点相对起始点的偏移
-        Coordinate delta = coo.sub(start);
+        Coordinate delta = raw.sub(startRaw);
         double distance = delta.distance();
 
         //布局左上角应在的位置
@@ -60,6 +63,8 @@ public abstract class BaseFloatView extends RelativeLayout {
                 //起始触摸点相对布局左上角坐标
                 start.x = event.getX();
                 start.y = event.getY();
+                startRaw.x = raw.x;
+                startRaw.y = raw.y;
                 startTime = new Date().getTime();
                 onTouchStart(event);
                 break;

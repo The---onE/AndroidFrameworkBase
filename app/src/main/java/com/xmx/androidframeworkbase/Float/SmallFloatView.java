@@ -42,10 +42,21 @@ public class SmallFloatView extends BaseFloatView {
     @Override
     public void onTouchEnd(MotionEvent event, long deltaTime,
                            float deltaX, float deltaY, double distance) {
-        double x= distance;
-        if (deltaTime < CLICK_TIME && distance < CLICK_DISTANCE) {
-            FloatViewManager.getInstance().showFloatView(getContext(),
-                    new FloatView(getContext()));
-        }
+    }
+
+    @Override
+    public void onLongClick() {
+
+    }
+
+    @Override
+    public void onSingleClick() {
+        FloatViewManager.getInstance().showFloatView(getContext(),
+                new FloatView(getContext()));
+    }
+
+    @Override
+    public void onDoubleClick() {
+
     }
 }

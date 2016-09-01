@@ -18,6 +18,7 @@
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
+        android:persistent="true"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
@@ -95,7 +96,8 @@
         <activity
             android:name=".Data.Sync.SyncActivity"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".ShoppingCart.OrderCodeActivity"
+        <activity
+            android:name=".ShoppingCart.OrderCodeActivity"
             android:theme="@style/AppTheme.NoActionBar" />
 
         <service

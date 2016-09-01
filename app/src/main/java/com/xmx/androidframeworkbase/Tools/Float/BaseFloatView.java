@@ -1,6 +1,7 @@
 package com.xmx.androidframeworkbase.Tools.Float;
 
 import android.content.Context;
+import android.os.Handler;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.WindowManager;
@@ -34,6 +35,9 @@ public abstract class BaseFloatView extends RelativeLayout {
     protected static final int CLICK_DISTANCE = 25;
     protected static final long LONG_CLICK_TIME = 500;
     protected static final long CLICK_TIME = 200;
+    protected static final long DOUBLE_CLICK_TIME = 300;
+
+    private boolean doubleClickFlag = false;
 
     public BaseFloatView(Context context, AttributeSet attrs, int defStyle) {
         super(context);
@@ -80,7 +84,29 @@ public abstract class BaseFloatView extends RelativeLayout {
             case MotionEvent.ACTION_UP:
                 pos = getCoordinateNearEdge(pos);
                 updatePosition(pos);
-                onTouchEnd(event, now - startTime, delta.x, delta.y, distance);
+                long deltaTime = now - startTime;
+                onTouchEnd(event, deltaTime, delta.x, delta.y, distance);
+                if (deltaTime > LONG_CLICK_TIME && distance < CLICK_DISTANCE) { //长按
+                    onLongClick();
+                } else if (deltaTime > 0 && distance < CLICK_DISTANCE) { //短按
+                    if (!doubleClickFlag) { //首次短按
+                        doubleClickFlag = true; //等待第二次按键
+                        new Handler().postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                if (doubleClickFlag) { //超时未按下第二次
+                                    //执行单按逻辑
+                                    onSingleClick();
+                                }
+                                doubleClickFlag = false;
+                            }
+                        }, DOUBLE_CLICK_TIME);
+                    } else { //双按
+                        doubleClickFlag = false;
+                        //执行双按逻辑
+                        onDoubleClick();
+                    }
+                }
                 break;
         }
         return true;
@@ -169,4 +195,10 @@ public abstract class BaseFloatView extends RelativeLayout {
 
     abstract public void onTouchEnd(MotionEvent event, long deltaTime,
                                     float deltaX, float deltaY, double distance);
+
+    abstract public void onLongClick();
+
+    abstract public void onSingleClick();
+
+    abstract public void onDoubleClick();
 }

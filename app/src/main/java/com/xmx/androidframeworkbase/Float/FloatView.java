@@ -70,6 +70,21 @@ public class FloatView extends BaseFloatView {
 
     }
 
+    @Override
+    public void onLongClick() {
+
+    }
+
+    @Override
+    public void onSingleClick() {
+
+    }
+
+    @Override
+    public void onDoubleClick() {
+
+    }
+
     public void setText(String text) {
         floatText.setText(text);
     }

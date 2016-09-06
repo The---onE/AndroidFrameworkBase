@@ -67,6 +67,9 @@
             android:name=".User.RegisterActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
+            android:name=".Log.OperationLogActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
             android:name=".Tools.ChoosePhoto.AlbumActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity

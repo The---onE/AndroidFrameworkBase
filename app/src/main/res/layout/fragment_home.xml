@@ -47,4 +47,10 @@
         android:layout_height="wrap_content"
         android:text="关闭浮动窗口" />
 
+    <Button
+        android:id="@+id/btn_show_log"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="查看日志" />
+
 </LinearLayout>

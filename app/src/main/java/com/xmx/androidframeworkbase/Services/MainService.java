@@ -1,6 +1,7 @@
 package com.xmx.androidframeworkbase.Services;
 
 import com.xmx.androidframeworkbase.MainActivity;
+import com.xmx.androidframeworkbase.Tools.OperationLog.OperationLogEntityManager;
 import com.xmx.androidframeworkbase.Tools.ServiceBase.BaseService;
 import com.xmx.androidframeworkbase.Tools.Timer;
 
@@ -16,6 +17,7 @@ public class MainService extends BaseService {
             public void timer() {
                 long now = System.currentTimeMillis();
                 showToast("服务已运行" + (now - time) + "毫秒");
+                OperationLogEntityManager.getInstance().addLog("服务已运行" + (now - time) + "毫秒");
             }
         };
         timer.start(5000);
@@ -24,6 +26,7 @@ public class MainService extends BaseService {
     @Override
     public void onDestroy() {
         super.onDestroy();
+        OperationLogEntityManager.getInstance().addLog("服务停止");
 
         timer.stop();
     }

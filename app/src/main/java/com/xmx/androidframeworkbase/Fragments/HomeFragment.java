@@ -8,6 +8,7 @@ import android.support.v4.app.Fragment;
 import android.view.View;
 
 import com.xmx.androidframeworkbase.Float.FloatService;
+import com.xmx.androidframeworkbase.Log.OperationLogActivity;
 import com.xmx.androidframeworkbase.QRCode.CreateQRCodeActivity;
 import com.xmx.androidframeworkbase.QRCode.ScanQRCodeActivity;
 import com.xmx.androidframeworkbase.R;
@@ -79,6 +80,11 @@ public class HomeFragment extends xUtilsFragment {
         if (!flag) {
             showToast("浮动窗口未开启");
         }
+    }
+
+    @Event(value = R.id.btn_show_log)
+    private void onCilckShowLog(View view) {
+        startActivity(OperationLogActivity.class);
     }
 
     @Override

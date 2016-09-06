@@ -17,6 +17,8 @@ import com.xmx.androidframeworkbase.Tools.FragmentBase.BaseFragment;
 import com.xmx.androidframeworkbase.Tools.FragmentBase.xUtilsFragment;
 import com.xmx.androidframeworkbase.Tools.Notification.NotificationTempActivity;
 import com.xmx.androidframeworkbase.Tools.Notification.NotificationUtils;
+import com.xmx.androidframeworkbase.Tools.OperationLog.OperationLogEntityManager;
+import com.xmx.androidframeworkbase.Tools.OperationLog.OperationLogManager;
 
 import org.xutils.view.annotation.ContentView;
 import org.xutils.view.annotation.Event;
@@ -80,6 +82,7 @@ public class NotificationFragment extends xUtilsFragment {
     private void onStartServiceClick(View view) {
         Intent service = new Intent(getContext(), MainService.class);
         getContext().startService(service);
+        OperationLogEntityManager.getInstance().addLog("开启服务");
         showToast("已开启服务");
     }
 

@@ -81,7 +81,8 @@ public class CartItem implements ICartItem {
 
     class ItemHolder {
         TextView nameView;
-        Button clickView;
+        Button addView;
+        Button subView;
     }
 
     @Override
@@ -91,7 +92,8 @@ public class CartItem implements ICartItem {
             convertView = LayoutInflater.from(context).inflate(R.layout.item_cart, null);
             holder = new ItemHolder();
             holder.nameView = (TextView) convertView.findViewById(R.id.item_name);
-            holder.clickView = (Button) convertView.findViewById(R.id.item_click);
+            holder.addView = (Button) convertView.findViewById(R.id.item_add);
+            holder.subView = (Button) convertView.findViewById(R.id.item_sub);
             convertView.setTag(holder);
         } else {
             holder = (ItemHolder) convertView.getTag();
@@ -99,14 +101,23 @@ public class CartItem implements ICartItem {
 
         if (count > 0) {
             convertView.setBackgroundColor(Color.LTGRAY);
+            holder.subView.setVisibility(View.VISIBLE);
         } else {
             convertView.setBackgroundColor(Color.GRAY);
+            holder.subView.setVisibility(View.GONE);
         }
         holder.nameView.setText(name + (count > 0 ? " Count: " + count : ""));
-        holder.clickView.setOnClickListener(new View.OnClickListener() {
+        holder.addView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 add(1);
+                CartAdapter.update();
+            }
+        });
+        holder.subView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                sub(1);
                 CartAdapter.update();
             }
         });

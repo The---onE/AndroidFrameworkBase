@@ -55,7 +55,8 @@ public class CloudActivity extends BaseTempActivity {
             public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
                 final Cloud cloud = (Cloud) cloudAdapter.getItem(i);
 
-                AlertDialog.Builder builder = new AlertDialog.Builder(getBaseContext());
+                AlertDialog.Builder builder = new AlertDialog
+                        .Builder(CloudActivity.this, R.style.AppTheme);
                 builder.setMessage("要更新该记录吗？");
                 builder.setTitle("提示");
                 builder.setNegativeButton("删除", new DialogInterface.OnClickListener() {

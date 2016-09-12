@@ -45,7 +45,8 @@ public class SyncActivity extends BaseTempActivity {
     private boolean onSyncLongClick(AdapterView<?> adapterView, View view, int i, long l) {
         final Sync sync = (Sync) syncAdapter.getItem(i);
 
-        AlertDialog.Builder builder = new AlertDialog.Builder(getBaseContext());
+        AlertDialog.Builder builder = new AlertDialog
+                .Builder(SyncActivity.this, R.style.AppTheme);
         builder.setMessage("要更新该记录吗？");
         builder.setTitle("提示");
         builder.setNegativeButton("删除", new DialogInterface.OnClickListener() {

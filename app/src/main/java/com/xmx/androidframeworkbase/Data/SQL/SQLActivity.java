@@ -45,7 +45,8 @@ public class SQLActivity extends BaseTempActivity {
             public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
                 final SQL sql = (SQL) sqlAdapter.getItem(i);
 
-                AlertDialog.Builder builder = new AlertDialog.Builder(getBaseContext());
+                AlertDialog.Builder builder = new AlertDialog
+                        .Builder(SQLActivity.this, R.style.AppTheme);
                 builder.setMessage("要更新该记录吗？");
                 builder.setTitle("提示");
                 builder.setNegativeButton("删除", new DialogInterface.OnClickListener() {

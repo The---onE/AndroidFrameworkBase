@@ -200,7 +200,7 @@ public abstract class BaseSyncEntityManager<Entity extends ISyncEntity> {
                     }
                     strings.add(string);
                 }
-                sqlManager.updateDate(objectId, strings.toArray(new String[strings.size()]));
+                sqlManager.updateData(objectId, strings.toArray(new String[strings.size()]));
                 callback.success(user);
             }
 

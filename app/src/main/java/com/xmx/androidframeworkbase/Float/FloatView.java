@@ -85,6 +85,11 @@ public class FloatView extends BaseFloatView {
 
     }
 
+    @Override
+    public void onTripleClick() {
+
+    }
+
     public void setText(String text) {
         floatText.setText(text);
     }

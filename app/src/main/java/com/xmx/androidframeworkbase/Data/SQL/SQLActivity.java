@@ -59,7 +59,7 @@ public class SQLActivity extends BaseTempActivity {
                 builder.setPositiveButton("更新", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        SQLEntityManager.getInstance().updateDate(sql.mId,
+                        SQLEntityManager.getInstance().updateData(sql.mId,
                                 "Time = " + new Date().getTime());
                         SQLManager.getInstance().updateData();
                         sqlAdapter.updateList(SQLManager.getInstance().getData());

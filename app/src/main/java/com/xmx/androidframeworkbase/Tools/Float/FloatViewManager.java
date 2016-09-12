@@ -49,6 +49,7 @@ public class FloatViewManager {
         layout = view;
         wm.addView(layout, params);
         floatFlag = true;
+        layout.updatePosition();
     }
 
     public void hideFloatView(Context context) {

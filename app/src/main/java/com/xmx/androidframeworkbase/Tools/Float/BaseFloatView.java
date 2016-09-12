@@ -1,11 +1,17 @@
 package com.xmx.androidframeworkbase.Tools.Float;
 
 import android.content.Context;
+import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.Handler;
+import android.support.annotation.IdRes;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.MotionEvent;
+import android.view.View;
 import android.view.WindowManager;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 import java.lang.reflect.Field;
 import java.util.Date;
@@ -34,16 +40,23 @@ public abstract class BaseFloatView extends RelativeLayout {
 
     protected static final int CLICK_DISTANCE = 25;
     protected static final long LONG_CLICK_TIME = 500;
-    protected static final long CLICK_TIME = 200;
     protected static final long DOUBLE_CLICK_TIME = 300;
+    protected static final long TRIPLE_CLICK_TIME = 300;
 
     private boolean doubleClickFlag = false;
+    private boolean tripleClickFlag = false;
 
     public BaseFloatView(Context context, AttributeSet attrs, int defStyle) {
         super(context);
         wm = (WindowManager) getContext().getApplicationContext()
                 .getSystemService(Context.WINDOW_SERVICE);
         statusBarHeight = getStatusBarHeight();
+    }
+
+    @Override
+    protected void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        updatePosition();
     }
 
     @Override
@@ -89,7 +102,7 @@ public abstract class BaseFloatView extends RelativeLayout {
                 if (deltaTime > LONG_CLICK_TIME && distance < CLICK_DISTANCE) { //长按
                     onLongClick();
                 } else if (deltaTime > 0 && distance < CLICK_DISTANCE) { //短按
-                    if (!doubleClickFlag) { //首次短按
+                    if (!doubleClickFlag && !tripleClickFlag) { //首次短按
                         doubleClickFlag = true; //等待第二次按键
                         new Handler().postDelayed(new Runnable() {
                             @Override
@@ -101,15 +114,37 @@ public abstract class BaseFloatView extends RelativeLayout {
                                 doubleClickFlag = false;
                             }
                         }, DOUBLE_CLICK_TIME);
-                    } else { //双按
+                    } else if (!tripleClickFlag){ //双按
                         doubleClickFlag = false;
-                        //执行双按逻辑
-                        onDoubleClick();
+                        tripleClickFlag = true; //等待第三次按键
+                        new Handler().postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                if (tripleClickFlag) { //超时未按下第三次
+                                    //执行双按逻辑
+                                    onDoubleClick();
+                                }
+                                tripleClickFlag = false;
+                            }
+                        }, TRIPLE_CLICK_TIME);
+                    } else { //三按
+                        //执行三按逻辑
+                        onTripleClick();
+                        doubleClickFlag = false;
+                        tripleClickFlag = false;
                     }
                 }
                 break;
         }
         return true;
+    }
+
+    // 更新浮动窗口位置参数
+    public void updatePosition() {
+        float x = params.x;
+        float y = params.y;
+        Coordinate co = getCoordinateNearEdge(new Coordinate(x, y));
+        updatePosition(co);
     }
 
     // 更新浮动窗口位置参数
@@ -188,6 +223,39 @@ public abstract class BaseFloatView extends RelativeLayout {
         return pos;
     }
 
+    protected <VT extends View> VT getViewById(@IdRes int id) {
+        return (VT) findViewById(id);
+    }
+
+    protected void showToast(String str) {
+        Toast.makeText(getContext(), str, Toast.LENGTH_SHORT).show();
+    }
+
+    protected void showToast(int resId) {
+        Toast.makeText(getContext(), resId, Toast.LENGTH_SHORT).show();
+    }
+
+    protected void showLog(String tag, String msg) {
+        Log.e(tag, msg);
+    }
+
+    protected void showLog(String tag, int i) {
+        Log.e(tag, "" + i);
+    }
+
+    protected void startActivity(Class<?> cls) {
+        Intent intent = new Intent(getContext(), cls);
+        getContext().startActivity(intent);
+    }
+
+    protected void startActivity(Class<?> cls, String... objs) {
+        Intent intent = new Intent(getContext(), cls);
+        for (int i = 0; i < objs.length; i++) {
+            intent.putExtra(objs[i], objs[++i]);
+        }
+        getContext().startActivity(intent);
+    }
+
     abstract public void onTouchStart(MotionEvent event);
 
     abstract public void onTouchMove(MotionEvent event, long deltaTime,
@@ -201,4 +269,6 @@ public abstract class BaseFloatView extends RelativeLayout {
     abstract public void onSingleClick();
 
     abstract public void onDoubleClick();
+
+    abstract public void onTripleClick();
 }

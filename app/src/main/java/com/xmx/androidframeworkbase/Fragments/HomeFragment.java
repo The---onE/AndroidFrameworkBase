@@ -27,38 +27,38 @@ import java.util.List;
 public class HomeFragment extends xUtilsFragment {
 
     @Event(value = R.id.btn_create_qr)
-    private void onCilckCreateQRCode(View view) {
+    private void onClickCreateQRCode(View view) {
         startActivity(CreateQRCodeActivity.class);
     }
 
     @Event(value = R.id.btn_scan_qr)
-    private void onCilckScanQRCode(View view) {
+    private void onClickScanQRCode(View view) {
         startActivity(ScanQRCodeActivity.class);
     }
 
     @Event(value = R.id.btn_vibrate_once)
-    private void onCilckVibrateOnce(View view) {
+    private void onClickVibrateOnce(View view) {
         VibratorManager.getInstance().vibrate(getContext(), 1000);
     }
 
     @Event(value = R.id.btn_vibrate_forever)
-    private void onCilckVibrateForever(View view) {
+    private void onClickVibrateForever(View view) {
         VibratorManager.getInstance().vibrate(getContext());
     }
 
     @Event(value = R.id.btn_cancel_vibrate)
-    private void onCilckCancelVibrate(View view) {
+    private void onClickCancelVibrate(View view) {
         VibratorManager.getInstance().cancel(getContext());
     }
 
     @Event(value = R.id.btn_show_float)
-    private void onCilckShowFloat(View view) {
+    private void onClickShowFloat(View view) {
         Intent service = new Intent(getContext(), FloatService.class);
         getContext().startService(service);
     }
 
     @Event(value = R.id.btn_hide_float)
-    private void onCilckHideFloat(View view) {
+    private void onClickHideFloat(View view) {
         ActivityManager manager =
                 (ActivityManager) getActivity().getSystemService(Context.ACTIVITY_SERVICE);
         int defaultNum = 1000;
@@ -83,7 +83,7 @@ public class HomeFragment extends xUtilsFragment {
     }
 
     @Event(value = R.id.btn_show_log)
-    private void onCilckShowLog(View view) {
+    private void onClickShowLog(View view) {
         startActivity(OperationLogActivity.class);
     }
 

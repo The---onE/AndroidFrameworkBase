@@ -137,8 +137,8 @@ public abstract class BaseSQLEntityManager<Entity extends ISQLEntity> {
         version++;
     }
 
-    //更新数据 updateDateById(id, "KEY1=Value1", "KEY2=Value2")
-    public void updateDate(long id, String... strings) {
+    //更新数据 updateData(id, "KEY1=Value1", "KEY2=Value2")
+    public void updateData(long id, String... strings) {
         if (!checkDatabase()) {
             return;
         }
@@ -159,8 +159,8 @@ public abstract class BaseSQLEntityManager<Entity extends ISQLEntity> {
         version++;
     }
 
-    //更新数据 updateDateByCloudId(cloudId, "KEY1=Value1", "KEY2=Value2")
-    public void updateDate(String cloudId, String... strings) {
+    //更新数据 updateData(cloudId, "KEY1=Value1", "KEY2=Value2")
+    public void updateData(String cloudId, String... strings) {
         if (!checkDatabase()) {
             return;
         }

@@ -59,4 +59,9 @@ public class SmallFloatView extends BaseFloatView {
     public void onDoubleClick() {
 
     }
+
+    @Override
+    public void onTripleClick() {
+
+    }
 }

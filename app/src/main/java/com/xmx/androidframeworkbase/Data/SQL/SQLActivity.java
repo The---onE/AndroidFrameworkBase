@@ -46,7 +46,7 @@ public class SQLActivity extends BaseTempActivity {
                 final SQL sql = (SQL) sqlAdapter.getItem(i);
 
                 AlertDialog.Builder builder = new AlertDialog
-                        .Builder(SQLActivity.this, R.style.AppTheme);
+                        .Builder(SQLActivity.this);
                 builder.setMessage("要更新该记录吗？");
                 builder.setTitle("提示");
                 builder.setNegativeButton("删除", new DialogInterface.OnClickListener() {

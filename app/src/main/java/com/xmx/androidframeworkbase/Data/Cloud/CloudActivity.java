@@ -56,7 +56,7 @@ public class CloudActivity extends BaseTempActivity {
                 final Cloud cloud = (Cloud) cloudAdapter.getItem(i);
 
                 AlertDialog.Builder builder = new AlertDialog
-                        .Builder(CloudActivity.this, R.style.AppTheme);
+                        .Builder(CloudActivity.this);
                 builder.setMessage("要更新该记录吗？");
                 builder.setTitle("提示");
                 builder.setNegativeButton("删除", new DialogInterface.OnClickListener() {

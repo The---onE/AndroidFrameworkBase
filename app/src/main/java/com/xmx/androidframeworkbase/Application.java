@@ -4,6 +4,7 @@ import com.avos.avoscloud.AVInstallation;
 import com.avos.avoscloud.AVOSCloud;
 import com.avos.avoscloud.PushService;
 import com.facebook.drawee.backends.pipeline.Fresco;
+import com.xmx.androidframeworkbase.Tools.CrashHandler;
 import com.xmx.androidframeworkbase.Tools.Data.DataManager;
 import com.xmx.androidframeworkbase.Tools.PushMessage.ReceiveMessageActivity;
 import com.xmx.androidframeworkbase.User.UserManager;
@@ -22,6 +23,9 @@ public class Application extends android.app.Application {
         x.Ext.setDebug(BuildConfig.DEBUG);
 
         AVOSCloud.initialize(this, Constants.APP_ID, Constants.APP_KEY);
+
+        CrashHandler crashHandler = CrashHandler.getInstance();
+        crashHandler.init(this);
 
         PushService.setDefaultPushCallback(this, ReceiveMessageActivity.class);
         PushService.subscribe(this, "system", ReceiveMessageActivity.class);

@@ -4,8 +4,6 @@ import android.content.Context;
 import android.view.Gravity;
 import android.view.WindowManager;
 
-import com.xmx.androidframeworkbase.Float.FloatView;
-
 /**
  * Created by The_onE on 2016/8/29.
  */
@@ -30,7 +28,7 @@ public class FloatViewManager {
         }
 
         WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
-        WindowManager.LayoutParams params = FloatView.params;
+        WindowManager.LayoutParams params = BaseFloatView.params;
 
         params.type = WindowManager.LayoutParams.TYPE_SYSTEM_ALERT
                 | WindowManager.LayoutParams.TYPE_SYSTEM_OVERLAY;// 设置窗口类型为系统级

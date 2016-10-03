@@ -8,6 +8,7 @@ import android.support.v4.app.Fragment;
 import android.view.View;
 
 import com.xmx.androidframeworkbase.Float.FloatService;
+import com.xmx.androidframeworkbase.Log.ExceptionTestActivity;
 import com.xmx.androidframeworkbase.Log.OperationLogActivity;
 import com.xmx.androidframeworkbase.QRCode.CreateQRCodeActivity;
 import com.xmx.androidframeworkbase.QRCode.ScanQRCodeActivity;
@@ -85,6 +86,11 @@ public class HomeFragment extends xUtilsFragment {
     @Event(value = R.id.btn_show_log)
     private void onClickShowLog(View view) {
         startActivity(OperationLogActivity.class);
+    }
+
+    @Event(value = R.id.btn_exception_test)
+    private void onClickExceptionTest(View view) {
+        startActivity(ExceptionTestActivity.class);
     }
 
     @Override

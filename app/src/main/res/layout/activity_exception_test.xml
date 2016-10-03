@@ -1,0 +1,22 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".Log.OperationLogActivity">
+
+    <include layout="@layout/tool_bar" />
+
+    <Button
+        android:id="@+id/btn_divide_by_zero"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="除0异常"/>
+
+    <Button
+        android:id="@+id/btn_null_pointer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="空指针异常"/>
+
+</LinearLayout>

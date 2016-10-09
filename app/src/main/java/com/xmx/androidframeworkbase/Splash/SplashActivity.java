@@ -8,9 +8,10 @@ import com.xmx.androidframeworkbase.Constants;
 import com.xmx.androidframeworkbase.MainActivity;
 import com.xmx.androidframeworkbase.R;
 import com.xmx.androidframeworkbase.Tools.ActivityBase.BaseActivity;
+import com.xmx.androidframeworkbase.Tools.ActivityBase.BaseSplashActivity;
 import com.xmx.androidframeworkbase.User.LoginActivity;
 
-public class SplashActivity extends BaseActivity {
+public class SplashActivity extends BaseSplashActivity {
 
     @Override
     protected void initView(Bundle savedInstanceState) {
@@ -32,17 +33,5 @@ public class SplashActivity extends BaseActivity {
     @Override
     protected void processLogic(Bundle savedInstanceState) {
 
-    }
-
-    void startLoginActivity() {
-        Intent loginIntent = new Intent(SplashActivity.this, LoginActivity.class);
-        startActivity(loginIntent);
-        finish();
-    }
-
-    void startMainActivity() {
-        Intent mainIntent = new Intent(SplashActivity.this, MainActivity.class);
-        startActivity(mainIntent);
-        finish();
     }
 }

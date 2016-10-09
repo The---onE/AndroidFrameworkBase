@@ -10,12 +10,13 @@ import com.xmx.androidframeworkbase.Constants;
 import com.xmx.androidframeworkbase.MainActivity;
 import com.xmx.androidframeworkbase.R;
 import com.xmx.androidframeworkbase.Tools.ActivityBase.BaseActivity;
+import com.xmx.androidframeworkbase.Tools.ActivityBase.BaseSplashActivity;
 import com.xmx.androidframeworkbase.User.Callback.AutoLoginCallback;
 import com.xmx.androidframeworkbase.User.LoginActivity;
 import com.xmx.androidframeworkbase.User.UserConstants;
 import com.xmx.androidframeworkbase.User.UserManager;
 
-public class SplashLoginActivity extends BaseActivity {
+public class SplashLoginActivity extends BaseSplashActivity {
     boolean loginFlag = false;
     boolean timeFlag = false;
     boolean notLoginFlag = false;
@@ -107,19 +108,5 @@ public class SplashLoginActivity extends BaseActivity {
     @Override
     protected void processLogic(Bundle savedInstanceState) {
 
-    }
-
-    void startLoginActivity() {
-        startFlag = true;
-        Intent loginIntent = new Intent(SplashLoginActivity.this, LoginActivity.class);
-        startActivity(loginIntent);
-        finish();
-    }
-
-    void startMainActivity() {
-        startFlag = true;
-        Intent mainIntent = new Intent(SplashLoginActivity.this, MainActivity.class);
-        startActivity(mainIntent);
-        finish();
     }
 }

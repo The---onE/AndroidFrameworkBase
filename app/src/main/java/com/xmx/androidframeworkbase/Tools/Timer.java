@@ -27,4 +27,8 @@ public abstract class Timer {
     public void stop() {
         handler.removeCallbacks(runnable);
     }
+
+    public void execute() {
+        timer();
+    }
 }

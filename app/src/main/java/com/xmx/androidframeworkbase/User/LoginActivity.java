@@ -86,13 +86,13 @@ public class LoginActivity extends BaseActivity {
 
     }
 
-    @Override
-    public void onBackPressed() {
-        if ((System.currentTimeMillis() - mExitTime) > Constants.LONGEST_EXIT_TIME) {
-            showToast(R.string.confirm_exit);
-            mExitTime = System.currentTimeMillis();
-        } else {
-            finish();
-        }
-    }
+//    @Override
+//    public void onBackPressed() {
+//        if ((System.currentTimeMillis() - mExitTime) > Constants.LONGEST_EXIT_TIME) {
+//            showToast(R.string.confirm_exit);
+//            mExitTime = System.currentTimeMillis();
+//        } else {
+//            finish();
+//        }
+//    }
 }

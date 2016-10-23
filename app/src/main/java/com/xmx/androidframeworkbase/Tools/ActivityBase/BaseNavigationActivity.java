@@ -1,10 +1,12 @@
 package com.xmx.androidframeworkbase.Tools.ActivityBase;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
@@ -57,14 +59,33 @@ public abstract class BaseNavigationActivity extends BaseActivity
             case R.id.nav_setting:
                 break;
             case R.id.nav_logout:
-                UserManager.getInstance().logout(new LogoutCallback() {
-                    @Override
-                    public void logout(AVObject user) {
-                        //SyncEntityManager.getInstance().getSQLManager().clearDatabase();
-                    }
-                });
-                startActivity(LoginActivity.class);
-                finish();
+                if (UserManager.getInstance().isLoggedIn()) {
+                    AlertDialog.Builder builder = new AlertDialog
+                            .Builder(BaseNavigationActivity.this);
+                    builder.setMessage("确定要注销吗？");
+                    builder.setTitle("提示");
+                    builder.setNeutralButton("取消", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            dialogInterface.dismiss();
+                        }
+                    });
+                    builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            UserManager.getInstance().logout(new LogoutCallback() {
+                                @Override
+                                public void logout(AVObject user) {
+                                    //SyncEntityManager.getInstance().getSQLManager().clearDatabase();
+                                }
+                            });
+                            startActivity(LoginActivity.class);
+                        }
+                    });
+                    builder.show();
+                } else {
+                    startActivity(LoginActivity.class);
+                }
                 break;
         }
 

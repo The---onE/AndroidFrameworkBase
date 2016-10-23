@@ -120,7 +120,7 @@ public class UserManager {
         callback.logout(user);
     }
 
-    public void logout(final LogoutCallback callback) {
+    public boolean logout(final LogoutCallback callback) {
         if (isLoggedIn()) {
             String username = getUsername();
             AVQuery<AVObject> query = new AVQuery<>(Constants.USER_DATA_TABLE);
@@ -145,7 +145,9 @@ public class UserManager {
                     }
                 }
             });
+            return true;
         }
+        return false;
     }
 
     public void saveLog(String username) {

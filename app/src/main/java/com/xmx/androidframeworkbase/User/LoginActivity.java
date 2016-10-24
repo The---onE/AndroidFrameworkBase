@@ -1,5 +1,6 @@
 package com.xmx.androidframeworkbase.User;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AutoCompleteTextView;
@@ -43,7 +44,9 @@ public class LoginActivity extends BaseActivity {
                                 @Override
                                 public void success(AVObject user) {
                                     showToast(R.string.login_success);
-                                    startActivity(MainActivity.class);
+                                    //startActivity(MainActivity.class);
+                                    Intent i = new Intent();
+                                    setResult(RESULT_OK, i);
                                     finish();
                                 }
 

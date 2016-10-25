@@ -87,6 +87,10 @@ public abstract class BaseNavigationActivity extends BaseActivity
                                     //SyncEntityManager.getInstance().getSQLManager().clearDatabase();
                                 }
                             });
+                            NavigationView navigation = getViewById(R.id.nav_view);
+                            Menu menu = navigation.getMenu();
+                            MenuItem login = menu.findItem(R.id.nav_logout);
+                            login.setTitle("登录");
                             startActivityForResult(intent, LOGIN_REQUEST);
                         }
                     });

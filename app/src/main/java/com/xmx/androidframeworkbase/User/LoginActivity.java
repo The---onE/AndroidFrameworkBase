@@ -17,6 +17,7 @@ import com.xmx.androidframeworkbase.User.Callback.LoginCallback;
 
 public class LoginActivity extends BaseActivity {
     private long mExitTime = 0;
+    public boolean mustFlag = false;
 
     @Override
     protected void initView(Bundle savedInstanceState) {
@@ -44,7 +45,9 @@ public class LoginActivity extends BaseActivity {
                                 @Override
                                 public void success(AVObject user) {
                                     showToast(R.string.login_success);
-                                    //startActivity(MainActivity.class);
+                                    if (mustFlag) {
+                                        startActivity(MainActivity.class);
+                                    }
                                     Intent i = new Intent();
                                     setResult(RESULT_OK, i);
                                     finish();
@@ -89,13 +92,17 @@ public class LoginActivity extends BaseActivity {
 
     }
 
-//    @Override
-//    public void onBackPressed() {
-//        if ((System.currentTimeMillis() - mExitTime) > Constants.LONGEST_EXIT_TIME) {
-//            showToast(R.string.confirm_exit);
-//            mExitTime = System.currentTimeMillis();
-//        } else {
-//            finish();
-//        }
-//    }
+    @Override
+    public void onBackPressed() {
+        if (mustFlag) {
+            if ((System.currentTimeMillis() - mExitTime) > Constants.LONGEST_EXIT_TIME) {
+                showToast(R.string.confirm_exit);
+                mExitTime = System.currentTimeMillis();
+            } else {
+                finish();
+            }
+        } else {
+            super.onBackPressed();
+        }
+    }
 }

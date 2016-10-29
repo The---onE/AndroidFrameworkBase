@@ -1,4 +1,4 @@
-package com.xmx.androidframeworkbase.Tools;
+package com.xmx.androidframeworkbase.Tools.Utils;
 
 import android.content.Context;
 

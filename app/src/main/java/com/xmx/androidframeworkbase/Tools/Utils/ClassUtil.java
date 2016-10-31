@@ -14,8 +14,8 @@ import java.util.Set;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 
-//import org.slf4j.Logger;
-//import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * 类工具类
@@ -25,7 +25,7 @@ import java.util.jar.JarFile;
  * @see http://www.oschina.net/code/snippet_234657_22722
  */
 public class ClassUtil {
-    //private static Logger log = LoggerFactory.getLogger(ClassUtil.class);
+    private static Logger log = LoggerFactory.getLogger(ClassUtil.class);
 
     /**
      * Class文件扩展名
@@ -68,7 +68,7 @@ public class ClassUtil {
      * @return
      */
     public static Set<Class<?>> scanPackage(String packageName) {
-        //log.debug("Scan classes from package [{}]...", packageName);
+        log.debug("Scan classes from package [{}]...", packageName);
         return scanPackage(packageName, NULL_CLASS_FILTER);
     }
 
@@ -88,7 +88,7 @@ public class ClassUtil {
 
         final Set<Class<?>> classes = new HashSet<Class<?>>();
         for (String classPath : getClassPaths(packageName)) {
-            //log.debug("Scan classpath: [{}]", classPath);
+            log.debug("Scan classpath: [{}]", classPath);
             // 填充 classes
             fillClasses(classPath, packageName, classFilter, classes);
         }
@@ -96,7 +96,7 @@ public class ClassUtil {
         //如果在项目的ClassPath中未找到，去系统定义的ClassPath里找
         if (classes.isEmpty()) {
             for (String classPath : getJavaClassPaths()) {
-                //log.debug("Scan java classpath: [{}]", classPath);
+                log.debug("Scan java classpath: [{}]", classPath);
                 // 填充 classes
                 fillClasses(new File(classPath), packageName, classFilter, classes);
             }
@@ -141,7 +141,7 @@ public class ClassUtil {
         try {
             resources = Thread.currentThread().getContextClassLoader().getResources(packagePath);
         } catch (IOException e) {
-            //log.error("Error when load classPath!", e);
+            log.error("Error when load classPath!", e);
             return null;
         }
         Set<String> paths = new HashSet<String>();
@@ -417,7 +417,7 @@ public class ClassUtil {
                 }
             }
         } catch (Throwable ex) {
-            //log.error(ex.getMessage(), ex);
+            log.error(ex.getMessage(), ex);
         }
     }
 
@@ -437,7 +437,7 @@ public class ClassUtil {
                     classes.add(clazz);
                 }
             } catch (Throwable ex) {
-                //log.error("", ex);
+                log.error("", ex);
             }
         }
     }

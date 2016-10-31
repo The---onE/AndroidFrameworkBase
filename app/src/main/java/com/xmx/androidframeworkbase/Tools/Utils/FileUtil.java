@@ -335,8 +335,8 @@ public class FileUtil {
      * @param path       文件路径
      * @param charset    字符集
      * @param collection 集合
-     * @throws IOException
      * @return 文件中的每行内容的集合
+     * @throws IOException
      */
     public static <T extends Collection<String>> T readLines(String path, String charset, T collection) throws IOException {
         BufferedReader reader = null;

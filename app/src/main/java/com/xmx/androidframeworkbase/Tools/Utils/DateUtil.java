@@ -6,8 +6,8 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
-//import org.slf4j.Logger;
-//import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * 时间工具类
@@ -15,7 +15,7 @@ import java.util.Locale;
  * @author xiaoleilu
  */
 public class DateUtil {
-    //private static Logger log = LoggerFactory.getLogger(DateUtil.class);
+    private static Logger log = LoggerFactory.getLogger(DateUtil.class);
 
     /**
      * 毫秒
@@ -150,7 +150,7 @@ public class DateUtil {
         try {
             return (new SimpleDateFormat(format)).parse(dateString);
         } catch (ParseException e) {
-            //log.error("Parse " + dateString + " with format " + format + " error!", e);
+            log.error("Parse " + dateString + " with format " + format + " error!", e);
         }
         return null;
     }
@@ -166,7 +166,7 @@ public class DateUtil {
         try {
             return NORM_DATETIME_FORMAT.parse(dateString);
         } catch (ParseException e) {
-            //log.error("Parse " + dateString + " with format " + NORM_DATETIME_FORMAT.toPattern() + " error!", e);
+            log.error("Parse " + dateString + " with format " + NORM_DATETIME_FORMAT.toPattern() + " error!", e);
         }
         return null;
     }
@@ -181,7 +181,7 @@ public class DateUtil {
         try {
             return NORM_DATE_FORMAT.parse(dateString);
         } catch (ParseException e) {
-            //log.error("Parse " + dateString + " with format " + NORM_DATE_PATTERN + " error!", e);
+            log.error("Parse " + dateString + " with format " + NORM_DATE_PATTERN + " error!", e);
         }
         return null;
     }
@@ -196,7 +196,7 @@ public class DateUtil {
         try {
             return NORM_TIME_FORMAT.parse(timeString);
         } catch (ParseException e) {
-            //log.error("Parse " + timeString + " with format " + NORM_TIME_PATTERN + " error!", e);
+            log.error("Parse " + timeString + " with format " + NORM_TIME_PATTERN + " error!", e);
         }
         return null;
     }
@@ -221,7 +221,7 @@ public class DateUtil {
                 return parseTime(dateStr);
             }
         } catch (Exception e) {
-            //log.error("Parse " + dateStr + " with format normal error!", e);
+            log.error("Parse " + dateStr + " with format normal error!", e);
         }
         return null;
     }

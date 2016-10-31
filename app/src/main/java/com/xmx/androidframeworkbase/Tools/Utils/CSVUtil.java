@@ -6,8 +6,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Collection;
 
-//import org.slf4j.Logger;
-//import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * CSV文件相关工具（逗号分隔符文件）
@@ -15,7 +15,7 @@ import java.util.Collection;
  * @author Luxiaolei
  */
 public class CSVUtil {
-    //private static Logger logger = LoggerFactory.getLogger(CsvUtil.class);
+    private static Logger logger = LoggerFactory.getLogger(CSVUtil.class);
 
     /**
      * 将结果集存储为CSV文件
@@ -37,7 +37,7 @@ public class CSVUtil {
                     sb.append(",");
                 }
                 String line = sb.toString();
-                //logger.debug("写入：" + line);
+                logger.debug("写入：" + line);
                 writer.println(line);
             }
             writer.close();
@@ -59,7 +59,7 @@ public class CSVUtil {
         try {
             PrintWriter writer = FileUtil.getPrintWriter(pathWithName, charset, false);
             for (String line : collection) {
-                //logger.debug("写入：" + line);
+                logger.debug("写入：" + line);
                 writer.println(line);
             }
             writer.close();

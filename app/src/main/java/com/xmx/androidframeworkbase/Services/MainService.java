@@ -1,5 +1,7 @@
 package com.xmx.androidframeworkbase.Services;
 
+import android.content.Intent;
+
 import com.xmx.androidframeworkbase.MainActivity;
 import com.xmx.androidframeworkbase.Tools.OperationLog.OperationLogEntityManager;
 import com.xmx.androidframeworkbase.Tools.ServiceBase.BaseService;
@@ -11,7 +13,7 @@ public class MainService extends BaseService {
     Timer timer;
 
     @Override
-    protected void processLogic() {
+    protected void processLogic(Intent intent) {
         timer = new Timer() {
             @Override
             public void timer() {
@@ -32,7 +34,7 @@ public class MainService extends BaseService {
     }
 
     @Override
-    protected void setForeground() {
+    protected void setForeground(Intent intent) {
         showForeground(MainActivity.class, "正在运行");
     }
 }

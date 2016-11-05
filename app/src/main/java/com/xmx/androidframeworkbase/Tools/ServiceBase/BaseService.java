@@ -27,13 +27,20 @@ public abstract class BaseService extends Service {
     public void onCreate() {
         super.onCreate();
 
-        processLogic();
-        setForeground();
+//        processLogic();
+//        setForeground();
     }
 
-    protected abstract void processLogic();
+    @Override
+    public int onStartCommand(Intent intent, int flags, int startId) {
+        processLogic(intent);
+        setForeground(intent);
+        return super.onStartCommand(intent, flags, startId);
+    }
 
-    protected abstract void setForeground();
+    protected abstract void processLogic(Intent intent);
+
+    protected abstract void setForeground(Intent intent);
 
     public void showForeground(Class<?> iActivity, String content) {
         showForeground(iActivity, R.mipmap.ic_launcher, getString(R.string.app_name), content);

@@ -64,4 +64,6 @@ dependencies {
     compile 'com.jcraft:jsch:0.1.54'
     //compile 'org.dom4j:dom4j:2.0.0-RC1'
     compile 'org.slf4j:slf4j-simple:1.7.21'
+
+    compile 'com.xiaoleilu:hutool:2.15.17'
 }

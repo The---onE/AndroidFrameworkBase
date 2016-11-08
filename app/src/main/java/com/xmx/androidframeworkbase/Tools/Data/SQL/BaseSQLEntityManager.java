@@ -5,6 +5,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
 import com.xmx.androidframeworkbase.Constants;
+import com.xmx.androidframeworkbase.Tools.Utils.ExceptionUtil;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -115,6 +116,54 @@ public abstract class BaseSQLEntityManager<Entity extends ISQLEntity> {
         }
         version++;
         return database.insert(tableName, null, entity.getContent());
+    }
+
+    //插入实体数据
+    public boolean insertData(List<Entity> entities) {
+        if (!checkDatabase()) {
+            return false;
+        }
+        boolean flag = false;
+        database.beginTransaction();
+        try {
+            for (Entity entity : entities) {
+                database.insert(tableName, null, entity.getContent());
+            }
+            database.setTransactionSuccessful();
+            flag = true;
+            version++;
+        } catch (Exception e) {
+            ExceptionUtil.filterException(e);
+        } finally {
+            database.endTransaction();
+        }
+        return flag;
+    }
+
+    //插入实体数据
+    public boolean insertData(List<Entity> entities, InsertCallback callback) {
+        if (!checkDatabase()) {
+            return false;
+        }
+        boolean flag = false;
+        database.beginTransaction();
+        try {
+            int index = 0;
+            for (Entity entity : entities) {
+                database.insert(tableName, null, entity.getContent());
+                index++;
+                callback.proceeding(index);
+            }
+            database.setTransactionSuccessful();
+            callback.success(index);
+            flag = true;
+            version++;
+        } catch (Exception e) {
+            ExceptionUtil.filterException(e);
+        } finally {
+            database.endTransaction();
+        }
+        return flag;
     }
 
     //删除数据
@@ -309,5 +358,16 @@ public abstract class BaseSQLEntityManager<Entity extends ISQLEntity> {
         }
         Cursor cursor = database.rawQuery("select * from " + tableName + " " + content + " order by " + order + " " + asc, null);
         return convertToEntities(cursor);
+    }
+
+    //获取数据总条数
+    public int getCount() {
+        Cursor cursor = database.rawQuery("select COUNT(*) from " + tableName, null);
+        int count = 0;
+        if (cursor.moveToFirst()) {
+            count = cursor.getInt(0);
+        }
+        cursor.close();
+        return count;
     }
 }

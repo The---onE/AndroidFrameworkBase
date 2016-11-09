@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public abstract class BaseSQLEntityManager<Entity extends ISQLEntity> {
-    private SQLiteDatabase database = null;
+    protected SQLiteDatabase database = null;
     long version = System.currentTimeMillis();
     protected boolean openFlag = false;
 
@@ -118,22 +118,21 @@ public abstract class BaseSQLEntityManager<Entity extends ISQLEntity> {
         return database.insert(tableName, null, entity.getContent());
     }
 
-    //插入实体数据
-    public boolean insertData(List<Entity> entities) {
+    public boolean operationInTransaction(TransactionCallback callback) {
         if (!checkDatabase()) {
             return false;
         }
         boolean flag = false;
         database.beginTransaction();
         try {
-            for (Entity entity : entities) {
-                database.insert(tableName, null, entity.getContent());
-            }
+            int total =  callback.operation();
             database.setTransactionSuccessful();
+            callback.success(total);
             flag = true;
             version++;
         } catch (Exception e) {
             ExceptionUtil.filterException(e);
+            callback.error(e);
         } finally {
             database.endTransaction();
         }
@@ -141,39 +140,112 @@ public abstract class BaseSQLEntityManager<Entity extends ISQLEntity> {
     }
 
     //插入实体数据
-    public boolean insertData(List<Entity> entities, InsertCallback callback) {
-        if (!checkDatabase()) {
-            return false;
-        }
-        boolean flag = false;
-        database.beginTransaction();
-        try {
-            int index = 0;
-            for (Entity entity : entities) {
-                database.insert(tableName, null, entity.getContent());
-                index++;
-                callback.proceeding(index);
+    public boolean insertData(final List<Entity> entities) {
+        return operationInTransaction(new TransactionCallback() {
+            @Override
+            public int operation() throws Exception {
+                for (Entity entity : entities) {
+                    database.insert(tableName, null, entity.getContent());
+                }
+                return entities.size();
             }
-            database.setTransactionSuccessful();
-            callback.success(index);
-            flag = true;
-            version++;
-        } catch (Exception e) {
-            ExceptionUtil.filterException(e);
-        } finally {
-            database.endTransaction();
-        }
-        return flag;
+
+            @Override
+            public void success(int total) {
+
+            }
+
+            @Override
+            public void error(Exception e) {
+
+            }
+        });
+    }
+
+    //插入实体数据
+    public boolean insertData(final List<Entity> entities, final InsertCallback callback) {
+        return operationInTransaction(new TransactionCallback() {
+            @Override
+            public int operation() throws Exception {
+                int index = 0;
+                for (Entity entity : entities) {
+                    database.insert(tableName, null, entity.getContent());
+                    index++;
+                    callback.proceeding(index);
+                }
+                return index;
+            }
+
+            @Override
+            public void success(int total) {
+                callback.success(total);
+            }
+
+            @Override
+            public void error(Exception e) {
+
+            }
+        });
     }
 
     //删除数据
-    public void deleteById(long id) {
+    public int deleteById(long id) {
         if (!checkDatabase()) {
-            return;
+            return 0;
         }
-        database.delete(tableName, "ID = ?", new String[]{String.valueOf(id)});
+        int res = database.delete(tableName, "ID = ?", new String[]{String.valueOf(id)});
 
         version++;
+        return res;
+    }
+
+    //删除数据
+    public boolean deleteByIds(final List<Long> ids) {
+        return operationInTransaction(new TransactionCallback() {
+            @Override
+            public int operation() throws Exception {
+                for (Long id : ids) {
+                    database.delete(tableName, "ID = ?", new String[]{String.valueOf(id)});
+                }
+                return ids.size();
+            }
+
+            @Override
+            public void success(int total) {
+
+            }
+
+            @Override
+            public void error(Exception e) {
+
+            }
+        });
+    }
+
+    //删除数据
+    public boolean deleteByIds(final List<Long> ids, final DeleteCallback callback) {
+        return operationInTransaction(new TransactionCallback() {
+            @Override
+            public int operation() throws Exception {
+                int index = 0;
+                for (Long id : ids) {
+                    database.delete(tableName, "ID = ?", new String[]{String.valueOf(id)});
+                    index++;
+                    callback.proceeding(index);
+                }
+                return index;
+            }
+
+            @Override
+            public void success(int total) {
+                callback.success(total);
+            }
+
+            @Override
+            public void error(Exception e) {
+
+            }
+        });
     }
 
     //删除数据
@@ -230,7 +302,7 @@ public abstract class BaseSQLEntityManager<Entity extends ISQLEntity> {
         version++;
     }
 
-    private List<Entity> convertToEntities(Cursor cursor) {
+    protected List<Entity> convertToEntities(Cursor cursor) {
         if (!checkDatabase()) {
             return null;
         }

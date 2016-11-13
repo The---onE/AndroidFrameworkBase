@@ -9,7 +9,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.xmx.androidframeworkbase.Application;
 import com.xmx.androidframeworkbase.Constants;
+import com.xmx.androidframeworkbase.Tools.OperationLog.OperationLogEntityManager;
 
 import org.xutils.x;
 
@@ -26,6 +28,8 @@ public abstract class BaseActivity extends AppCompatActivity {
         x.view().inject(this);
 
         TAG = this.getClass().getSimpleName();
+        Application.getInstance().addActivity(this);
+
         initView(savedInstanceState);
         setListener();
         processLogic(savedInstanceState);
@@ -66,6 +70,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         if (e != null && Constants.EXCEPTION_DEBUG) {
             e.printStackTrace();
             showToast(e.getMessage());
+            OperationLogEntityManager.getInstance().addLog(e.getMessage());
             return false;
         } else {
             return true;

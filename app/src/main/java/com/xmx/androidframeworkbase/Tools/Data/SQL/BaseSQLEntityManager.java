@@ -131,7 +131,6 @@ public abstract class BaseSQLEntityManager<Entity extends ISQLEntity> {
             flag = true;
             version++;
         } catch (Exception e) {
-            ExceptionUtil.filterException(e);
             callback.error(e);
         } finally {
             database.endTransaction();
@@ -157,7 +156,7 @@ public abstract class BaseSQLEntityManager<Entity extends ISQLEntity> {
 
             @Override
             public void error(Exception e) {
-
+                ExceptionUtil.filterException(e);
             }
         });
     }
@@ -183,7 +182,7 @@ public abstract class BaseSQLEntityManager<Entity extends ISQLEntity> {
 
             @Override
             public void error(Exception e) {
-
+                ExceptionUtil.filterException(e);
             }
         });
     }
@@ -217,7 +216,7 @@ public abstract class BaseSQLEntityManager<Entity extends ISQLEntity> {
 
             @Override
             public void error(Exception e) {
-
+                ExceptionUtil.filterException(e);
             }
         });
     }
@@ -243,7 +242,7 @@ public abstract class BaseSQLEntityManager<Entity extends ISQLEntity> {
 
             @Override
             public void error(Exception e) {
-
+                ExceptionUtil.filterException(e);
             }
         });
     }

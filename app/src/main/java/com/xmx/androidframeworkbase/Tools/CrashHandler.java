@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.Looper;
 import android.widget.Toast;
 
+import com.xmx.androidframeworkbase.Application;
 import com.xmx.androidframeworkbase.Tools.OperationLog.OperationLogEntityManager;
 
 /**
@@ -42,8 +43,9 @@ public class CrashHandler implements Thread.UncaughtExceptionHandler {
                 Toast.makeText(mContext, "出现错误:" + e, Toast.LENGTH_SHORT).show();
             }
             //退出程序
-            android.os.Process.killProcess(android.os.Process.myPid());
-            System.exit(1);
+            Application.getInstance().exit();
+            //android.os.Process.killProcess(android.os.Process.myPid());
+            //System.exit(1);
         }
     }
 

@@ -341,5 +341,39 @@ public class StrUtil {
     public static String format(String template, Object... values) {
         return String.format(template.replace("{}", "%s"), values);
     }
+
+    /**
+     * 连接字符串
+     *
+     * @param items     待连接的字符串数组
+     * @param separator 分隔字符串
+     * @return 格式化后的文本
+     */
+    public static String join(String[] items, String separator) {
+        StringBuffer sb = new StringBuffer();
+        sb.append(items[0]);
+        for (int i = 1; i < items.length; ++i) {
+            sb.append(separator);
+            sb.append(items[i]);
+        }
+        return new String(sb);
+    }
+
+    /**
+     * 连接字符串
+     *
+     * @param items     待连接的字符串列表
+     * @param separator 分隔字符串
+     * @return 格式化后的文本
+     */
+    public static String join(List<String> items, String separator) {
+        StringBuffer sb = new StringBuffer();
+        sb.append(items.get(0));
+        for (int i = 1; i < items.size(); ++i) {
+            sb.append(separator);
+            sb.append(items.get(i));
+        }
+        return new String(sb);
+    }
 }
 

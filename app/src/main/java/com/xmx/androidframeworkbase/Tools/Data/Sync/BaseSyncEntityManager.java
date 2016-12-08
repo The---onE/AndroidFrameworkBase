@@ -5,6 +5,7 @@ import com.avos.avoscloud.AVObject;
 import com.xmx.androidframeworkbase.Tools.Data.Callback.DelCallback;
 import com.xmx.androidframeworkbase.Tools.Data.Callback.InsertCallback;
 import com.xmx.androidframeworkbase.Tools.Data.Callback.SelectCallback;
+import com.xmx.androidframeworkbase.Tools.Data.Callback.SelectLoginCallback;
 import com.xmx.androidframeworkbase.Tools.Data.Callback.UpdateCallback;
 import com.xmx.androidframeworkbase.Tools.Data.Cloud.BaseCloudEntityManager;
 import com.xmx.androidframeworkbase.Tools.Data.DataConstants;
@@ -93,12 +94,12 @@ public abstract class BaseSyncEntityManager<Entity extends ISyncEntity> {
 
     //将云端数据同步至数据库
     public void syncFromCloud(final Map<String, Object> conditions,
-                              final SelectCallback<Entity> callback) {
+                              final SelectLoginCallback<Entity> callback) {
         if (!checkDatabase()) {
             callback.syncError(DataConstants.NOT_INIT);
             return;
         }
-        cloudManager.selectByCondition(conditions, null, false, new SelectCallback<Entity>() {
+        cloudManager.selectByCondition(conditions, null, false, new SelectLoginCallback<Entity>() {
 
             @Override
             public void success(AVObject user, List<Entity> entities) {

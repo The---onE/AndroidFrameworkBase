@@ -12,10 +12,10 @@ import com.avos.avoscloud.AVException;
 import com.avos.avoscloud.AVObject;
 import com.xmx.androidframeworkbase.R;
 import com.xmx.androidframeworkbase.Tools.ActivityBase.BaseTempActivity;
+import com.xmx.androidframeworkbase.Tools.Data.Callback.SelectLoginCallback;
 import com.xmx.androidframeworkbase.Tools.Data.DataConstants;
 import com.xmx.androidframeworkbase.Tools.Data.Callback.DelCallback;
 import com.xmx.androidframeworkbase.Tools.Data.Callback.InsertCallback;
-import com.xmx.androidframeworkbase.Tools.Data.Callback.SelectCallback;
 import com.xmx.androidframeworkbase.Tools.Data.Callback.UpdateCallback;
 
 import org.xutils.view.annotation.ContentView;
@@ -194,7 +194,7 @@ public class SyncActivity extends BaseTempActivity {
         syncList.setAdapter(syncAdapter);
 
         SyncEntityManager.getInstance().syncFromCloud(null,
-                new SelectCallback<Sync>() {
+                new SelectLoginCallback<Sync>() {
                     @Override
                     public void success(AVObject user, List<Sync> syncs) {
                         SyncManager.getInstance().updateData();

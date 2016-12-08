@@ -14,10 +14,10 @@ import com.avos.avoscloud.AVException;
 import com.avos.avoscloud.AVObject;
 import com.xmx.androidframeworkbase.R;
 import com.xmx.androidframeworkbase.Tools.ActivityBase.BaseTempActivity;
+import com.xmx.androidframeworkbase.Tools.Data.Callback.SelectCallback;
 import com.xmx.androidframeworkbase.Tools.Data.DataConstants;
 import com.xmx.androidframeworkbase.Tools.Data.Callback.DelCallback;
 import com.xmx.androidframeworkbase.Tools.Data.Callback.InsertCallback;
-import com.xmx.androidframeworkbase.Tools.Data.Callback.SelectCallback;
 import com.xmx.androidframeworkbase.Tools.Data.Callback.UpdateCallback;
 
 import java.util.ArrayList;
@@ -199,7 +199,7 @@ public class CloudActivity extends BaseTempActivity {
                 "Time", false,
                 new SelectCallback<Cloud>() {
                     @Override
-                    public void success(AVObject user, List<Cloud> clouds) {
+                    public void success(List<Cloud> clouds) {
                         cloudAdapter.updateList(clouds);
                     }
 

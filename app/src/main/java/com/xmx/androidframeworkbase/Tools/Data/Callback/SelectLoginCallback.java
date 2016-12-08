@@ -9,9 +9,9 @@ import java.util.List;
 /**
  * Created by The_onE on 2016/5/29.
  */
-public abstract class SelectCallback<Entity extends ICloudEntity> {
+public abstract class SelectLoginCallback<Entity extends ICloudEntity> {
 
-    public abstract void success(List<Entity> entities);
+    public abstract void success(AVObject user, List<Entity> entities);
 
     public abstract void syncError(int error);
 

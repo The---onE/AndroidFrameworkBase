@@ -10,6 +10,7 @@ import com.avos.avoscloud.SaveCallback;
 import com.xmx.androidframeworkbase.Tools.Data.Callback.DelCallback;
 import com.xmx.androidframeworkbase.Tools.Data.Callback.InsertCallback;
 import com.xmx.androidframeworkbase.Tools.Data.Callback.SelectCallback;
+import com.xmx.androidframeworkbase.Tools.Data.Callback.SelectLoginCallback;
 import com.xmx.androidframeworkbase.Tools.Data.Callback.UpdateCallback;
 import com.xmx.androidframeworkbase.Tools.Data.DataConstants;
 import com.xmx.androidframeworkbase.User.Callback.AutoLoginCallback;
@@ -34,10 +35,100 @@ public abstract class BaseCloudEntityManager<Entity extends ICloudEntity> {
         return tableName != null && entityTemplate != null;
     }
 
+    //查询全部数据
+    public void selectAll(final SelectCallback<Entity> callback) {
+        if (!checkDatabase()) {
+            callback.syncError(DataConstants.NOT_INIT);
+            return;
+        }
+        AVQuery<AVObject> query = new AVQuery<>(tableName);
+        query.findInBackground(new FindCallback<AVObject>() {
+            public void done(List<AVObject> avObjects, AVException e) {
+                if (e == null) {
+                    List<Entity> entities = new ArrayList<>();
+                    for (AVObject object : avObjects) {
+                        Entity entity = (Entity) entityTemplate.convertToEntity(object);
+                        entities.add(entity);
+                    }
+                    callback.success(entities);
+                } else {
+                    callback.syncError(e);
+                }
+            }
+        });
+    }
+
     //查询全部数据并排序, ascFlag为true升序，为false降序
+    public void selectAll(final SelectCallback<Entity> callback, final String order, final boolean ascFlag) {
+        if (!checkDatabase()) {
+            callback.syncError(DataConstants.NOT_INIT);
+            return;
+        }
+        AVQuery<AVObject> query = new AVQuery<>(tableName);
+        if (order != null) {
+            if (ascFlag) {
+                query.orderByAscending(order);
+            } else {
+                query.orderByDescending(order);
+            }
+        }
+        query.findInBackground(new FindCallback<AVObject>() {
+            public void done(List<AVObject> avObjects, AVException e) {
+                if (e == null) {
+                    List<Entity> entities = new ArrayList<>();
+                    for (AVObject object : avObjects) {
+                        Entity entity = (Entity) entityTemplate.convertToEntity(object);
+                        entities.add(entity);
+                    }
+                    callback.success(entities);
+                } else {
+                    callback.syncError(e);
+                }
+            }
+        });
+    }
+
+    //按条件查询数据并排序, ascFlag为true升序，为false降序
     public void selectByCondition(final Map<String, Object> conditions,
                                   final String order, final boolean ascFlag,
                                   final SelectCallback<Entity> callback) {
+        if (!checkDatabase()) {
+            callback.syncError(DataConstants.NOT_INIT);
+            return;
+        }
+        AVQuery<AVObject> query = new AVQuery<>(tableName);
+        if (conditions != null) {
+            for (String key : conditions.keySet()) {
+                query.whereEqualTo(key, conditions.get(key));
+            }
+        }
+        if (order != null) {
+            if (ascFlag) {
+                query.orderByAscending(order);
+            } else {
+                query.orderByDescending(order);
+            }
+        }
+        query.findInBackground(new FindCallback<AVObject>() {
+            public void done(List<AVObject> avObjects, AVException e) {
+                if (e == null) {
+                    List<Entity> entities = new ArrayList<>();
+                    for (AVObject object : avObjects) {
+                        Entity entity = (Entity) entityTemplate.convertToEntity(object);
+                        entities.add(entity);
+                    }
+                    callback.success(entities);
+                } else {
+                    callback.syncError(e);
+                }
+            }
+        });
+    }
+
+    //在登录状态下按条件查询数据并排序, ascFlag为true升序，为false降序
+    public void selectByCondition(final Map<String, Object> conditions,
+                                  final String order, final boolean ascFlag,
+                                  final SelectLoginCallback<Entity> callback) {
         if (!checkDatabase()) {
             callback.syncError(DataConstants.NOT_INIT);
             return;

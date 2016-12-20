@@ -1,5 +1,8 @@
 package com.xmx.androidframeworkbase.Tools.Data.Cloud;
 
+import android.content.Context;
+import android.widget.Toast;
+
 import com.avos.avoscloud.AVException;
 import com.avos.avoscloud.AVObject;
 import com.avos.avoscloud.AVQuery;
@@ -7,6 +10,7 @@ import com.avos.avoscloud.DeleteCallback;
 import com.avos.avoscloud.FindCallback;
 import com.avos.avoscloud.GetCallback;
 import com.avos.avoscloud.SaveCallback;
+import com.xmx.androidframeworkbase.R;
 import com.xmx.androidframeworkbase.Tools.Data.Callback.DelCallback;
 import com.xmx.androidframeworkbase.Tools.Data.Callback.InsertCallback;
 import com.xmx.androidframeworkbase.Tools.Data.Callback.SelectCallback;
@@ -344,5 +348,22 @@ public abstract class BaseCloudEntityManager<Entity extends ICloudEntity> {
                 }
             }
         });
+    }
+
+    public static void defaultError(int error, Context context) {
+        switch (error) {
+            case DataConstants.NOT_INIT:
+                Toast.makeText(context, R.string.failure, Toast.LENGTH_SHORT).show();
+                break;
+            case DataConstants.NOT_LOGGED_IN:
+                Toast.makeText(context, R.string.not_loggedin, Toast.LENGTH_SHORT).show();
+                break;
+            case DataConstants.USERNAME_ERROR:
+                Toast.makeText(context, R.string.username_error, Toast.LENGTH_SHORT).show();
+                break;
+            case DataConstants.CHECKSUM_ERROR:
+                Toast.makeText(context, R.string.not_loggedin, Toast.LENGTH_SHORT).show();
+                break;
+        }
     }
 }

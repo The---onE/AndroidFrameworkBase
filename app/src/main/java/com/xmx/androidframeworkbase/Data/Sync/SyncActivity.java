@@ -62,20 +62,7 @@ public class SyncActivity extends BaseTempActivity {
 
                     @Override
                     public void syncError(int error) {
-                        switch (error) {
-                            case DataConstants.NOT_INIT:
-                                showToast(R.string.failure);
-                                break;
-                            case DataConstants.NOT_LOGGED_IN:
-                                showToast(R.string.not_loggedin);
-                                break;
-                            case DataConstants.USERNAME_ERROR:
-                                showToast(R.string.username_error);
-                                break;
-                            case DataConstants.CHECKSUM_ERROR:
-                                showToast(R.string.not_loggedin);
-                                break;
-                        }
+                        SyncEntityManager.defaultError(error, getBaseContext());
                     }
 
                     @Override
@@ -102,20 +89,7 @@ public class SyncActivity extends BaseTempActivity {
 
                             @Override
                             public void syncError(int error) {
-                                switch (error) {
-                                    case DataConstants.NOT_INIT:
-                                        showToast(R.string.failure);
-                                        break;
-                                    case DataConstants.NOT_LOGGED_IN:
-                                        showToast(R.string.not_loggedin);
-                                        break;
-                                    case DataConstants.USERNAME_ERROR:
-                                        showToast(R.string.username_error);
-                                        break;
-                                    case DataConstants.CHECKSUM_ERROR:
-                                        showToast(R.string.not_loggedin);
-                                        break;
-                                }
+                                SyncEntityManager.defaultError(error, getBaseContext());
                             }
 
                             @Override
@@ -152,20 +126,7 @@ public class SyncActivity extends BaseTempActivity {
 
             @Override
             public void syncError(int error) {
-                switch (error) {
-                    case DataConstants.NOT_INIT:
-                        showToast(R.string.failure);
-                        break;
-                    case DataConstants.NOT_LOGGED_IN:
-                        showToast(R.string.not_loggedin);
-                        break;
-                    case DataConstants.USERNAME_ERROR:
-                        showToast(R.string.username_error);
-                        break;
-                    case DataConstants.CHECKSUM_ERROR:
-                        showToast(R.string.not_loggedin);
-                        break;
-                }
+                SyncEntityManager.defaultError(error, getBaseContext());
             }
 
             @Override
@@ -204,20 +165,7 @@ public class SyncActivity extends BaseTempActivity {
 
                     @Override
                     public void syncError(int error) {
-                        switch (error) {
-                            case DataConstants.NOT_INIT:
-                                showToast(R.string.failure);
-                                break;
-                            case DataConstants.NOT_LOGGED_IN:
-                                showToast(R.string.not_loggedin);
-                                break;
-                            case DataConstants.USERNAME_ERROR:
-                                showToast(R.string.username_error);
-                                break;
-                            case DataConstants.CHECKSUM_ERROR:
-                                showToast(R.string.not_loggedin);
-                                break;
-                        }
+                        SyncEntityManager.defaultError(error, getBaseContext());
                     }
 
                     @Override

@@ -4,7 +4,7 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content">
 
-    <com.xmx.androidframeworkbase.Float.ScrollTextView
+    <com.xmx.androidframeworkbase.module.floatwindow.ScrollTextView
         android:id="@+id/tv_float"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

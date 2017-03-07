@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".Log.OperationLogActivity">
+    tools:context=".module.log.OperationLogActivity">
 
     <include layout="@layout/tool_bar" />
 

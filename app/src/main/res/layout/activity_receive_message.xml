@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
     android:orientation="vertical"
-    tools:context=".Tools.PushMessage.ReceiveMessageActivity">
+    tools:context=".common.push.ReceiveMessageActivity">
 
     <include layout="@layout/tool_bar" />
 

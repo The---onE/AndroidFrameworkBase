@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <com.xmx.androidframeworkbase.Tools.ChoosePhoto.entities.BigGifImageView
+    <com.xmx.androidframeworkbase.common.choosephoto.entities.BigGifImageView
         android:id="@+id/big_photo"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />

@@ -93,7 +93,7 @@ public class NotificationFragment extends xUtilsFragment {
         for (ActivityManager.RunningServiceInfo runServiceInfo : runServiceList) {
             if (runServiceInfo.foreground) {
                 if (runServiceInfo.service
-                        .getShortClassName().equals(".Services.MainService")) {
+                        .getShortClassName().equals(".module.services.MainService")) {
                     Intent intent = new Intent();
                     intent.setComponent(runServiceInfo.service);
                     getContext().stopService(intent);

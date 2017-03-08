@@ -114,7 +114,7 @@
             android:enabled="true"
             android:exported="true" />
         <service
-            android:name=".module.float.FloatService"
+            android:name=".module.floatwindow.FloatService"
             android:enabled="true"
             android:exported="true" />
     </application>

@@ -1,6 +1,8 @@
 <resources>
     <string name="app_name">基础框架</string>
 
+    <string name="skip">跳过</string>
+
     <string name="navigation_drawer_open">打开导航栏</string>
     <string name="navigation_drawer_close">关闭导航栏</string>
 

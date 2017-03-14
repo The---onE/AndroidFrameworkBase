@@ -2,6 +2,7 @@ package com.xmx.androidframeworkbase.core.activity;
 
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
+import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
@@ -56,8 +57,11 @@ public class MainActivity extends BaseNavigationActivity {
 
         PagerAdapter adapter = new PagerAdapter(getSupportFragmentManager(), fragments, titles);
 
-        vp = getViewById(R.id.pager_main);
+        vp = getViewById(R.id.view_pager);
         vp.setAdapter(adapter);
+        // 设置标签页底部选项卡
+        TabLayout tabLayout = getViewById(R.id.tab_layout);
+        tabLayout.setupWithViewPager(vp);
     }
 
     @Override

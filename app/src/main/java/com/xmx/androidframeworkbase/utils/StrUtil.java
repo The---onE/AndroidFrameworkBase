@@ -1,5 +1,9 @@
 package com.xmx.androidframeworkbase.utils;
 
+import android.content.Context;
+import android.util.Log;
+import android.widget.Toast;
+
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
@@ -374,6 +378,42 @@ public class StrUtil {
             sb.append(items.get(i));
         }
         return new String(sb);
+    }
+
+    /**
+     * 显示提示信息
+     * @param context 当前上下文
+     * @param str 要显示的字符串信息
+     */
+    public static void showToast(Context context, String str) {
+        Toast.makeText(context, str, Toast.LENGTH_SHORT).show();
+    }
+
+    /**
+     * 显示提示信息
+     * @param context 当前上下文
+     * @param resId 要显示的字符串在strings文件中的ID
+     */
+    public static void showToast(Context context, int resId) {
+        Toast.makeText(context, resId, Toast.LENGTH_SHORT).show();
+    }
+
+    /**
+     * 打印日志
+     * @param tag 日志标签
+     * @param msg 日志信息
+     */
+    public static void showLog(String tag, String msg) {
+        Log.e(tag, msg);
+    }
+
+    /**
+     * 打印日志
+     * @param tag 日志标签
+     * @param i 数字作为日志信息
+     */
+    public static void showLog(String tag, int i) {
+        Log.e(tag, "" + i);
     }
 }
 

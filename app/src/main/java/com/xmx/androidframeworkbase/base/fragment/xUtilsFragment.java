@@ -10,6 +10,7 @@ import org.xutils.x;
 
 /**
  * Created by The_onE on 2016/7/4.
+ * 使用xUtils的Fragment基类，使用注解绑定控件对象
  * 继承本类的Fragment需
  * 1.在Fragment前加@ContentView(R.layout.fragment_file)注解
  * 2.使用@ViewInject(R.id.view_id)注解绑定控件
@@ -18,6 +19,7 @@ import org.xutils.x;
  */
 public abstract class xUtilsFragment extends BFragment {
 
+    // 是否已注册xUtils
     private boolean injected = false;
 
     @Override
@@ -30,11 +32,18 @@ public abstract class xUtilsFragment extends BFragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
         if  (!injected) {
+            // 注册xUtils
             x.view().inject(this, this.getView());
         }
+        // 处理业务逻辑
         processLogic(savedInstanceState);
     }
 
+    /**
+     * 处理业务逻辑接口
+     * @param savedInstanceState [onViewCreated]方法中的实例状态
+     */
     protected abstract void processLogic(Bundle savedInstanceState);
 }

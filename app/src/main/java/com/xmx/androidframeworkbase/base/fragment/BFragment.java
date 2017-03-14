@@ -14,22 +14,12 @@ import com.xmx.androidframeworkbase.utils.StrUtil;
  */
 public abstract class BFragment extends Fragment {
 
-    protected boolean filterException(Exception e) {
-        if (e != null && Constants.EXCEPTION_DEBUG) {
-            e.printStackTrace();
-            showToast(e.getMessage());
-            return false;
-        } else {
-            return true;
-        }
-    }
-
     /**
      * 显示提示信息
      * @param str 要显示的字符串信息
      */
     protected void showToast(String str) {
-        StrUtil.showToast(this, str);
+        StrUtil.showToast(getContext(), str);
     }
 
     /**
@@ -37,7 +27,7 @@ public abstract class BFragment extends Fragment {
      * @param resId 要显示的字符串在strings文件中的ID
      */
     protected void showToast(int resId) {
-        StrUtil.showToast(this, resId);
+        StrUtil.showToast(getContext(), resId);
     }
 
     /**

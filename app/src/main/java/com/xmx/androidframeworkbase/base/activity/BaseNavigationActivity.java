@@ -20,6 +20,7 @@ import com.xmx.androidframeworkbase.common.user.callback.LogoutCallback;
 import com.xmx.androidframeworkbase.common.user.LoginActivity;
 import com.xmx.androidframeworkbase.common.user.UserConstants;
 import com.xmx.androidframeworkbase.common.user.UserManager;
+import com.xmx.androidframeworkbase.utils.ExceptionUtil;
 
 /**
  * Created by The_onE on 2015/12/28.
@@ -121,7 +122,7 @@ public abstract class BaseNavigationActivity extends BaseActivity
 
                 @Override
                 public void error(AVException e) {
-                    filterException(e);
+                    ExceptionUtil.normalException(e, getBaseContext());
                 }
 
                 @Override

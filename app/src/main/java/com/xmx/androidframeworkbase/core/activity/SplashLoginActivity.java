@@ -11,6 +11,7 @@ import com.xmx.androidframeworkbase.base.activity.BaseSplashActivity;
 import com.xmx.androidframeworkbase.common.user.callback.AutoLoginCallback;
 import com.xmx.androidframeworkbase.common.user.UserConstants;
 import com.xmx.androidframeworkbase.common.user.UserManager;
+import com.xmx.androidframeworkbase.utils.ExceptionUtil;
 
 public class SplashLoginActivity extends BaseSplashActivity {
     boolean loginFlag = false;
@@ -63,7 +64,7 @@ public class SplashLoginActivity extends BaseSplashActivity {
             @Override
             public void error(AVException e) {
                 showToast(R.string.network_error);
-                filterException(e);
+                ExceptionUtil.normalException(e, getBaseContext());
                 notLoginFlag = true;
                 if (timeFlag) {
                     startLoginActivity();

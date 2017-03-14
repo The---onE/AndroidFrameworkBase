@@ -21,7 +21,7 @@ public abstract class BaseFragment extends BFragment {
     }
 
     @Override
-    public View onViewCreated(View view, Bundle savedInstanceState) {
+    public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
         // 初始化View
@@ -30,8 +30,6 @@ public abstract class BaseFragment extends BFragment {
         setListener(view);
         // 处理业务逻辑
         processLogic(view, savedInstanceState);
-
-        return view;
     }
 
     /**

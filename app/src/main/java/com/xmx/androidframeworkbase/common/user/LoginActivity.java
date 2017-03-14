@@ -14,6 +14,7 @@ import com.xmx.androidframeworkbase.core.activity.MainActivity;
 import com.xmx.androidframeworkbase.R;
 import com.xmx.androidframeworkbase.base.activity.BaseActivity;
 import com.xmx.androidframeworkbase.common.user.callback.LoginCallback;
+import com.xmx.androidframeworkbase.utils.ExceptionUtil;
 
 public class LoginActivity extends BaseActivity {
     private long mExitTime = 0;
@@ -56,7 +57,7 @@ public class LoginActivity extends BaseActivity {
                                 @Override
                                 public void error(AVException e) {
                                     showToast(R.string.network_error);
-                                    filterException(e);
+                                    ExceptionUtil.normalException(e, getBaseContext());
                                     login.setEnabled(true);
                                 }
 

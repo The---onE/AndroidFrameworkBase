@@ -16,6 +16,7 @@ import com.xmx.androidframeworkbase.common.push.ReceiveMessageActivity;
 import com.xmx.androidframeworkbase.common.user.callback.AutoLoginCallback;
 import com.xmx.androidframeworkbase.common.user.UserConstants;
 import com.xmx.androidframeworkbase.common.user.UserManager;
+import com.xmx.androidframeworkbase.utils.ExceptionUtil;
 
 import org.xutils.view.annotation.ContentView;
 import org.xutils.view.annotation.Event;
@@ -58,12 +59,12 @@ public class PushFragment extends xUtilsFragment {
                                         if (e == null) {
                                             showToast("关注成功");
                                         } else {
-                                            filterException(e);
+                                            ExceptionUtil.normalException(e, getContext());
                                         }
                                     }
                                 });
                             } else {
-                                filterException(e);
+                                ExceptionUtil.normalException(e, getContext());
                             }
                         }
                     });
@@ -73,7 +74,7 @@ public class PushFragment extends xUtilsFragment {
             @Override
             public void error(AVException e) {
                 showToast(R.string.network_error);
-                filterException(e);
+                ExceptionUtil.normalException(e, getContext());
             }
 
             @Override
@@ -117,7 +118,7 @@ public class PushFragment extends xUtilsFragment {
                                 if (e == null) {
                                     showToast("取关成功");
                                 } else {
-                                    filterException(e);
+                                    ExceptionUtil.normalException(e, getContext());
                                 }
                             }
                         });
@@ -128,7 +129,7 @@ public class PushFragment extends xUtilsFragment {
             @Override
             public void error(AVException e) {
                 showToast(R.string.network_error);
-                filterException(e);
+                ExceptionUtil.normalException(e, getContext());
             }
 
             @Override

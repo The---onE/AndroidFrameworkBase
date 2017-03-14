@@ -90,16 +90,6 @@ public abstract class BaseService extends Service {
         startForeground(notificationId, notification);
     }
 
-    protected boolean filterException(Exception e) {
-        if (e != null && Constants.EXCEPTION_DEBUG) {
-            e.printStackTrace();
-            showToast(e.getMessage());
-            return false;
-        } else {
-            return true;
-        }
-    }
-
     /**
      * 显示提示信息
      * @param str 要显示的字符串信息

@@ -23,6 +23,7 @@ import com.xmx.androidframeworkbase.R;
 import com.xmx.androidframeworkbase.base.activity.BaseTempActivity;
 import com.xmx.androidframeworkbase.common.choosephoto.AlbumActivity;
 import com.xmx.androidframeworkbase.common.user.UserManager;
+import com.xmx.androidframeworkbase.utils.ExceptionUtil;
 
 import org.json.JSONObject;
 import org.xutils.view.annotation.ContentView;
@@ -176,7 +177,7 @@ public class PushItemMessageActivity extends BaseTempActivity {
                                                     finish();
                                                 }
                                             } else {
-                                                filterException(e);
+                                                ExceptionUtil.normalException(e, getBaseContext());
 
                                                 btnPush.setText("推送");
                                                 btnPush.setEnabled(true);
@@ -184,13 +185,13 @@ public class PushItemMessageActivity extends BaseTempActivity {
                                         }
                                     });
                                 } catch (Exception ex) {
-                                    filterException(ex);
+                                    ExceptionUtil.normalException(ex, getBaseContext());
 
                                     btnPush.setText("推送");
                                     btnPush.setEnabled(true);
                                 }
                             } else {
-                                filterException(e);
+                                ExceptionUtil.normalException(e, getBaseContext());
 
                                 btnPush.setText("推送");
                                 btnPush.setEnabled(true);
@@ -210,7 +211,7 @@ public class PushItemMessageActivity extends BaseTempActivity {
                             showToast("推送成功");
                             finish();
                         } else {
-                            filterException(e);
+                            ExceptionUtil.normalException(e, getBaseContext());
 
                             btnPush.setText("推送");
                             btnPush.setEnabled(true);
@@ -219,7 +220,7 @@ public class PushItemMessageActivity extends BaseTempActivity {
                 });
             }
         } catch (Exception e) {
-            filterException(e);
+            ExceptionUtil.normalException(e, getBaseContext());
 
             btnPush.setText("推送");
             btnPush.setEnabled(true);

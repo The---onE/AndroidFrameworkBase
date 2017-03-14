@@ -106,17 +106,6 @@ public abstract class BaseActivity extends AppCompatActivity {
     protected void onViewCreated() {
     }
 
-    protected boolean filterException(Exception e) {
-        if (e != null && Constants.EXCEPTION_DEBUG) {
-            e.printStackTrace();
-            showToast(e.getMessage());
-            OperationLogEntityManager.getInstance().addLog(e.getMessage());
-            return false;
-        } else {
-            return true;
-        }
-    }
-
     /**
      * 显示提示信息
      * @param str 要显示的字符串信息

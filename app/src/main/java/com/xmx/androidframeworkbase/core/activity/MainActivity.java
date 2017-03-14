@@ -24,6 +24,7 @@ import com.xmx.androidframeworkbase.core.PagerAdapter;
 import com.xmx.androidframeworkbase.common.user.callback.AutoLoginCallback;
 import com.xmx.androidframeworkbase.common.user.UserConstants;
 import com.xmx.androidframeworkbase.common.user.UserManager;
+import com.xmx.androidframeworkbase.utils.ExceptionUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -78,7 +79,7 @@ public class MainActivity extends BaseNavigationActivity {
 
             @Override
             public void error(AVException e) {
-                filterException(e);
+                ExceptionUtil.normalException(e, getBaseContext());
             }
 
             @Override

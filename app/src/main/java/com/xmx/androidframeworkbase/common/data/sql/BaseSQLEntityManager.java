@@ -156,7 +156,7 @@ public abstract class BaseSQLEntityManager<Entity extends ISQLEntity> {
 
             @Override
             public void error(Exception e) {
-                ExceptionUtil.filterException(e);
+                ExceptionUtil.normalException(e, null);
             }
         });
     }
@@ -182,7 +182,7 @@ public abstract class BaseSQLEntityManager<Entity extends ISQLEntity> {
 
             @Override
             public void error(Exception e) {
-                ExceptionUtil.filterException(e);
+                ExceptionUtil.normalException(e, null);
             }
         });
     }
@@ -216,7 +216,7 @@ public abstract class BaseSQLEntityManager<Entity extends ISQLEntity> {
 
             @Override
             public void error(Exception e) {
-                ExceptionUtil.filterException(e);
+                ExceptionUtil.normalException(e, null);
             }
         });
     }
@@ -242,7 +242,7 @@ public abstract class BaseSQLEntityManager<Entity extends ISQLEntity> {
 
             @Override
             public void error(Exception e) {
-                ExceptionUtil.filterException(e);
+                ExceptionUtil.normalException(e, null);
             }
         });
     }

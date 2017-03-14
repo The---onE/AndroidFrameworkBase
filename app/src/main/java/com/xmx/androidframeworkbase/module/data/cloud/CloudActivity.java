@@ -18,6 +18,7 @@ import com.xmx.androidframeworkbase.common.data.callback.SelectCallback;
 import com.xmx.androidframeworkbase.common.data.callback.DelCallback;
 import com.xmx.androidframeworkbase.common.data.callback.InsertCallback;
 import com.xmx.androidframeworkbase.common.data.callback.UpdateCallback;
+import com.xmx.androidframeworkbase.utils.ExceptionUtil;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -76,7 +77,7 @@ public class CloudActivity extends BaseTempActivity {
                             @Override
                             public void syncError(AVException e) {
                                 showToast(R.string.sync_failure);
-                                filterException(e);
+                                ExceptionUtil.normalException(e, getBaseContext());
                             }
                         });
                     }
@@ -102,7 +103,7 @@ public class CloudActivity extends BaseTempActivity {
                                     @Override
                                     public void syncError(AVException e) {
                                         showToast(R.string.sync_failure);
-                                        filterException(e);
+                                        ExceptionUtil.normalException(e, getBaseContext());
                                     }
                                 });
                     }
@@ -141,7 +142,7 @@ public class CloudActivity extends BaseTempActivity {
                     @Override
                     public void syncError(AVException e) {
                         showToast(R.string.sync_failure);
-                        filterException(e);
+                        ExceptionUtil.normalException(e, getBaseContext());
                     }
                 });
                 text.setText("");
@@ -171,7 +172,7 @@ public class CloudActivity extends BaseTempActivity {
                     @Override
                     public void syncError(AVException e) {
                         showToast(R.string.sync_failure);
-                        filterException(e);
+                        ExceptionUtil.normalException(e, getBaseContext());
                     }
                 });
     }

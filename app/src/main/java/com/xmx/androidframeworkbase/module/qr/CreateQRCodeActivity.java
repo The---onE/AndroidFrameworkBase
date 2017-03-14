@@ -16,6 +16,7 @@ import android.widget.TextView;
 
 import com.xmx.androidframeworkbase.R;
 import com.xmx.androidframeworkbase.base.activity.BaseTempActivity;
+import com.xmx.androidframeworkbase.utils.ExceptionUtil;
 
 import org.xutils.view.annotation.ContentView;
 import org.xutils.view.annotation.Event;
@@ -177,7 +178,7 @@ public class CreateQRCodeActivity extends BaseTempActivity {
                                 publishProgress(true);
                                 return "图片保存至" + filepath;
                             } catch (FileNotFoundException e) {
-                                filterException(e);
+                                ExceptionUtil.normalException(e, getBaseContext());
                             }
                             return null;
                         }

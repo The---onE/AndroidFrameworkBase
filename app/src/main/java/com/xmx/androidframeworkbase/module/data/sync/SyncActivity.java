@@ -16,6 +16,7 @@ import com.xmx.androidframeworkbase.common.data.callback.SelectLoginCallback;
 import com.xmx.androidframeworkbase.common.data.callback.DelCallback;
 import com.xmx.androidframeworkbase.common.data.callback.InsertCallback;
 import com.xmx.androidframeworkbase.common.data.callback.UpdateCallback;
+import com.xmx.androidframeworkbase.utils.ExceptionUtil;
 
 import org.xutils.view.annotation.ContentView;
 import org.xutils.view.annotation.Event;
@@ -67,7 +68,7 @@ public class SyncActivity extends BaseTempActivity {
                     @Override
                     public void syncError(AVException e) {
                         showToast(R.string.sync_failure);
-                        filterException(e);
+                        ExceptionUtil.normalException(e, getBaseContext());
                     }
                 });
             }
@@ -94,7 +95,7 @@ public class SyncActivity extends BaseTempActivity {
                             @Override
                             public void syncError(AVException e) {
                                 showToast(R.string.sync_failure);
-                                filterException(e);
+                                ExceptionUtil.normalException(e, getBaseContext());
                             }
                         });
             }
@@ -131,7 +132,7 @@ public class SyncActivity extends BaseTempActivity {
             @Override
             public void syncError(AVException e) {
                 showToast(R.string.sync_failure);
-                filterException(e);
+                ExceptionUtil.normalException(e, getBaseContext());
             }
         });
         text.setText("");
@@ -170,7 +171,7 @@ public class SyncActivity extends BaseTempActivity {
                     @Override
                     public void syncError(AVException e) {
                         showToast(R.string.sync_failure);
-                        filterException(e);
+                        ExceptionUtil.normalException(e, getBaseContext());
                     }
                 });
     }

@@ -9,6 +9,7 @@ import com.avos.avoscloud.AVException;
 import com.xmx.androidframeworkbase.R;
 import com.xmx.androidframeworkbase.base.activity.BaseTempActivity;
 import com.xmx.androidframeworkbase.common.user.callback.RegisterCallback;
+import com.xmx.androidframeworkbase.utils.ExceptionUtil;
 
 public class RegisterActivity extends BaseTempActivity {
 
@@ -60,7 +61,7 @@ public class RegisterActivity extends BaseTempActivity {
                     @Override
                     public void error(AVException e) {
                         showToast(R.string.network_error);
-                        filterException(e);
+                        ExceptionUtil.normalException(e, getBaseContext());
                         register.setEnabled(true);
                     }
 

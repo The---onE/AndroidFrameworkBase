@@ -11,13 +11,13 @@ import android.widget.EditText;
 import android.widget.ListView;
 
 import com.avos.avoscloud.AVException;
-import com.avos.avoscloud.AVObject;
 import com.xmx.androidframeworkbase.R;
 import com.xmx.androidframeworkbase.base.activity.BaseTempActivity;
 import com.xmx.androidframeworkbase.common.data.callback.SelectCallback;
 import com.xmx.androidframeworkbase.common.data.callback.DelCallback;
 import com.xmx.androidframeworkbase.common.data.callback.InsertCallback;
 import com.xmx.androidframeworkbase.common.data.callback.UpdateCallback;
+import com.xmx.androidframeworkbase.common.user.UserData;
 import com.xmx.androidframeworkbase.utils.ExceptionUtil;
 
 import java.util.ArrayList;
@@ -64,7 +64,7 @@ public class CloudActivity extends BaseTempActivity {
                     public void onClick(DialogInterface dialogInterface, int i) {
                         CloudEntityManager.getInstance().deleteFromCloud(cloud.mCloudId, new DelCallback() {
                             @Override
-                            public void success(AVObject user) {
+                            public void success(UserData user) {
                                 showToast(R.string.delete_success);
                                 updateList();
                             }
@@ -90,7 +90,7 @@ public class CloudActivity extends BaseTempActivity {
                         CloudEntityManager.getInstance().updateToCloud(cloud.mCloudId, update,
                                 new UpdateCallback() {
                                     @Override
-                                    public void success(AVObject user) {
+                                    public void success(UserData user) {
                                         showToast(R.string.update_success);
                                         updateList();
                                     }
@@ -129,7 +129,7 @@ public class CloudActivity extends BaseTempActivity {
                 entity.mTime = new Date();
                 CloudEntityManager.getInstance().insertToCloud(entity, new InsertCallback() {
                     @Override
-                    public void success(AVObject user, String objectId) {
+                    public void success(UserData user, String objectId) {
                         showToast(R.string.add_success);
                         updateList();
                     }

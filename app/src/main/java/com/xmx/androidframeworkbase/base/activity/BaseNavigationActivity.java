@@ -15,6 +15,7 @@ import android.view.MenuItem;
 import com.avos.avoscloud.AVException;
 import com.avos.avoscloud.AVObject;
 import com.xmx.androidframeworkbase.R;
+import com.xmx.androidframeworkbase.common.user.UserData;
 import com.xmx.androidframeworkbase.common.user.callback.AutoLoginCallback;
 import com.xmx.androidframeworkbase.common.user.callback.LogoutCallback;
 import com.xmx.androidframeworkbase.common.user.LoginActivity;
@@ -84,7 +85,7 @@ public abstract class BaseNavigationActivity extends BaseActivity
                         public void onClick(DialogInterface dialogInterface, int i) {
                             UserManager.getInstance().logout(new LogoutCallback() {
                                 @Override
-                                public void logout(AVObject user) {
+                                public void logout(UserData user) {
                                     //SyncEntityManager.getInstance().getSQLManager().clearDatabase();
                                 }
                             });
@@ -116,8 +117,8 @@ public abstract class BaseNavigationActivity extends BaseActivity
             final MenuItem login = menu.findItem(R.id.nav_logout);
             UserManager.getInstance().autoLogin(new AutoLoginCallback() {
                 @Override
-                public void success(final AVObject user) {
-                    login.setTitle(user.getString("nickname") + " 点击注销");
+                public void success(final UserData user) {
+                    login.setTitle(user.nickname + " 点击注销");
                 }
 
                 @Override

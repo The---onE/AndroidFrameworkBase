@@ -11,6 +11,7 @@ import com.avos.avoscloud.PushService;
 import com.avos.avoscloud.SaveCallback;
 import com.xmx.androidframeworkbase.R;
 import com.xmx.androidframeworkbase.base.fragment.xUtilsFragment;
+import com.xmx.androidframeworkbase.common.user.UserData;
 import com.xmx.androidframeworkbase.module.message.PushItemMessageActivity;
 import com.xmx.androidframeworkbase.common.push.ReceiveMessageActivity;
 import com.xmx.androidframeworkbase.common.user.callback.AutoLoginCallback;
@@ -35,8 +36,8 @@ public class PushFragment extends xUtilsFragment {
     private void onSubscribeClick(View view) {
         UserManager.getInstance().checkLogin(new AutoLoginCallback() {
             @Override
-            public void success(AVObject user) {
-                List<String> subscribing = user.getList("subscribing");
+            public void success(UserData user) {
+                List<String> subscribing = user.subscribing;
                 if (subscribing == null) {
                     subscribing = new ArrayList<>();
                 }
@@ -47,8 +48,9 @@ public class PushFragment extends xUtilsFragment {
                     AVInstallation.getCurrentInstallation().saveInBackground();
                 } else {
                     subscribing.add(title);
-                    user.put("subscribing", subscribing);
-                    user.saveInBackground(new SaveCallback() {
+                    AVObject object = user.object;
+                    object.put("subscribing", subscribing);
+                    object.saveInBackground(new SaveCallback() {
                         @Override
                         public void done(AVException e) {
                             if (e == null) {
@@ -81,6 +83,7 @@ public class PushFragment extends xUtilsFragment {
             public void error(int error) {
                 switch (error) {
                     case UserConstants.NOT_LOGGED_IN:
+                    case UserConstants.CANNOT_CHECK_LOGIN:
                         showToast(R.string.not_loggedin);
                         break;
 
@@ -102,8 +105,8 @@ public class PushFragment extends xUtilsFragment {
         AVInstallation.getCurrentInstallation().saveInBackground();
         UserManager.getInstance().checkLogin(new AutoLoginCallback() {
             @Override
-            public void success(AVObject user) {
-                List<String> subscribing = user.getList("subscribing");
+            public void success(UserData user) {
+                List<String> subscribing = user.subscribing;
                 if (subscribing == null) {
                     showToast("没有关注过");
                 } else {
@@ -111,8 +114,9 @@ public class PushFragment extends xUtilsFragment {
                         showToast("没有关注过");
                     } else {
                         subscribing.remove(title);
-                        user.put("subscribing", subscribing);
-                        user.saveInBackground(new SaveCallback() {
+                        AVObject object = user.object;
+                        object.put("subscribing", subscribing);
+                        object.saveInBackground(new SaveCallback() {
                             @Override
                             public void done(AVException e) {
                                 if (e == null) {
@@ -136,6 +140,7 @@ public class PushFragment extends xUtilsFragment {
             public void error(int error) {
                 switch (error) {
                     case UserConstants.NOT_LOGGED_IN:
+                    case UserConstants.CANNOT_CHECK_LOGIN:
                         showToast(R.string.not_loggedin);
                         break;
 

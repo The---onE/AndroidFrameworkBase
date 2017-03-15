@@ -9,13 +9,13 @@ import android.widget.EditText;
 import android.widget.ListView;
 
 import com.avos.avoscloud.AVException;
-import com.avos.avoscloud.AVObject;
 import com.xmx.androidframeworkbase.R;
 import com.xmx.androidframeworkbase.base.activity.BaseTempActivity;
 import com.xmx.androidframeworkbase.common.data.callback.SelectLoginCallback;
 import com.xmx.androidframeworkbase.common.data.callback.DelCallback;
 import com.xmx.androidframeworkbase.common.data.callback.InsertCallback;
 import com.xmx.androidframeworkbase.common.data.callback.UpdateCallback;
+import com.xmx.androidframeworkbase.common.user.UserData;
 import com.xmx.androidframeworkbase.utils.ExceptionUtil;
 
 import org.xutils.view.annotation.ContentView;
@@ -54,7 +54,7 @@ public class SyncActivity extends BaseTempActivity {
             public void onClick(DialogInterface dialogInterface, int i) {
                 SyncEntityManager.getInstance().deleteData(sync.mCloudId, new DelCallback() {
                     @Override
-                    public void success(AVObject user) {
+                    public void success(UserData user) {
                         showToast(R.string.delete_success);
                         SyncManager.getInstance().updateData();
                         syncAdapter.updateList(SyncManager.getInstance().getData());
@@ -81,7 +81,7 @@ public class SyncActivity extends BaseTempActivity {
                 SyncEntityManager.getInstance().updateData(sync.mCloudId, update,
                         new UpdateCallback() {
                             @Override
-                            public void success(AVObject user) {
+                            public void success(UserData user) {
                                 showToast(R.string.update_success);
                                 SyncManager.getInstance().updateData();
                                 syncAdapter.updateList(SyncManager.getInstance().getData());
@@ -118,7 +118,7 @@ public class SyncActivity extends BaseTempActivity {
         entity.mTime = new Date();
         SyncEntityManager.getInstance().insertData(entity, new InsertCallback() {
             @Override
-            public void success(AVObject user, String objectId) {
+            public void success(UserData user, String objectId) {
                 showToast(R.string.add_success);
                 SyncManager.getInstance().updateData();
                 syncAdapter.updateList(SyncManager.getInstance().getData());
@@ -157,7 +157,7 @@ public class SyncActivity extends BaseTempActivity {
         SyncEntityManager.getInstance().syncFromCloud(null,
                 new SelectLoginCallback<Sync>() {
                     @Override
-                    public void success(AVObject user, List<Sync> syncs) {
+                    public void success(UserData user, List<Sync> syncs) {
                         SyncManager.getInstance().updateData();
                         syncAdapter.updateList(SyncManager.getInstance().getData());
                         showToast(R.string.sync_success);

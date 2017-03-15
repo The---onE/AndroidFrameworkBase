@@ -17,6 +17,7 @@ import com.xmx.androidframeworkbase.common.data.callback.SelectCallback;
 import com.xmx.androidframeworkbase.common.data.callback.SelectLoginCallback;
 import com.xmx.androidframeworkbase.common.data.callback.UpdateCallback;
 import com.xmx.androidframeworkbase.common.data.DataConstants;
+import com.xmx.androidframeworkbase.common.user.UserData;
 import com.xmx.androidframeworkbase.common.user.callback.AutoLoginCallback;
 import com.xmx.androidframeworkbase.common.user.UserConstants;
 import com.xmx.androidframeworkbase.common.user.UserManager;
@@ -139,10 +140,10 @@ public abstract class BaseCloudEntityManager<Entity extends ICloudEntity> {
         }
         UserManager.getInstance().checkLogin(new AutoLoginCallback() {
             @Override
-            public void success(final AVObject user) {
+            public void success(final UserData user) {
                 AVQuery<AVObject> query = new AVQuery<>(tableName);
                 if (userField != null) {
-                    query.whereEqualTo(userField, user.getObjectId());
+                    query.whereEqualTo(userField, user.objectId);
                 }
                 if (conditions != null) {
                     for (String key : conditions.keySet()) {
@@ -181,6 +182,7 @@ public abstract class BaseCloudEntityManager<Entity extends ICloudEntity> {
             public void error(int error) {
                 switch (error) {
                     case UserConstants.NOT_LOGGED_IN:
+                    case UserConstants.CANNOT_CHECK_LOGIN:
                         callback.syncError(DataConstants.NOT_LOGGED_IN);
                         break;
                     case UserConstants.USERNAME_ERROR:
@@ -201,10 +203,10 @@ public abstract class BaseCloudEntityManager<Entity extends ICloudEntity> {
         }
         UserManager.getInstance().checkLogin(new AutoLoginCallback() {
             @Override
-            public void success(final AVObject user) {
+            public void success(final UserData user) {
                 final AVObject object = entity.getContent(tableName);
                 if (userField != null) {
-                    object.put(userField, user.getObjectId());
+                    object.put(userField, user.objectId);
                 }
                 object.saveInBackground(new SaveCallback() {
                     @Override
@@ -227,6 +229,7 @@ public abstract class BaseCloudEntityManager<Entity extends ICloudEntity> {
             public void error(int error) {
                 switch (error) {
                     case UserConstants.NOT_LOGGED_IN:
+                    case UserConstants.CANNOT_CHECK_LOGIN:
                         callback.syncError(DataConstants.NOT_LOGGED_IN);
                         break;
                     case UserConstants.USERNAME_ERROR:
@@ -247,7 +250,7 @@ public abstract class BaseCloudEntityManager<Entity extends ICloudEntity> {
         }
         UserManager.getInstance().checkLogin(new AutoLoginCallback() {
             @Override
-            public void success(final AVObject user) {
+            public void success(final UserData user) {
                 AVQuery<AVObject> query = new AVQuery<>(tableName);
                 query.getInBackground(objectId, new GetCallback<AVObject>() {
                     @Override
@@ -279,6 +282,7 @@ public abstract class BaseCloudEntityManager<Entity extends ICloudEntity> {
             public void error(int error) {
                 switch (error) {
                     case UserConstants.NOT_LOGGED_IN:
+                    case UserConstants.CANNOT_CHECK_LOGIN:
                         callback.syncError(DataConstants.NOT_LOGGED_IN);
                         break;
                     case UserConstants.USERNAME_ERROR:
@@ -300,7 +304,7 @@ public abstract class BaseCloudEntityManager<Entity extends ICloudEntity> {
         }
         UserManager.getInstance().checkLogin(new AutoLoginCallback() {
             @Override
-            public void success(final AVObject user) {
+            public void success(final UserData user) {
                 AVQuery<AVObject> query = new AVQuery<>(tableName);
                 query.getInBackground(objectId, new GetCallback<AVObject>() {
                     @Override
@@ -337,6 +341,7 @@ public abstract class BaseCloudEntityManager<Entity extends ICloudEntity> {
             public void error(int error) {
                 switch (error) {
                     case UserConstants.NOT_LOGGED_IN:
+                    case UserConstants.CANNOT_CHECK_LOGIN:
                         callback.syncError(DataConstants.NOT_LOGGED_IN);
                         break;
                     case UserConstants.USERNAME_ERROR:

@@ -4,7 +4,7 @@ import android.os.Bundle;
 import android.os.Handler;
 
 import com.avos.avoscloud.AVException;
-import com.avos.avoscloud.AVObject;
+import com.xmx.androidframeworkbase.common.user.UserData;
 import com.xmx.androidframeworkbase.core.Constants;
 import com.xmx.androidframeworkbase.R;
 import com.xmx.androidframeworkbase.base.activity.BaseSplashActivity;
@@ -54,7 +54,7 @@ public class SplashLoginActivity extends BaseSplashActivity {
 
         UserManager.getInstance().autoLogin(new AutoLoginCallback() {
             @Override
-            public void success(AVObject user) {
+            public void success(UserData user) {
                 loginFlag = true;
                 if (timeFlag) {
                     startMainActivity();

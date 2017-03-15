@@ -11,7 +11,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.avos.avoscloud.AVException;
-import com.avos.avoscloud.AVObject;
+import com.xmx.androidframeworkbase.common.user.UserData;
 import com.xmx.androidframeworkbase.core.Constants;
 import com.xmx.androidframeworkbase.R;
 import com.xmx.androidframeworkbase.core.fragments.CartFragment;
@@ -77,8 +77,8 @@ public class MainActivity extends BaseNavigationActivity {
 
         UserManager.getInstance().autoLogin(new AutoLoginCallback() {
             @Override
-            public void success(final AVObject user) {
-                login.setTitle(user.getString("nickname") + " 点击注销");
+            public void success(final UserData user) {
+                login.setTitle(user.nickname + " 点击注销");
             }
 
             @Override

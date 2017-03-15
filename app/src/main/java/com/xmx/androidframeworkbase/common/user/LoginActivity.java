@@ -44,7 +44,7 @@ public class LoginActivity extends BaseActivity {
                     UserManager.getInstance().login(username, password,
                             new LoginCallback() {
                                 @Override
-                                public void success(AVObject user) {
+                                public void success(UserData user) {
                                     showToast(R.string.login_success);
                                     if (mustFlag) {
                                         startActivity(MainActivity.class);

@@ -7,8 +7,8 @@ import android.view.View;
 import android.widget.ListView;
 
 import com.avos.avoscloud.AVException;
-import com.avos.avoscloud.AVObject;
 import com.xmx.androidframeworkbase.R;
+import com.xmx.androidframeworkbase.common.user.UserData;
 import com.xmx.androidframeworkbase.module.cart.CartAdapter;
 import com.xmx.androidframeworkbase.module.cart.CartItem;
 import com.xmx.androidframeworkbase.module.cart.OrderCodeActivity;
@@ -37,11 +37,11 @@ public class CartFragment extends xUtilsFragment {
     CartAdapter cartAdapter;
 
     @Event(value = R.id.btn_order)
-    private void onOrderCick(View view) {
+    private void onOrderClick(View view) {
         UserManager.getInstance().checkLogin(new AutoLoginCallback() {
             @Override
-            public void success(AVObject user) {
-                String userId = user.getObjectId();
+            public void success(UserData user) {
+                String userId = user.objectId;
                 OrderManager manager = new OrderManager(userId);
                 String order = manager.getOrder(cartItems);
                 showToast(order);
@@ -62,6 +62,7 @@ public class CartFragment extends xUtilsFragment {
             public void error(int error) {
                 switch (error) {
                     case UserConstants.NOT_LOGGED_IN:
+                    case UserConstants.CANNOT_CHECK_LOGIN:
                         showToast(R.string.not_loggedin);
                         break;
 

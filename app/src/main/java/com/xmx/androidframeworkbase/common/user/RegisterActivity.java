@@ -53,7 +53,7 @@ public class RegisterActivity extends BaseTempActivity {
                 register.setEnabled(false);
                 UserManager.getInstance().register(username, password, nickname, new RegisterCallback() {
                     @Override
-                    public void success() {
+                    public void success(UserData user) {
                         showToast(R.string.register_success);
                         finish();
                     }

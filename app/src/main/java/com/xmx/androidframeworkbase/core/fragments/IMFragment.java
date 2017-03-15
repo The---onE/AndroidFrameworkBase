@@ -7,12 +7,12 @@ import android.widget.EditText;
 import android.widget.ListView;
 
 import com.avos.avoscloud.AVException;
-import com.avos.avoscloud.AVObject;
 import com.avos.avoscloud.im.v2.AVIMClient;
 import com.avos.avoscloud.im.v2.AVIMConversation;
 import com.avos.avoscloud.im.v2.AVIMException;
 import com.avos.avoscloud.im.v2.callback.AVIMClientCallback;
 import com.avos.avoscloud.im.v2.messages.AVIMTextMessage;
+import com.xmx.androidframeworkbase.common.user.UserData;
 import com.xmx.androidframeworkbase.module.im.IMAdapter;
 import com.xmx.androidframeworkbase.module.im.IMTextMessageHandler;
 import com.xmx.androidframeworkbase.module.im.OnReceiveCallback;
@@ -54,10 +54,10 @@ public class IMFragment extends xUtilsFragment {
     private void onOpenClick(View view) {
         UserManager.getInstance().checkLogin(new AutoLoginCallback() {
             @Override
-            public void success(AVObject user) {
+            public void success(UserData user) {
                 showToast("IM客户端打开中……");
 
-                IMClientManager.getInstance().openClient(user.getString("username"),
+                IMClientManager.getInstance().openClient(user.username,
                         new AVIMClientCallback() {
                             @Override
                             public void done(AVIMClient avimClient, AVIMException e) {
@@ -76,6 +76,7 @@ public class IMFragment extends xUtilsFragment {
             public void error(int error) {
                 switch (error) {
                     case UserConstants.NOT_LOGGED_IN:
+                    case UserConstants.CANNOT_CHECK_LOGIN:
                         showToast(R.string.not_loggedin);
                         break;
 

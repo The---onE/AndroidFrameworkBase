@@ -44,7 +44,8 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     /**
      * 获取控件对象
-     * @param id 控件ID
+     *
+     * @param id   控件ID
      * @param <VT> 控件类型
      * @return 控件对象
      */
@@ -54,6 +55,7 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     /**
      * 初始化View接口
+     *
      * @param savedInstanceState [onCreate]方法中的实例状态
      */
     protected abstract void initView(Bundle savedInstanceState);
@@ -65,12 +67,14 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     /**
      * 处理业务逻辑接口
+     *
      * @param savedInstanceState [onCreate]方法中的实例状态
      */
     protected abstract void processLogic(Bundle savedInstanceState);
 
     /**
      * 设置Activity对应layout
+     *
      * @param layoutResID Activity对应的layout文件ID
      */
     @Override
@@ -81,6 +85,7 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     /**
      * 设置Activity对应layout
+     *
      * @param view Activity对应的View
      */
     @Override
@@ -91,7 +96,8 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     /**
      * 设置Activity对应layout
-     * @param view Activity对应的View
+     *
+     * @param view   Activity对应的View
      * @param params view的属性
      */
     @Override
@@ -108,6 +114,7 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     /**
      * 显示提示信息
+     *
      * @param str 要显示的字符串信息
      */
     protected void showToast(String str) {
@@ -116,6 +123,7 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     /**
      * 显示提示信息
+     *
      * @param resId 要显示的字符串在strings文件中的ID
      */
     protected void showToast(int resId) {
@@ -124,6 +132,7 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     /**
      * 打印日志
+     *
      * @param tag 日志标签
      * @param msg 日志信息
      */
@@ -133,8 +142,9 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     /**
      * 打印日志
+     *
      * @param tag 日志标签
-     * @param i 数字作为日志信息
+     * @param i   数字作为日志信息
      */
     protected void showLog(String tag, int i) {
         StrUtil.showLog(tag, i);
@@ -142,6 +152,7 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     /**
      * 启动新Activity
+     *
      * @param cls 要启动的Activity类
      */
     protected void startActivity(Class<?> cls) {
@@ -151,7 +162,8 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     /**
      * 带参数启动新Activity
-     * @param cls 要启动的Activity类
+     *
+     * @param cls  要启动的Activity类
      * @param objs 向Activity传递的参数，奇数项为键，偶数项为值
      */
     protected void startActivity(Class<?> cls, String... objs) {

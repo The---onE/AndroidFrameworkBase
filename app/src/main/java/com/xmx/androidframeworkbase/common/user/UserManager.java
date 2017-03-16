@@ -289,7 +289,7 @@ public class UserManager {
      * @param registerCallback 回调处理
      */
     public void register(final String username, final String password, final String nickname,
-                          final RegisterCallback registerCallback) {
+                         final RegisterCallback registerCallback) {
         final AVQuery<AVObject> query = AVQuery.getQuery(UserConstants.USER_INFO_TABLE);
         query.whereEqualTo("username", username);
         query.countInBackground(new CountCallback() {

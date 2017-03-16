@@ -35,7 +35,8 @@ public abstract class BaseFragment extends BFragment {
     /**
      * 设置Fragment对应布局接口
      * 实现中return inflater.inflate(R.layout.Fragment布局, container, false);
-     * @param inflater 用于加载Fragment的布局
+     *
+     * @param inflater  用于加载Fragment的布局
      * @param container 存放Fragment的layout的ViewGroup
      * @return Fragment对应的布局
      */
@@ -43,20 +44,23 @@ public abstract class BaseFragment extends BFragment {
 
     /**
      * 初始化View接口
-     * @param view Fragment对应布局的View
+     *
+     * @param view               Fragment对应布局的View
      * @param savedInstanceState [onViewCreated]方法中的实例状态
      */
     protected abstract void initView(View view, Bundle savedInstanceState);
 
     /**
      * 声明事件监听接口
+     *
      * @param view Fragment对应布局的View
      */
     protected abstract void setListener(View view);
 
     /**
      * 处理业务逻辑接口
-     * @param view Fragment对应布局的View
+     *
+     * @param view               Fragment对应布局的View
      * @param savedInstanceState [onViewCreated]方法中的实例状态
      */
     protected abstract void processLogic(View view, Bundle savedInstanceState);

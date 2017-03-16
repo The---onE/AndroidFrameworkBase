@@ -19,6 +19,7 @@ public class UserData {
 
     /**
      * 将LeanCloud对象转化为实体
+     *
      * @param o 云端用户数据LeanCloud对象
      * @return 转化后的实体
      */

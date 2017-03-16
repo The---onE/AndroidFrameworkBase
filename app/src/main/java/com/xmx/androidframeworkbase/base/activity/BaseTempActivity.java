@@ -18,7 +18,7 @@ public abstract class BaseTempActivity extends BaseActivity {
     // 手势识别
     GestureDetector mGestureDetector;
 
-    class TempOnGestureListener extends GestureDetector.SimpleOnGestureListener {
+    private class TempOnGestureListener extends GestureDetector.SimpleOnGestureListener {
         // 添加右滑关闭功能
         @Override
         public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
@@ -31,6 +31,7 @@ public abstract class BaseTempActivity extends BaseActivity {
 
     /**
      * 触摸时添加对手势的识别
+     *
      * @param event 触摸事件
      * @return true:事件已处理完成，不向下传递 false:事件未处理完成，向下传递
      */

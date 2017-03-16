@@ -33,7 +33,7 @@ public abstract class xUtilsFragment extends BFragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        if  (!injected) {
+        if (!injected) {
             // 注册xUtils
             x.view().inject(this, this.getView());
         }
@@ -43,6 +43,7 @@ public abstract class xUtilsFragment extends BFragment {
 
     /**
      * 处理业务逻辑接口
+     *
      * @param savedInstanceState [onViewCreated]方法中的实例状态
      */
     protected abstract void processLogic(Bundle savedInstanceState);

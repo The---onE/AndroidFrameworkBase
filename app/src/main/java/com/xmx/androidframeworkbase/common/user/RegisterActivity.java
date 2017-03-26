@@ -68,7 +68,7 @@ public class RegisterActivity extends BaseTempActivity {
                     @Override
                     public void error(int error) {
                         switch (error) {
-                            case UserConstants.USERNAME_ERROR:
+                            case UserConstants.USERNAME_EXIST:
                                 showToast(R.string.username_exist);
                                 register.setEnabled(true);
                                 break;

@@ -124,12 +124,21 @@ public class UserManager {
     }
 
     /**
+     * 判断是否登录成功过
+     *
+     * @return 是否登录成功过
+     */
+    public boolean checkLoggedIn() {
+        return mSP.getBoolean("loggedin", false);
+    }
+
+    /**
      * 判断是否已登录
      *
      * @return 是否已登录
      */
     public boolean isLoggedIn() {
-        return mSP.getBoolean("loggedin", false);
+        return loginFlag;
     }
 
     /**
@@ -166,6 +175,8 @@ public class UserManager {
      * @param callback 自定义处理
      */
     public void logoutProc(UserData user, LogoutCallback callback) {
+        loginFlag = false;
+
         SharedPreferences.Editor editor = mSP.edit();
         editor.putBoolean("loggedin", false);
         editor.putString("username", "");
@@ -446,7 +457,7 @@ public class UserManager {
      */
     public void autoLogin(final AutoLoginCallback loginCallback) {
         final String username = getUsername();
-        if (!isLoggedIn() || username.equals("")) {
+        if (!checkLoggedIn() || username.equals("")) {
             loginCallback.error(UserConstants.NOT_LOGGED_IN);
             return;
         }

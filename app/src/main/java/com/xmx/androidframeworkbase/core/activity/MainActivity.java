@@ -241,11 +241,9 @@ public class MainActivity extends BaseActivity
                                     //SyncEntityManager.getInstance().getSQLManager().clearDatabase();
                                 }
                             });
-                            NavigationView navigation = getViewById(R.id.nav_view);
-                            Menu menu = navigation.getMenu();
-                            MenuItem login = menu.findItem(R.id.nav_logout);
+                            showToast("注销成功");
                             login.setTitle("登录");
-                            startActivityForResult(intent, UserConstants.LOGIN_REQUEST_CODE);
+//                            startActivityForResult(intent, UserConstants.LOGIN_REQUEST_CODE);
                         }
                     });
                     builder.show();

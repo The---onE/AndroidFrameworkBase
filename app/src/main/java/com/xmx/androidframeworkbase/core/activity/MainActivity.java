@@ -92,33 +92,38 @@ public class MainActivity extends BaseActivity
         NavigationView navigation = getViewById(R.id.nav_view);
         Menu menu = navigation.getMenu();
         login = menu.findItem(R.id.nav_logout);
-        // 使用设备保存的数据自动登录
-        UserManager.getInstance().autoLogin(new AutoLoginCallback() {
-            @Override
-            public void success(final UserData user) {
-                login.setTitle(user.nickname + " 点击注销");
-            }
-
-            @Override
-            public void error(AVException e) {
-                ExceptionUtil.normalException(e, getBaseContext());
-            }
-
-            @Override
-            public void error(int error) {
-                switch (error) {
-                    case UserConstants.NOT_LOGGED_IN:
-                        showToast("请在侧边栏中选择登录");
-                        break;
-                    case UserConstants.USERNAME_ERROR:
-                        showToast("请在侧边栏中选择登录");
-                        break;
-                    case UserConstants.CHECKSUM_ERROR:
-                        showToast("登录过期，请在侧边栏中重新登录");
-                        break;
+        // 在SplashActivity中自动登录，在此校验登录
+        if (UserManager.getInstance().isLoggedIn()) {
+            UserManager.getInstance().checkLogin(new AutoLoginCallback() {
+                @Override
+                public void success(UserData user) {
+                    login.setTitle(user.nickname + " 点击注销");
                 }
-            }
-        });
+
+                @Override
+                public void error(int error) {
+                    switch (error) {
+                        case UserConstants.CANNOT_CHECK_LOGIN:
+                            showToast("请先登录");
+                            break;
+                        case UserConstants.NOT_LOGGED_IN:
+                            showToast("请在侧边栏中选择登录");
+                            break;
+                        case UserConstants.USERNAME_ERROR:
+                            showToast("请在侧边栏中选择登录");
+                            break;
+                        case UserConstants.CHECKSUM_ERROR:
+                            showToast("登录过期，请在侧边栏中重新登录");
+                            break;
+                    }
+                }
+
+                @Override
+                public void error(AVException e) {
+                    ExceptionUtil.normalException(e, getBaseContext());
+                }
+            });
+        }
     }
 
     /**

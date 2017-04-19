@@ -5,6 +5,7 @@ import android.os.Handler;
 import android.view.View;
 
 import com.avos.avoscloud.AVException;
+import com.xmx.androidframeworkbase.common.user.LoginEvent;
 import com.xmx.androidframeworkbase.common.user.UserConstants;
 import com.xmx.androidframeworkbase.common.user.UserData;
 import com.xmx.androidframeworkbase.common.user.UserManager;
@@ -14,6 +15,8 @@ import com.xmx.androidframeworkbase.R;
 import com.xmx.androidframeworkbase.base.activity.BaseSplashActivity;
 import com.xmx.androidframeworkbase.utils.ExceptionUtil;
 import com.xmx.androidframeworkbase.utils.Timer;
+
+import org.greenrobot.eventbus.EventBus;
 
 public class SplashActivity extends BaseSplashActivity {
 
@@ -48,7 +51,7 @@ public class SplashActivity extends BaseSplashActivity {
         UserManager.getInstance().autoLogin(new AutoLoginCallback() {
             @Override
             public void success(final UserData user) {
-
+                EventBus.getDefault().post(new LoginEvent());
             }
 
             @Override

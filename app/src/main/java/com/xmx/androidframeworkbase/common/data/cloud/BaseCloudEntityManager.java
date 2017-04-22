@@ -17,6 +17,7 @@ import com.xmx.androidframeworkbase.common.data.callback.SelectCallback;
 import com.xmx.androidframeworkbase.common.data.callback.SelectLoginCallback;
 import com.xmx.androidframeworkbase.common.data.callback.UpdateCallback;
 import com.xmx.androidframeworkbase.common.data.DataConstants;
+import com.xmx.androidframeworkbase.common.user.IUserManager;
 import com.xmx.androidframeworkbase.common.user.UserData;
 import com.xmx.androidframeworkbase.common.user.callback.AutoLoginCallback;
 import com.xmx.androidframeworkbase.common.user.UserConstants;
@@ -35,6 +36,8 @@ public abstract class BaseCloudEntityManager<Entity extends ICloudEntity> {
     protected String tableName = null;
     protected Entity entityTemplate = null; //空模版，不需要数据
     protected String userField = null; //用户字段，保存当前登录用户的ObjectId，为空时不保存用户字段
+
+    private IUserManager userManager = UserManager.getInstance();
 
     protected boolean checkDatabase() {
         return tableName != null && entityTemplate != null;
@@ -138,7 +141,7 @@ public abstract class BaseCloudEntityManager<Entity extends ICloudEntity> {
             callback.syncError(DataConstants.NOT_INIT);
             return;
         }
-        UserManager.getInstance().checkLogin(new AutoLoginCallback() {
+        userManager.checkLogin(new AutoLoginCallback() {
             @Override
             public void success(final UserData user) {
                 AVQuery<AVObject> query = new AVQuery<>(tableName);
@@ -201,7 +204,7 @@ public abstract class BaseCloudEntityManager<Entity extends ICloudEntity> {
             callback.syncError(DataConstants.NOT_INIT);
             return;
         }
-        UserManager.getInstance().checkLogin(new AutoLoginCallback() {
+        userManager.checkLogin(new AutoLoginCallback() {
             @Override
             public void success(final UserData user) {
                 final AVObject object = entity.getContent(tableName);
@@ -248,7 +251,7 @@ public abstract class BaseCloudEntityManager<Entity extends ICloudEntity> {
             callback.syncError(DataConstants.NOT_INIT);
             return;
         }
-        UserManager.getInstance().checkLogin(new AutoLoginCallback() {
+        userManager.checkLogin(new AutoLoginCallback() {
             @Override
             public void success(final UserData user) {
                 AVQuery<AVObject> query = new AVQuery<>(tableName);
@@ -302,7 +305,7 @@ public abstract class BaseCloudEntityManager<Entity extends ICloudEntity> {
             callback.syncError(DataConstants.NOT_INIT);
             return;
         }
-        UserManager.getInstance().checkLogin(new AutoLoginCallback() {
+        userManager.checkLogin(new AutoLoginCallback() {
             @Override
             public void success(final UserData user) {
                 AVQuery<AVObject> query = new AVQuery<>(tableName);

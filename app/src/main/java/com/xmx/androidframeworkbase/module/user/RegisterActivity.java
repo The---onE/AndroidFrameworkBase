@@ -1,4 +1,4 @@
-package com.xmx.androidframeworkbase.common.user;
+package com.xmx.androidframeworkbase.module.user;
 
 import android.os.Bundle;
 import android.view.View;
@@ -8,10 +8,16 @@ import android.widget.EditText;
 import com.avos.avoscloud.AVException;
 import com.xmx.androidframeworkbase.R;
 import com.xmx.androidframeworkbase.base.activity.BaseTempActivity;
+import com.xmx.androidframeworkbase.common.user.IUserManager;
+import com.xmx.androidframeworkbase.common.user.UserConstants;
+import com.xmx.androidframeworkbase.common.user.UserData;
+import com.xmx.androidframeworkbase.common.user.UserManager;
 import com.xmx.androidframeworkbase.common.user.callback.RegisterCallback;
 import com.xmx.androidframeworkbase.utils.ExceptionUtil;
 
 public class RegisterActivity extends BaseTempActivity {
+
+    private IUserManager userManager = UserManager.getInstance();
 
     @Override
     protected void initView(Bundle savedInstanceState) {
@@ -51,7 +57,7 @@ public class RegisterActivity extends BaseTempActivity {
                 }
 
                 register.setEnabled(false);
-                UserManager.getInstance().register(username, password, nickname, new RegisterCallback() {
+                userManager.register(username, password, nickname, new RegisterCallback() {
                     @Override
                     public void success(UserData user) {
                         showToast(R.string.register_success);

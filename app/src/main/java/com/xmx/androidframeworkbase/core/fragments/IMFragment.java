@@ -12,6 +12,7 @@ import com.avos.avoscloud.im.v2.AVIMConversation;
 import com.avos.avoscloud.im.v2.AVIMException;
 import com.avos.avoscloud.im.v2.callback.AVIMClientCallback;
 import com.avos.avoscloud.im.v2.messages.AVIMTextMessage;
+import com.xmx.androidframeworkbase.common.user.IUserManager;
 import com.xmx.androidframeworkbase.common.user.UserData;
 import com.xmx.androidframeworkbase.module.im.IMAdapter;
 import com.xmx.androidframeworkbase.module.im.IMTextMessageHandler;
@@ -50,9 +51,11 @@ public class IMFragment extends xUtilsFragment {
     @ViewInject(R.id.list_im)
     private ListView imList;
 
+    private IUserManager userManager = UserManager.getInstance();
+
     @Event(value = R.id.btn_open_client)
     private void onOpenClick(View view) {
-        UserManager.getInstance().checkLogin(new AutoLoginCallback() {
+        userManager.checkLogin(new AutoLoginCallback() {
             @Override
             public void success(UserData user) {
                 showToast("IM客户端打开中……");

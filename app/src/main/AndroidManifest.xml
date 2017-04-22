@@ -64,10 +64,10 @@
         <!--android:launchMode="singleTask"-->
         <!--android:theme="@style/AppTheme.NoActionBar" />-->
         <activity
-            android:name=".common.user.LoginActivity"
+            android:name=".module.user.LoginActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".common.user.RegisterActivity"
+            android:name=".module.user.RegisterActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".module.log.OperationLogActivity"

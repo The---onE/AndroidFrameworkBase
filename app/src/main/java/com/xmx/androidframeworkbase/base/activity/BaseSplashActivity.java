@@ -3,7 +3,7 @@ package com.xmx.androidframeworkbase.base.activity;
 import android.content.Intent;
 
 import com.xmx.androidframeworkbase.core.activity.MainActivity;
-import com.xmx.androidframeworkbase.common.user.LoginActivity;
+import com.xmx.androidframeworkbase.module.user.LoginActivity;
 
 /**
  * Created by The_onE on 2016/10/8.

@@ -11,6 +11,7 @@ import com.avos.avoscloud.PushService;
 import com.avos.avoscloud.SaveCallback;
 import com.xmx.androidframeworkbase.R;
 import com.xmx.androidframeworkbase.base.fragment.xUtilsFragment;
+import com.xmx.androidframeworkbase.common.user.IUserManager;
 import com.xmx.androidframeworkbase.common.user.UserData;
 import com.xmx.androidframeworkbase.module.message.PushItemMessageActivity;
 import com.xmx.androidframeworkbase.common.push.ReceiveMessageActivity;
@@ -32,9 +33,11 @@ import java.util.List;
 public class PushFragment extends xUtilsFragment {
     String title = "test";
 
+    private IUserManager userManager = UserManager.getInstance();
+
     @Event(value = R.id.btn_subscribe)
     private void onSubscribeClick(View view) {
-        UserManager.getInstance().checkLogin(new AutoLoginCallback() {
+        userManager.checkLogin(new AutoLoginCallback() {
             @Override
             public void success(UserData user) {
                 List<String> subscribing = user.subscribing;
@@ -103,7 +106,7 @@ public class PushFragment extends xUtilsFragment {
     private void onUnsubscribeClick(View view) {
         PushService.unsubscribe(getContext(), UserManager.getSHA(title));
         AVInstallation.getCurrentInstallation().saveInBackground();
-        UserManager.getInstance().checkLogin(new AutoLoginCallback() {
+        userManager.checkLogin(new AutoLoginCallback() {
             @Override
             public void success(UserData user) {
                 List<String> subscribing = user.subscribing;

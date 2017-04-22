@@ -1,4 +1,4 @@
-package com.xmx.androidframeworkbase.common.user;
+package com.xmx.androidframeworkbase.module.user;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -8,7 +8,10 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.avos.avoscloud.AVException;
-import com.avos.avoscloud.AVObject;
+import com.xmx.androidframeworkbase.common.user.IUserManager;
+import com.xmx.androidframeworkbase.common.user.UserConstants;
+import com.xmx.androidframeworkbase.common.user.UserData;
+import com.xmx.androidframeworkbase.common.user.UserManager;
 import com.xmx.androidframeworkbase.core.Constants;
 import com.xmx.androidframeworkbase.core.activity.MainActivity;
 import com.xmx.androidframeworkbase.R;
@@ -19,6 +22,8 @@ import com.xmx.androidframeworkbase.utils.ExceptionUtil;
 public class LoginActivity extends BaseActivity {
     private long mExitTime = 0;
     public boolean mustFlag = false;
+
+    private IUserManager userManager = UserManager.getInstance();
 
     @Override
     protected void initView(Bundle savedInstanceState) {
@@ -41,7 +46,7 @@ public class LoginActivity extends BaseActivity {
                     showToast(R.string.password_empty);
                 } else {
                     login.setEnabled(false);
-                    UserManager.getInstance().login(username, password,
+                    userManager.login(username, password,
                             new LoginCallback() {
                                 @Override
                                 public void success(UserData user) {

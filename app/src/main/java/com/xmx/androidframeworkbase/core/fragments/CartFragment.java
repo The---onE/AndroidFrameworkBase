@@ -8,6 +8,7 @@ import android.widget.ListView;
 
 import com.avos.avoscloud.AVException;
 import com.xmx.androidframeworkbase.R;
+import com.xmx.androidframeworkbase.common.user.IUserManager;
 import com.xmx.androidframeworkbase.common.user.UserData;
 import com.xmx.androidframeworkbase.module.cart.CartAdapter;
 import com.xmx.androidframeworkbase.module.cart.CartItem;
@@ -36,9 +37,11 @@ public class CartFragment extends xUtilsFragment {
     CartList cartItems = new CartList();
     CartAdapter cartAdapter;
 
+    private IUserManager userManager = UserManager.getInstance();
+
     @Event(value = R.id.btn_order)
     private void onOrderClick(View view) {
-        UserManager.getInstance().checkLogin(new AutoLoginCallback() {
+        userManager.checkLogin(new AutoLoginCallback() {
             @Override
             public void success(UserData user) {
                 String userId = user.objectId;

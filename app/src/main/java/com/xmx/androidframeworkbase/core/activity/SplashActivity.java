@@ -5,6 +5,7 @@ import android.os.Handler;
 import android.view.View;
 
 import com.avos.avoscloud.AVException;
+import com.xmx.androidframeworkbase.common.user.IUserManager;
 import com.xmx.androidframeworkbase.common.user.LoginEvent;
 import com.xmx.androidframeworkbase.common.user.UserConstants;
 import com.xmx.androidframeworkbase.common.user.UserData;
@@ -21,6 +22,8 @@ import org.greenrobot.eventbus.EventBus;
 public class SplashActivity extends BaseSplashActivity {
 
     Timer timer;
+
+    private IUserManager userManager = UserManager.getInstance();
 
     @Override
     protected void initView(Bundle savedInstanceState) {
@@ -48,7 +51,7 @@ public class SplashActivity extends BaseSplashActivity {
         };
         timer.start(Constants.SPLASH_TIME, true);
         // 使用设备保存的数据自动登录
-        UserManager.getInstance().autoLogin(new AutoLoginCallback() {
+        userManager.autoLogin(new AutoLoginCallback() {
             @Override
             public void success(final UserData user) {
                 EventBus.getDefault().post(new LoginEvent());

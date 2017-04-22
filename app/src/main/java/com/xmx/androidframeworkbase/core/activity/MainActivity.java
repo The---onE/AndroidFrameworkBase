@@ -18,7 +18,8 @@ import android.view.MenuItem;
 
 import com.avos.avoscloud.AVException;
 import com.xmx.androidframeworkbase.base.activity.BaseActivity;
-import com.xmx.androidframeworkbase.common.user.LoginActivity;
+import com.xmx.androidframeworkbase.common.user.IUserManager;
+import com.xmx.androidframeworkbase.module.user.LoginActivity;
 import com.xmx.androidframeworkbase.common.user.LoginEvent;
 import com.xmx.androidframeworkbase.common.user.UserData;
 import com.xmx.androidframeworkbase.common.user.callback.LogoutCallback;
@@ -50,6 +51,8 @@ public class MainActivity extends BaseActivity
     ViewPager vp;
     // 侧滑菜单登录菜单项
     MenuItem login;
+
+    private IUserManager userManager = UserManager.getInstance();
 
     @Override
     protected void initView(Bundle savedInstanceState) {
@@ -99,7 +102,7 @@ public class MainActivity extends BaseActivity
         Menu menu = navigation.getMenu();
         login = menu.findItem(R.id.nav_logout);
         // 在SplashActivity中自动登录，在此校验登录
-        if (UserManager.getInstance().isLoggedIn()) {
+        if (userManager.isLoggedIn()) {
             checkLogin();
         }
     }
@@ -150,7 +153,7 @@ public class MainActivity extends BaseActivity
     }
 
     private void checkLogin() {
-        UserManager.getInstance().checkLogin(new AutoLoginCallback() {
+        userManager.checkLogin(new AutoLoginCallback() {
             @Override
             public void success(UserData user) {
                 login.setTitle(user.nickname + " 点击注销");
@@ -209,7 +212,7 @@ public class MainActivity extends BaseActivity
                 break;
             case R.id.nav_logout: // 登录/注销
                 final Intent intent = new Intent(this, LoginActivity.class);
-                if (UserManager.getInstance().isLoggedIn()) {
+                if (userManager.isLoggedIn()) {
                     // 注销
                     AlertDialog.Builder builder = new AlertDialog
                             .Builder(this);
@@ -225,7 +228,7 @@ public class MainActivity extends BaseActivity
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
                             // 确认注销
-                            UserManager.getInstance().logout(new LogoutCallback() {
+                            userManager.logout(new LogoutCallback() {
                                 @Override
                                 public void logout(UserData user) {
                                     //SyncEntityManager.getInstance().getSQLManager().clearDatabase();

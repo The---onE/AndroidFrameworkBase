@@ -1,5 +1,6 @@
 package com.xmx.androidframeworkbase.module.user;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -61,6 +62,7 @@ public class RegisterActivity extends BaseTempActivity {
                     @Override
                     public void success(UserData user) {
                         showToast(R.string.register_success);
+                        setResult(RESULT_OK, new Intent());
                         finish();
                     }
 

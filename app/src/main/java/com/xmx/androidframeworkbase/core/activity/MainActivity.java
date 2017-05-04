@@ -7,6 +7,7 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.res.ResourcesCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
@@ -86,6 +87,13 @@ public class MainActivity extends BaseActivity
         // 设置标签页底部选项卡
         TabLayout tabLayout = getViewById(R.id.tab_layout);
         tabLayout.setupWithViewPager(vp);
+
+        tabLayout.getTabAt(0).setIcon(R.mipmap.ic_launcher);
+        tabLayout.getTabAt(1).setIcon(R.mipmap.ic_launcher);
+        tabLayout.getTabAt(2).setIcon(R.mipmap.ic_launcher);
+        tabLayout.getTabAt(3).setIcon(R.mipmap.ic_launcher);
+        tabLayout.getTabAt(4).setIcon(R.mipmap.ic_launcher);
+        tabLayout.getTabAt(5).setIcon(R.mipmap.ic_launcher);
 
         EventBus.getDefault().register(this);
     }

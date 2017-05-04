@@ -33,7 +33,7 @@
                 android:layout_height="50dp"
                 app:tabGravity="fill"
                 app:tabIndicatorHeight="0dp"
-                app:tabMode="fixed"
+                app:tabMode="scrollable"
                 app:tabSelectedTextColor="#FF4081"
                 app:tabTextColor="#000" />
 

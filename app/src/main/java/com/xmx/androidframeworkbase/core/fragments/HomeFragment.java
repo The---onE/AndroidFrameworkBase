@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.View;
 
+import com.xmx.androidframeworkbase.module.dialog.TestDialog;
 import com.xmx.androidframeworkbase.module.floatwindow.FloatService;
 import com.xmx.androidframeworkbase.module.log.ExceptionTestActivity;
 import com.xmx.androidframeworkbase.module.log.OperationLogActivity;
@@ -91,6 +92,13 @@ public class HomeFragment extends xUtilsFragment {
     @Event(value = R.id.btn_exception_test)
     private void onClickExceptionTest(View view) {
         startActivity(ExceptionTestActivity.class);
+    }
+
+    @Event(value = R.id.btn_dialog_test)
+    private void onClickDialogTest(View view) {
+        TestDialog dialog = new TestDialog();
+        dialog.initDialog(getContext());
+        dialog.show(getActivity().getFragmentManager(), "TEST");
     }
 
     @Override

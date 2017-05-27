@@ -20,6 +20,9 @@
         <item
             android:id="@+id/nav_data"
             android:title="数据" />
+        <item
+            android:id="@+id/nav_net"
+            android:title="网络" />
     </group>
 
     <group android:checkableBehavior="single">

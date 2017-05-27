@@ -108,6 +108,9 @@
         <activity
             android:name=".module.cart.OrderCodeActivity"
             android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".module.net.HttpActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
 
         <service
             android:name=".module.services.MainService"

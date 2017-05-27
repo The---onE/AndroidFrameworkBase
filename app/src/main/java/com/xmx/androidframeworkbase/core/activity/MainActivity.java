@@ -20,6 +20,7 @@ import android.view.MenuItem;
 import com.avos.avoscloud.AVException;
 import com.xmx.androidframeworkbase.base.activity.BaseActivity;
 import com.xmx.androidframeworkbase.common.user.IUserManager;
+import com.xmx.androidframeworkbase.core.fragments.NetFragment;
 import com.xmx.androidframeworkbase.module.user.LoginActivity;
 import com.xmx.androidframeworkbase.common.user.LoginEvent;
 import com.xmx.androidframeworkbase.common.user.UserData;
@@ -69,6 +70,7 @@ public class MainActivity extends BaseActivity
         fragments.add(new IMFragment());
         fragments.add(new PushFragment());
         fragments.add(new DataFragment());
+        fragments.add(new NetFragment());
 
         // Fragment对应的标题
         List<String> titles = new ArrayList<>();
@@ -78,6 +80,7 @@ public class MainActivity extends BaseActivity
         titles.add("IM");
         titles.add("推送");
         titles.add("数据");
+        titles.add("网络");
 
         // 分页Fragment适配器
         PagerAdapter adapter = new PagerAdapter(getSupportFragmentManager(), fragments, titles);
@@ -94,6 +97,7 @@ public class MainActivity extends BaseActivity
         tabLayout.getTabAt(3).setIcon(R.mipmap.ic_launcher);
         tabLayout.getTabAt(4).setIcon(R.mipmap.ic_launcher);
         tabLayout.getTabAt(5).setIcon(R.mipmap.ic_launcher);
+        tabLayout.getTabAt(6).setIcon(R.mipmap.ic_launcher);
 
         EventBus.getDefault().register(this);
     }
@@ -215,6 +219,9 @@ public class MainActivity extends BaseActivity
                 break;
             case R.id.nav_data: // 数据
                 vp.setCurrentItem(5);
+                break;
+            case R.id.nav_net: // 网络
+                vp.setCurrentItem(6);
                 break;
             case R.id.nav_setting: // 设置
                 break;

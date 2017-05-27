@@ -6,10 +6,8 @@ import android.view.View;
 
 import com.xmx.androidframeworkbase.R;
 import com.xmx.androidframeworkbase.base.fragment.xUtilsFragment;
-import com.xmx.androidframeworkbase.module.data.cloud.CloudActivity;
-import com.xmx.androidframeworkbase.module.data.sql.SQLActivity;
-import com.xmx.androidframeworkbase.module.data.sync.SyncActivity;
-import com.xmx.androidframeworkbase.module.net.HttpActivity;
+import com.xmx.androidframeworkbase.module.net.GetRequestActivity;
+import com.xmx.androidframeworkbase.module.net.JsonActivity;
 
 import org.xutils.view.annotation.ContentView;
 import org.xutils.view.annotation.Event;
@@ -22,7 +20,12 @@ public class NetFragment extends xUtilsFragment {
 
     @Event(value = R.id.btn_get)
     private void onGetClick(View view) {
-        startActivity(HttpActivity.class);
+        startActivity(GetRequestActivity.class);
+    }
+
+    @Event(value = R.id.btn_json)
+    private void onJsonClick(View view) {
+        startActivity(JsonActivity.class);
     }
 
     @Override

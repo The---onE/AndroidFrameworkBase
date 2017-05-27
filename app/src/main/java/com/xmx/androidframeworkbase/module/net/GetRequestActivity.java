@@ -1,48 +1,28 @@
 package com.xmx.androidframeworkbase.module.net;
 
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.AlertDialog;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ListView;
 import android.widget.TextView;
 
-import com.avos.avoscloud.AVException;
 import com.xmx.androidframeworkbase.R;
 import com.xmx.androidframeworkbase.base.activity.BaseTempActivity;
-import com.xmx.androidframeworkbase.common.data.callback.DelCallback;
-import com.xmx.androidframeworkbase.common.data.callback.InsertCallback;
-import com.xmx.androidframeworkbase.common.data.callback.SelectCallback;
-import com.xmx.androidframeworkbase.common.data.callback.UpdateCallback;
 import com.xmx.androidframeworkbase.common.net.HttpGetCallback;
 import com.xmx.androidframeworkbase.common.net.HttpManager;
-import com.xmx.androidframeworkbase.common.user.UserData;
-import com.xmx.androidframeworkbase.module.data.cloud.Cloud;
-import com.xmx.androidframeworkbase.module.data.cloud.CloudAdapter;
-import com.xmx.androidframeworkbase.module.data.cloud.CloudEntityManager;
 import com.xmx.androidframeworkbase.utils.ExceptionUtil;
-
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class HttpActivity extends BaseTempActivity {
+public class GetRequestActivity extends BaseTempActivity {
 
     EditText addressView;
     TextView responseView;
 
     @Override
     protected void initView(Bundle savedInstanceState) {
-        setContentView(R.layout.activity_http);
+        setContentView(R.layout.activity_get_request);
 
         addressView = getViewById(R.id.edit_address);
         responseView = getViewById(R.id.text_response);
@@ -67,7 +47,7 @@ public class HttpActivity extends BaseTempActivity {
 
                         @Override
                         public void fail(Exception e) {
-                            ExceptionUtil.normalException(e, HttpActivity.this);
+                            ExceptionUtil.normalException(e, GetRequestActivity.this);
                         }
                     });
                 } else {

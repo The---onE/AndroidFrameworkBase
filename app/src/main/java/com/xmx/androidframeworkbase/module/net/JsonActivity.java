@@ -35,39 +35,14 @@ public class JsonActivity extends BaseTempActivity {
         getViewById(R.id.btn_parse).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String json = jsonView.getText().toString();
+                String json = jsonView.getText().toString().trim();
                 try {
                     if (json.startsWith("{")) {
-                        resultView.setText("");
                         Map<String, Object> map = JSONUtil.parseObject(json);
-                        for (Map.Entry<String, Object> entry : map.entrySet()) {
-                            String key = entry.getKey();
-                            resultView.append(key + " : ");
-                            Object value = entry.getValue();
-                            if (value instanceof Map) {
-                                resultView.append("{...}");
-                            } else if (value instanceof List) {
-                                resultView.append("[...]");
-                            } else {
-                                resultView.append(value.toString());
-                            }
-
-                            resultView.append("\n");
-                        }
+                        resultView.setText(JSONUtil.formatJSONObject(map, " : ", "|----"));
                     } else if (json.startsWith("[")) {
                         List<Object> list = JSONUtil.parseArray(json);
-                        resultView.setText("");
-                        for (Object item : list) {
-                            if (item instanceof Map) {
-                                resultView.append("{...}");
-                            } else if (item instanceof List) {
-                                resultView.append("[...]");
-                            } else {
-                                resultView.append(item.toString());
-                            }
-
-                            resultView.append("\n");
-                        }
+                        resultView.setText(JSONUtil.formatJSONArray(list, " : ", "|----"));
                     } else {
                         showToast("格式不正确");
                     }

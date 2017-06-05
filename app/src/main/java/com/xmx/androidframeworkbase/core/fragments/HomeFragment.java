@@ -15,7 +15,7 @@ import com.xmx.androidframeworkbase.module.qr.CreateQRCodeActivity;
 import com.xmx.androidframeworkbase.module.qr.ScanQRCodeActivity;
 import com.xmx.androidframeworkbase.R;
 import com.xmx.androidframeworkbase.base.fragment.xUtilsFragment;
-import com.xmx.androidframeworkbase.utils.VibratorManager;
+import com.xmx.androidframeworkbase.utils.VibratorUtil;
 
 import org.xutils.view.annotation.ContentView;
 import org.xutils.view.annotation.Event;
@@ -40,17 +40,22 @@ public class HomeFragment extends xUtilsFragment {
 
     @Event(value = R.id.btn_vibrate_once)
     private void onClickVibrateOnce(View view) {
-        VibratorManager.getInstance().vibrate(getContext(), 1000);
+        VibratorUtil.vibrate(getContext(), 1000);
     }
 
     @Event(value = R.id.btn_vibrate_forever)
     private void onClickVibrateForever(View view) {
-        VibratorManager.getInstance().vibrate(getContext());
+        VibratorUtil.vibrate(getContext());
+    }
+
+    @Event(value = R.id.btn_vibrate_rhythm)
+    private void onClickVibrateRhythm(View view) {
+        VibratorUtil.vibrate(getContext(), 500, 250, 3);
     }
 
     @Event(value = R.id.btn_cancel_vibrate)
     private void onClickCancelVibrate(View view) {
-        VibratorManager.getInstance().cancel(getContext());
+        VibratorUtil.cancel(getContext());
     }
 
     @Event(value = R.id.btn_show_float)

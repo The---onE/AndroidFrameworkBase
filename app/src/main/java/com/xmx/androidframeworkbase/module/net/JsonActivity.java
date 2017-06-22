@@ -9,7 +9,7 @@ import android.widget.TextView;
 import com.xmx.androidframeworkbase.R;
 import com.xmx.androidframeworkbase.base.activity.BaseTempActivity;
 import com.xmx.androidframeworkbase.utils.ExceptionUtil;
-import com.xmx.androidframeworkbase.utils.JSONUtil;
+import com.xmx.androidframeworkbase.common.json.JSONUtil;
 
 import java.util.List;
 import java.util.Map;

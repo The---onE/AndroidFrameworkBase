@@ -211,14 +211,23 @@ public class JSONUtil {
         return source;
     }
 
-    static public ListJsonObject parseListObject(String json) throws Exception {
+    static public<T extends IJsonEntity> ListJsonObject<T> parseListObject(String json, Class<T> c) throws Exception {
         Map<String, Object> map = parseObject(json);
-        ListJsonObject object = new ListJsonObject();
+        ListJsonObject<T> object = new ListJsonObject<>();
 
         object.status = (String) map.get(RESPONSE_STATUS);
         object.prompt = (String) map.get(RESPONSE_PROMPT);
         if (STATUS_QUERY_SUCCESS.equals(object.status)) {
-            object.entities = (List<Object>) map.get(RESPONSE_ENTITIES);
+            List<Object> list = (List<Object>) map.get(RESPONSE_ENTITIES);
+            List<T> entities = new ArrayList<>();
+            for (Object item : list) {
+                T t = c.newInstance();
+                t.initWithJson(item);
+                entities.add(t);
+            }
+            object.entities = entities;
+        } else {
+            object.entities = null;
         }
 
         return object;

@@ -222,7 +222,7 @@ public class JSONUtil {
             List<T> entities = new ArrayList<>();
             for (Object item : list) {
                 T t = c.newInstance();
-                t.initWithJson(item);
+                t.initWithJson((Map<String, Object>)item);
                 entities.add(t);
             }
             object.entities = entities;

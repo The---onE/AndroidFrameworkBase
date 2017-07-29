@@ -42,7 +42,7 @@ public class ExceptionUtil {
      * @param e       异常信息
      * @param context 当前上下文
      */
-    void fatalError(Exception e, Context context) throws Exception {
+    static public void fatalError(Exception e, Context context) throws Exception {
         // 记录错误日志
         OperationLogEntityManager.getInstance().addLog(e.toString());
         // 在调试状态显示错误信息

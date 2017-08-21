@@ -4,6 +4,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -131,8 +132,8 @@ public class JSONUtil {
      * 格式化List数组
      *
      * @param list 由JSON解析出的List数组
-     * @param sep 键值分隔符
-     * @param tab 层次推进符
+     * @param sep  键值分隔符
+     * @param tab  层次推进符
      * @return 格式化后的字符串
      */
     static public String formatJSONArray(List<Object> list, String sep, String tab) {
@@ -144,11 +145,11 @@ public class JSONUtil {
     /**
      * 向字符串中追加Map对象
      *
-     * @param map 由JSON解析出的Map对象
+     * @param map    由JSON解析出的Map对象
      * @param source 原字符串
-     * @param level 所在层次
-     * @param sep 键值分隔符
-     * @param tab 层次推进符
+     * @param level  所在层次
+     * @param sep    键值分隔符
+     * @param tab    层次推进符
      * @return 追加后的字符串
      */
     static private StringBuilder appendJSONObject(Map<String, Object> map,
@@ -179,11 +180,11 @@ public class JSONUtil {
     /**
      * 向字符串中追加List数组
      *
-     * @param list 由JSON解析出的List数组
+     * @param list   由JSON解析出的List数组
      * @param source 原字符串
-     * @param level 所在层次
-     * @param sep 键值分隔符
-     * @param tab 层次推进符
+     * @param level  所在层次
+     * @param sep    键值分隔符
+     * @param tab    层次推进符
      * @return 追加后的字符串
      */
     static private StringBuilder appendJSONArray(List<Object> list,
@@ -211,7 +212,7 @@ public class JSONUtil {
         return source;
     }
 
-    static public<T extends IJsonEntity> ListJsonObject<T> parseListObject(String json, Class<T> c) throws Exception {
+    static public <T extends IJsonEntity> ListJsonObject<T> parseListObject(String json, Class<T> c) throws Exception {
         Map<String, Object> map = parseObject(json);
         ListJsonObject<T> object = new ListJsonObject<>();
 
@@ -222,7 +223,38 @@ public class JSONUtil {
             List<T> entities = new ArrayList<>();
             for (Object item : list) {
                 T t = c.newInstance();
-                t.initWithJson((Map<String, Object>)item);
+                t.initWithJson((Map<String, Object>) item);
+                entities.add(t);
+            }
+            object.entities = entities;
+        } else {
+            object.entities = null;
+        }
+
+        return object;
+    }
+
+    static public <T> ListAutoJsonObject<T> autoParseListObject(String json, Class<T> c) throws Exception {
+        Map<String, Object> map = parseObject(json);
+        ListAutoJsonObject<T> object = new ListAutoJsonObject<>();
+
+        object.status = (String) map.get(RESPONSE_STATUS);
+        object.prompt = (String) map.get(RESPONSE_PROMPT);
+        if (STATUS_QUERY_SUCCESS.equals(object.status)) {
+            List<Object> list = (List<Object>) map.get(RESPONSE_ENTITIES);
+            List<T> entities = new ArrayList<>();
+            for (Object item : list) {
+                T t = c.newInstance();
+                Map<String, Object> m = (Map<String, Object>) item;
+                Field[] fs = c.getDeclaredFields();
+                for (Field f : fs) {
+                    f.setAccessible(true);
+                    String fieldName = f.getName();
+                    Object o = m.get(fieldName);
+                    if (o != null) {
+                        f.set(t, o);
+                    }
+                }
                 entities.add(t);
             }
             object.entities = entities;
